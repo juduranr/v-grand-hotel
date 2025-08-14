@@ -1,0 +1,161 @@
+/* ==========================================================================
+   Fuentes locales - BeaufortforLOL
+   ========================================================================== */
+
+/* Declaraciones @font-face para las fuentes TTF locales */
+@font-face {
+  font-family: 'BeaufortforLOL';
+  src: url('/fonts/BeaufortforLOL-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BeaufortforLOL';
+  src: url('/fonts/BeaufortforLOL-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BeaufortforLOL';
+  src: url('/fonts/BeaufortforLOL-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BeaufortforLOL';
+  src: url('/fonts/BeaufortforLOL-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BeaufortforLOL';
+  src: url('/fonts/BeaufortforLOL-Heavy.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BeaufortforLOL';
+  src: url('/fonts/BeaufortforLOL-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BeaufortforLOL';
+  src: url('/fonts/BeaufortforLOL-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BeaufortforLOL';
+  src: url('/fonts/BeaufortforLOL-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BeaufortforLOL';
+  src: url('/fonts/BeaufortforLOL-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BeaufortforLOL';
+  src: url('/fonts/BeaufortforLOL-HeavyItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   Clases de utilidad para BeaufortforLOL
+   ========================================================================== */
+
+/* Clases básicas */
+.font-beaufort {
+  font-family: 'BeaufortforLOL', serif;
+}
+
+/* Clases por peso */
+.font-beaufort-light {
+  font-family: 'BeaufortforLOL', serif;
+  font-weight: 300;
+}
+
+.font-beaufort-regular {
+  font-family: 'BeaufortforLOL', serif;
+  font-weight: 400;
+}
+
+.font-beaufort-medium {
+  font-family: 'BeaufortforLOL', serif;
+  font-weight: 500;
+}
+
+.font-beaufort-bold {
+  font-family: 'BeaufortforLOL', serif;
+  font-weight: 700;
+}
+
+.font-beaufort-heavy {
+  font-family: 'BeaufortforLOL', serif;
+  font-weight: 900;
+}
+
+/* Clases con estilo italic */
+.font-beaufort-italic {
+  font-family: 'BeaufortforLOL', serif;
+  font-style: italic;
+}
+
+.font-beaufort-light-italic {
+  font-family: 'BeaufortforLOL', serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.font-beaufort-medium-italic {
+  font-family: 'BeaufortforLOL', serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.font-beaufort-bold-italic {
+  font-family: 'BeaufortforLOL', serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.font-beaufort-heavy-italic {
+  font-family: 'BeaufortforLOL', serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+/* ==========================================================================
+   Variables CSS para uso en el proyecto
+   ========================================================================== */
+:root {
+  --font-beaufort: 'BeaufortforLOL', serif;
+  --font-beaufort-light: 300;
+  --font-beaufort-regular: 400;
+  --font-beaufort-medium: 500;
+  --font-beaufort-bold: 700;
+  --font-beaufort-heavy: 900;
+}

@@ -1,0 +1,159 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom: none;
+  padding: 1rem 0;
+}
+
+.header__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Left side - Burger menu */
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.header__burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.header__burger-line {
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  border-radius: 1px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.header__burger--active .header__burger-line:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.header__burger--active .header__burger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.header__burger--active .header__burger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.header__menu-text {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-medium);
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.header__menu-text:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Center - Logo */
+.header__center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header__logo {
+  height: 40px;
+  width: auto;
+  transition: transform 0.2s ease;
+}
+
+.header__logo:hover {
+  transform: scale(1.05);
+}
+
+/* Right side - Reserve button */
+.header__right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Override button styles for header transparency */
+.header .btn--default {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #1f2937;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.header .btn--default:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .header__container {
+    padding: 0 1rem;
+  }
+  
+  .header__menu-text {
+    font-size: 0.875rem;
+  }
+  
+  .header__logo {
+    height: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__container {
+    padding: 0 0.75rem;
+  }
+  
+  .header__menu-text {
+    display: none; /* Hide menu text on very small screens */
+  }
+  
+  .header__logo {
+    height: 28px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .header__burger-line {
+    background-color: white;
+  }
+  
+  .header__menu-text {
+    color: white;
+  }
+  
+  .header__menu-text:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}

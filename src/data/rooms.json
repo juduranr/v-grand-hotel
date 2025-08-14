@@ -1,0 +1,35 @@
+[
+  {
+    "title": "Suite Presidencial",
+    "capacity": 4,
+    "area": 120,
+    "description": "Nuestra suite más exclusiva con vistas panorámicas a la ciudad. Incluye sala de estar independiente, jacuzzi privado y servicio de conserjería 24/7.",
+    "banner": "/images/infinity-gallery-1.png",
+    "beds": 2,
+    "bathrooms": 2,
+    "terrace": true,
+    "breakfast": true
+  },
+  {
+    "title": "Habitación Deluxe",
+    "capacity": 2,
+    "area": 65,
+    "description": "Habitación elegante con decoración moderna y todos los lujos necesarios para una estancia inolvidable. Vista al jardín del hotel.",
+    "banner": "/images/infinity-gallery-3.png",
+    "beds": 1,
+    "bathrooms": 1,
+    "terrace": false,
+    "breakfast": true
+  },
+  {
+    "title": "Suite Familiar",
+    "capacity": 6,
+    "area": 95,
+    "description": "Espaciosa suite perfecta para familias, con dos habitaciones conectadas y área de juegos para niños. Incluye cocina equipada.",
+    "banner": "/images/infinity-gallery-2.png",
+    "beds": 3,
+    "bathrooms": 2,
+    "terrace": true,
+    "breakfast": true
+  }
+]
