@@ -73,16 +73,16 @@ const Purpose: React.FC = () => {
         <div className="purpose__gallery">
           <div className="purpose__gallery-wrapper">
             <div className="purpose__gallery-item">
-              <img src="/images/purpose-gallery-2.png" alt="Purpose" />
+              <img src="/images/purpose-gallery-2.webp" alt="Purpose" />
             </div>
             <div className="purpose__gallery-item">
-              <img src="/images/purpose-gallery-1.png" alt="Purpose" />
+              <img src="/images/purpose-gallery-1.webp" alt="Purpose" />
             </div>
             <div className="purpose__gallery-item">
-              <img src="/images/purpose-gallery-2.png" alt="Purpose" />
+              <img src="/images/purpose-gallery-2.webp" alt="Purpose" />
             </div>
             <div className="purpose__gallery-item">
-              <img src="/images/purpose-gallery-3.png" alt="Purpose" />
+              <img src="/images/purpose-gallery-3.webp" alt="Purpose" />
             </div>
           </div>
           <div className="purpose__gallery-title">
