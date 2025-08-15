@@ -14,6 +14,7 @@
   text-align: left;
   max-width: 600px;
   margin: 0 auto;
+  margin-bottom: 12rem;
 }
 
 .purpose__presentation {
@@ -54,6 +55,7 @@
   line-height: 1.1;
   color: #ffffff;
   text-transform: uppercase;
+  margin-bottom: 2rem;
 }
 
 .purpose__content-subtitle, .pillars__content-subtitle {
@@ -62,6 +64,7 @@
   font-size: clamp(0.875rem, 0.875rem, 1rem);
   line-height: 1.7;
   color: #ffffff;
+  margin-bottom: 1rem;
 }
 
 .purpose__content-description, .pillars__content-description {
@@ -70,6 +73,47 @@
   font-size: clamp(1.125rem, 1.25rem, 1.5rem);
   line-height: 1.7;
   color: #ffffff;
+  margin-bottom: 0;
+}
+
+/* Estilos para la animación de texto */
+.text-reveal-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.2em;
+}
+
+.text-word {
+  display: inline-flex;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Estilos para títulos - animación linear horizontal */
+.text-char-title {
+  display: inline-block;
+  color: #ffffff;
+  will-change: opacity, transform;
+  transform: translateX(0);
+}
+
+/* Estilos para descripciones - efecto de gradiente */
+.text-char-description {
+  display: inline-block;
+  background: linear-gradient(to right, rgb(255, 255, 255) 50%, rgb(37, 37, 37) 50%);
+  background-size: 200% 100%;
+  background-position-x: 100%;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  will-change: background-position-x;
+}
+
+.text-space {
+  display: inline-block;
+  width: 0.2em;
+  flex-shrink: 0;
 }
 
 /* Content alignment and width */
@@ -77,12 +121,14 @@
   max-width: 600px;
   margin-right: auto;
   margin-left: 0;
+  margin-bottom: 12rem;
 }
 
 .pillars__content {
   max-width: 600px;
   margin-left: auto;
   margin-right: 0;
+  margin-top: 12rem;
 }
 
 .purpose__description {
@@ -102,14 +148,17 @@
 .purpose__gallery {
   max-width: 100%;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  margin: 8rem 0;
+  padding: 6rem 0;
 }
 
 .purpose__gallery-wrapper {
   display: flex;
-  overflow: hidden;
+  overflow: visible;
   max-width: 1000px;
   margin: 0 auto;
+  position: relative;
 }
 
 .purpose__gallery-item {
@@ -120,6 +169,8 @@
   width: 100%;
   height: auto;
   object-fit: cover;
+  transition: transform 0.1s ease-out;
+  will-change: transform;
 }
 
 .purpose__gallery-title {

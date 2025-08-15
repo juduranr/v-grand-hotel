@@ -2,9 +2,26 @@ import React, { useState } from 'react';
 import './RoomsCarousel.css';
 import { Button } from './ui/button';
 import roomsData from '../data/rooms.json';
+import infinityGallery1 from '../assets/images/infinity-gallery-1.webp';
+import infinityGallery2 from '../assets/images/infinity-gallery-2.webp';
+import infinityGallery3 from '../assets/images/infinity-gallery-3.webp';
 
 const RoomsCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Mapping function to get image source based on banner filename
+  const getImageSource = (banner: string) => {
+    switch (banner) {
+      case 'infinity-gallery-1.webp':
+        return infinityGallery1.src;
+      case 'infinity-gallery-2.webp':
+        return infinityGallery2.src;
+      case 'infinity-gallery-3.webp':
+        return infinityGallery3.src;
+      default:
+        return '';
+    }
+  };
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => 
@@ -95,7 +112,7 @@ const RoomsCarousel: React.FC = () => {
                                     </div>
                                 </div>
                                 <div className="rooms-carousel__room-image-container">
-                                    <img src={room.banner} alt={room.title} className="rooms-carousel__room-image" />
+                                    <img src={getImageSource(room.banner)} alt={room.title} className="rooms-carousel__room-image" />
                                     <div className="rooms-carousel__navigation">
                                         <button 
                                             className="rooms-carousel__nav-button rooms-carousel__nav-button--prev"
