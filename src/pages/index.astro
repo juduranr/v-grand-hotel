@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { Header, Hero, Purpose, Discover, RoomsCarousel } from '../components';
+import { Header, Hero, Purpose, Discover, RoomsCarousel, DualAutoCarousel } from '../components';
+import galleryData from '../data/gallery.json';
 ---
 
 <Layout>
@@ -11,5 +12,10 @@ import { Header, Hero, Purpose, Discover, RoomsCarousel } from '../components';
     <Purpose client:load />
     <Discover client:load />
     <RoomsCarousel client:load />
+    <DualAutoCarousel 
+      client:load 
+      frontItems={galleryData}
+      backItems={galleryData}
+    />
   </main>
 </Layout>

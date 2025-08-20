@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./RoomsCarousel.css";
 import { Button } from "./ui/button";
 import roomsData from "../data/rooms.json";
-import { DoubleBed, Sofa, Tub, KnifeFork, Sunbath } from "@icon-park/react";
+import { DoubleBed, Sofa, Tub, KnifeFork, Sunbath, ArrowRight, Left, Right } from "@icon-park/react";
 import infinityGallery1 from "../assets/images/infinity-gallery-1.webp";
 import infinityGallery2 from "../assets/images/infinity-gallery-2.webp";
 import infinityGallery3 from "../assets/images/infinity-gallery-3.webp";
@@ -66,20 +66,22 @@ const RoomsCarousel: React.FC = () => {
           <div className="rooms-carousel__controls">
             <div className="rooms-carousel__indicators">
               {roomsData.map((_, index) => (
-                <button
+                <Button
                   key={index}
-                  className={`rooms-carousel__indicator ${
+                  variant="ghost"
+                  size="regular"
+                  className={`rooms-carousel__indicator rooms-carousel__indicator--custom ${
                     index === currentIndex ? "active" : ""
                   }`}
                   onClick={() => goToSlide(index)}
                   aria-label={`Ir a habitación ${index + 1}`}
                 >
                   {index + 1}
-                </button>
+                </Button>
               ))}
             </div>
             <Button variant="link" className="rooms-carousel__carousel-button">
-              Ver todas las habitaciones
+              Ver todas las habitaciones <ArrowRight />
             </Button>
           </div>
           <div className="rooms-carousel__carousel-container">
@@ -102,6 +104,9 @@ const RoomsCarousel: React.FC = () => {
                       <h3 className="rooms-carousel__room-title">
                         {room.title}
                       </h3>
+                      <p className="rooms-carousel__room-capacity">
+                        {room.capacity} personas
+                      </p>
                       <p className="rooms-carousel__room-description">
                         {room.description}
                       </p>
@@ -162,20 +167,24 @@ const RoomsCarousel: React.FC = () => {
                         className="rooms-carousel__room-image"
                       />
                       <div className="rooms-carousel__navigation">
-                        <button
-                          className="rooms-carousel__nav-button rooms-carousel__nav-button--prev"
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="rooms-carousel__nav-button rooms-carousel__nav-button--prev rooms-carousel__nav-button--custom"
                           onClick={prevSlide}
                           aria-label="Anterior habitación"
                         >
-                          ‹
-                        </button>
-                        <button
-                          className="rooms-carousel__nav-button rooms-carousel__nav-button--next"
+                          <Left />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="rooms-carousel__nav-button rooms-carousel__nav-button--next rooms-carousel__nav-button--custom"
                           onClick={nextSlide}
                           aria-label="Siguiente habitación"
                         >
-                          ›
-                        </button>
+                          <Right />
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -248,6 +257,12 @@ const RoomsCarousel: React.FC = () => {
               </div>
             ))}
           </div>
+        </div>
+        <div className="rooms-carousel__all-rooms-grid-button">
+          <p>Para más información de tarifas y disponibilidad, visita nuestra</p>
+          <Button variant="link" className="rooms-carousel__carousel-button">
+            Página de reservas <ArrowRight />
+          </Button>
         </div>
       </div>
     </section>

@@ -6,6 +6,7 @@ import grandHotelLogo from "../assets/images/grand-hotel.svg";
 import purposeGallery1 from "../assets/images/purpose-gallery-1.webp";
 import purposeGallery2 from "../assets/images/purpose-gallery-2.webp";
 import purposeGallery3 from "../assets/images/purpose-gallery-3.webp";
+import LogosCarousel from "./LogosCarousel";
 import "./Purpose.css";
 
 // Registrar el plugin ScrollTrigger
@@ -244,6 +245,8 @@ const Purpose: React.FC = () => {
             <hr />
           </div>
         </div>
+        <LogosCarousel />
+        <div className="content-container">
         <div className="purpose__content">
           <p className="purpose__content-subtitle">Propósito</p>
           <h3 className="purpose__content-title">
@@ -298,6 +301,7 @@ const Purpose: React.FC = () => {
           <div ref={pillarsDescriptionRef} className="purpose__content-description">
             dolor sit amet consectetur. Hac eget interdum urna auctor. Enim consequat risus donec. Iaculis dignissim proin non arcu. Viverra adipiscing nec massa nunc tristique. Enim consequat risus sagittis donec. Iaculis dignissim proin non arcu.
           </div>
+        </div>
         </div>
       </div>
     </section>

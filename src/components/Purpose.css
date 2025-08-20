@@ -1,13 +1,12 @@
 .purpose {
   padding: 8rem 2rem;
-  background: linear-gradient(180deg, #2E3C35 0%, #191F1C 30%, #000000 100%);
+  background: linear-gradient(180deg, #2E3C35 0%, #191F1C 30%, #191F1C 100%);
   position: relative;
   overflow: hidden;
 }
 
-.purpose__container {
-  max-width: 1200px;
-  margin: 0 auto;
+.content-container {
+  margin: 0 12rem;
 }
 
 .purpose__content {
@@ -176,7 +175,7 @@
 .purpose__gallery-title {
   font-family: var(--font-primary);
   font-weight: var(--font-weight-regular);
-  font-size: clamp(4rem, 6rem, 8rem);
+  font-size: clamp(2rem, 4rem, 6rem);
   color: #ffffff;
   position: absolute;
   top: 50%;
@@ -184,6 +183,7 @@
   transform: translate(-50%, -50%);
   text-align: center;
   z-index: 5;
+  text-transform: uppercase;
 }
 
 .purpose__logo-container {
@@ -271,9 +271,6 @@
 
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
-  .purpose {
-    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-  }
   
   .purpose__title {
     color: #f9fafb;

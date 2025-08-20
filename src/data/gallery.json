@@ -1,0 +1,34 @@
+[
+  {
+    "src": "/images/hero.webp",
+    "alt": "Vista panorámica del hotel"
+  },
+  {
+    "src": "/images/discover.webp",
+    "alt": "Áreas comunes del hotel"
+  },
+  {
+    "src": "/images/infinity-gallery-1.webp",
+    "alt": "Galería de habitaciones"
+  },
+  {
+    "src": "/images/infinity-gallery-2.webp",
+    "alt": "Vistas exteriores"
+  },
+  {
+    "src": "/images/infinity-gallery-3.webp",
+    "alt": "Amenidades del hotel"
+  },
+  {
+    "src": "/images/purpose-gallery-1.webp",
+    "alt": "Experiencias únicas"
+  },
+  {
+    "src": "/images/purpose-gallery-2.webp",
+    "alt": "Servicios exclusivos"
+  },
+  {
+    "src": "/images/purpose-gallery-3.webp",
+    "alt": "Ambiente relajante"
+  }
+]

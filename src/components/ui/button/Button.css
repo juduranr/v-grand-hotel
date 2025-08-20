@@ -94,11 +94,13 @@
   padding: 0.5rem 0;
   text-decoration: underline;
   text-underline-offset: 2px;
+  font-style: italic;
 }
 
 .btn--link:hover:not(:disabled) {
   color: rgba(255, 255, 255, 1);
   text-decoration-thickness: 2px;
+  font-style: italic;
 }
 
 /* Disabled state */
@@ -178,9 +180,11 @@
   
   .btn--link {
     color: rgba(255, 255, 255, 0.9);
+    font-style: italic;
   }
   
   .btn--link:hover:not(:disabled) {
     color: rgba(255, 255, 255, 1);
+    font-style: italic;
   }
 }

@@ -1,6 +1,6 @@
 .hero {
   position: relative;
-  height: 150vh;
+  height: 200vh;
 }
 
 .hero__background {
@@ -23,11 +23,13 @@
   transform: translate(-50%, -50%);
   color: #fff;
   font-size: 6rem; /* Start at 96px (6rem) */
-  font-weight: bold;
+  font-family: 'BeaufortforLOL', serif;
+  font-weight: 400; /* Bold weight */
   text-align: center;
   z-index: 10;
   pointer-events: none;
-  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .hero__shadow {
@@ -42,14 +44,15 @@
 }
 
 .hero__description {
-  height: 50vh;
+  height: 100vh;
   background-color: #2E3C35;
   position: relative;
   margin-top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(1.125rem, 1.25rem, 1.5rem);
+  font-size: 24px;
+  font-style: normal;
 }
 
 .hero__description-content{
@@ -67,4 +70,8 @@
 
 .hero__description-text{
   color: #fff;
+  font-family: 'Avenir', sans-serif;
+  font-weight: 400; /* Regular weight */
+  line-height: 1.6;
+  letter-spacing: 0.02em;
 }

@@ -1,4 +1,106 @@
 /* ==========================================================================
+   Fuentes locales - Avenir
+   ========================================================================== */
+
+/* Declaraciones @font-face para las fuentes Avenir TTF locales */
+@font-face {
+  font-family: 'Avenir';
+  src: url('/fonts/Avenir-Roman-12.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('/fonts/Avenir-Book-01.ttf') format('truetype');
+  font-weight: 350;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('/fonts/Avenir-Medium-09.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('/fonts/Avenir-Heavy-05.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('/fonts/Avenir-Black-03.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('/fonts/Avenir-Light-07.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Estilos italic para Avenir */
+@font-face {
+  font-family: 'Avenir';
+  src: url('/fonts/Avenir-Oblique-11.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('/fonts/Avenir-BookOblique-02.ttf') format('truetype');
+  font-weight: 350;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('/fonts/Avenir-MediumOblique-10.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('/fonts/Avenir-HeavyOblique-06.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('/fonts/Avenir-BlackOblique-04.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('/fonts/Avenir-LightOblique-08.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ==========================================================================
    Fuentes locales - BeaufortforLOL
    ========================================================================== */
 
@@ -158,4 +260,89 @@
   --font-beaufort-medium: 500;
   --font-beaufort-bold: 700;
   --font-beaufort-heavy: 900;
+  
+  /* Variables para Avenir */
+  --font-avenir: 'Avenir', sans-serif;
+  --font-avenir-light: 300;
+  --font-avenir-book: 350;
+  --font-avenir-regular: 400;
+  --font-avenir-medium: 500;
+  --font-avenir-heavy: 800;
+  --font-avenir-black: 900;
+}
+
+/* ==========================================================================
+   Clases de utilidad para Avenir
+   ========================================================================== */
+
+/* Clases básicas */
+.font-avenir {
+  font-family: 'Avenir', sans-serif;
+}
+
+/* Clases por peso */
+.font-avenir-light {
+  font-family: 'Avenir', sans-serif;
+  font-weight: 300;
+}
+
+.font-avenir-book {
+  font-family: 'Avenir', sans-serif;
+  font-weight: 350;
+}
+
+.font-avenir-regular {
+  font-family: 'Avenir', sans-serif;
+  font-weight: 400;
+}
+
+.font-avenir-medium {
+  font-family: 'Avenir', sans-serif;
+  font-weight: 500;
+}
+
+.font-avenir-heavy {
+  font-family: 'Avenir', sans-serif;
+  font-weight: 800;
+}
+
+.font-avenir-black {
+  font-family: 'Avenir', sans-serif;
+  font-weight: 900;
+}
+
+/* Clases con estilo italic */
+.font-avenir-italic {
+  font-family: 'Avenir', sans-serif;
+  font-style: italic;
+}
+
+.font-avenir-light-italic {
+  font-family: 'Avenir', sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.font-avenir-book-italic {
+  font-family: 'Avenir', sans-serif;
+  font-weight: 350;
+  font-style: italic;
+}
+
+.font-avenir-medium-italic {
+  font-family: 'Avenir', sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.font-avenir-heavy-italic {
+  font-family: 'Avenir', sans-serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.font-avenir-black-italic {
+  font-family: 'Avenir', sans-serif;
+  font-weight: 900;
+  font-style: italic;
 }

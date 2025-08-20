@@ -14,7 +14,6 @@ const Hero: React.FC = () => {
   useEffect(() => {
     if (!titleRef.current || !heroRef.current || !shadowRef.current) return;
 
-    // Create the scroll-triggered animation for title
     gsap.to(titleRef.current, {
       scrollTrigger: {
         trigger: heroRef.current,
@@ -23,12 +22,11 @@ const Hero: React.FC = () => {
         scrub: true,
         pin: false
       },
-      y: "45vh",
-      fontSize: "4rem", // End at 64px (4rem)
+      y: "50vh",
+      fontSize: "4rem",
       ease: "none"
     });
 
-    // Create the scroll-triggered animation for shadow - slower movement
     gsap.to(shadowRef.current, {
       scrollTrigger: {
         trigger: heroRef.current,
@@ -37,8 +35,8 @@ const Hero: React.FC = () => {
         scrub: true,
         pin: false
       },
-      y: "-150vh", // Move shadow upward by 150vh for slower effect
-      height: "150vh", // Expand shadow height to 150vh
+      y: "-150vh",
+      height: "150vh",
       ease: "none"
     });
 

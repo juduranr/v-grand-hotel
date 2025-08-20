@@ -44,8 +44,8 @@ const Button: React.FC<ButtonProps> = ({
       type={type}
       {...props}
     >
-      {icon && size === 'icon' && (
-        <span className="btn__icon">{icon}</span>
+      {size === 'icon' && (
+        <span className="btn__icon">{children}</span>
       )}
       {size === 'regular' && (
         <>
