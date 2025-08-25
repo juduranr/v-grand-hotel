@@ -3,26 +3,13 @@ import "./RoomsCarousel.css";
 import { Button } from "./ui/button";
 import roomsData from "../data/rooms.json";
 import { DoubleBed, Sofa, Tub, KnifeFork, Sunbath, ArrowRight, Left, Right } from "@icon-park/react";
-import infinityGallery1 from "../assets/images/infinity-gallery-1.webp";
-import infinityGallery2 from "../assets/images/infinity-gallery-2.webp";
-import infinityGallery3 from "../assets/images/infinity-gallery-3.webp";
+// Usamos imágenes desde public/images para rutas estáticas
 
 const RoomsCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Mapping function to get image source based on banner filename
-  const getImageSource = (banner: string) => {
-    switch (banner) {
-      case "infinity-gallery-1.webp":
-        return infinityGallery1.src;
-      case "infinity-gallery-2.webp":
-        return infinityGallery2.src;
-      case "infinity-gallery-3.webp":
-        return infinityGallery3.src;
-      default:
-        return "";
-    }
-  };
+  const getImageSource = (banner: string) => `/images/${banner}`;
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) =>
@@ -85,16 +72,16 @@ const RoomsCarousel: React.FC = () => {
             </Button>
           </div>
           <div className="rooms-carousel__carousel-container">
-            <div className="rooms-carousel__carousel-track">
+            <div
+              className="rooms-carousel__carousel-track"
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            >
               {roomsData.map((room, index) => (
                 <div
                   key={index}
                   className={`rooms-carousel__carousel-item ${
                     index === currentIndex ? "active" : ""
                   }`}
-                  style={{
-                    transform: `translateX(${(index - currentIndex) * 100}%)`,
-                  }}
                 >
                   <div className="rooms-carousel__room-card">
                     <div className="rooms-carousel__room-content">
@@ -107,9 +94,11 @@ const RoomsCarousel: React.FC = () => {
                       <p className="rooms-carousel__room-capacity">
                         {room.capacity} personas
                       </p>
-                      <p className="rooms-carousel__room-description">
-                        {room.description}
-                      </p>
+                      {room.description && (
+                        <p className="rooms-carousel__room-description">
+                          {room.description}
+                        </p>
+                      )}
                       <div className="rooms-carousel__room-details">
                         <div className="rooms-carousel__all-icons">
                           {Array(room.beds)
