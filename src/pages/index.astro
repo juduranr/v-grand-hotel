@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { Header, Hero, Purpose, Discover, RoomsCarousel, Restaurants, Experiences } from '../components';
+import { Header, Hero, Purpose, Discover, RoomsCarousel, Restaurants, Experiences, Events } from '../components';
 import galleryData from '../data/gallery.json';
 ---
 
@@ -14,5 +14,6 @@ import galleryData from '../data/gallery.json';
     <RoomsCarousel client:load />
     <Restaurants client:load />
     <Experiences client:load />
+    <Events client:load />
   </main>
 </Layout>

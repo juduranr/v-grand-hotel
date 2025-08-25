@@ -7,4 +7,5 @@ export { default as Restaurants } from './Restaurants';
 export { default as Menu } from './Menu';
 export { default as LogosCarousel } from './LogosCarousel';
 export { default as Experiences } from './Experiences';
+export { default as Events } from './Events';
 export * from './ui';

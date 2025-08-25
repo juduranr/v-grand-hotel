@@ -1,0 +1,219 @@
+.events-container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #fff;
+    color: #000;
+    padding: 4rem 0;
+}
+
+.events-content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.events-subtitle {
+    font-size: 1rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.events-title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.events-title-container hr {
+    width: 60px;
+    height: 1px;
+    background-color: #666;
+    border: none;
+    margin: 0;
+}
+
+.events-title-container .v-hotel-logo {
+    color: #666;
+    flex-shrink: 0;
+}
+
+.events-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+    text-align: center;
+    color: #000;
+}
+
+.events-description {
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.events-button {
+    color: #000;
+    font-size: 1rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s ease;
+    margin: 0 auto;
+    justify-content: center;
+    background: #000;
+    color: #fff !important;
+}
+
+.events-button:hover {
+    color: #fff;
+    background-color: #000 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .events-title {
+        font-size: 2rem;
+    }
+    
+    .events-content-container {
+        padding: 0 1rem;
+    }
+}
+
+/* Carousel de fotos */
+.events-carousel {
+    margin-top: 4rem;
+}
+
+.events-carousel__container {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    height: 70vh;
+}
+
+.events-carousel__track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: 100%;
+}
+
+.events-carousel__item {
+    min-width: 100%;
+    height: 100%;
+}
+
+.events-carousel__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Áreas clickeables para navegación */
+.events-carousel__click-areas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    pointer-events: none;
+}
+
+.events-carousel__click-area {
+    flex: 1;
+    height: 100%;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: url('/images/arrow-circle.svg'), auto;
+}
+
+.events-carousel__click-area--left {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent);
+    cursor: url('/images/arrow-circle.svg') 16 16, auto;
+}
+
+.events-carousel__click-area--left:hover {
+    cursor: url('/images/arrow-circle.svg') 16 16, auto;
+}
+
+.events-carousel__click-area--right {
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.1), transparent);
+    cursor: url('/images/arrow-circle.svg') 16 16, auto;
+}
+
+.events-carousel__click-area--right:hover {
+    cursor: url('/images/arrow-circle.svg') 16 16, auto;
+}
+
+/* Cursor personalizado para el área izquierda (rotado 180° para apuntar a la izquierda) */
+.events-carousel__click-area--left,
+.events-carousel__click-area--left:hover {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 2C8.268 2 2 8.268 2 16s6.268 14 14 14 14-6.268 14-14S23.732 2 16 2zm0 26C9.373 28 4 22.627 4 16S9.373 4 16 4s12 5.373 12 12-5.373 12-12 12z" fill="%23fff"/><path d="M20 10l-6 6 6 6" stroke="%23fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>') 16 16, auto;
+}
+
+/* Cursor personalizado para el área derecha (rotado 0° para apuntar a la derecha) */
+.events-carousel__click-area--right,
+.events-carousel__click-area--right:hover {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 2C8.268 2 2 8.268 2 16s6.268 14 14 14 14-6.268 14-14S23.732 2 16 2zm0 26C9.373 28 4 22.627 4 16S9.373 4 16 4s12 5.373 12 12-5.373 12-12 12z" fill="%23fff"/><path d="M12 10l6 6-6 6" stroke="%23fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>') 16 16, auto;
+}
+
+/* Indicadores en la parte inferior alineados a la izquierda */
+.events-carousel__indicators {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding-left: 0;
+}
+
+.events-carousel__indicator {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #000000 !important;
+    background: transparent !important;
+    border: 2px solid transparent !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Estilos específicos para los indicadores del carrusel */
+.events-carousel__indicator--custom {
+    background-color: transparent !important;
+    color: #000000 !important;
+    border: 2px solid transparent !important;
+}
+
+.events-carousel__indicator--custom:hover {
+    border: 2px solid #979A83 !important;
+    background: rgba(151, 154, 131, 0.1) !important;
+    transform: none !important;
+}
+
+.events-carousel__indicator--custom.active {
+    background: #979A83 !important;
+    color: white !important;
+    transform: scale(1.1) !important;
+    border-color: #979A83 !important;
+}
