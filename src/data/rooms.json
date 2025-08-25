@@ -1,35 +1,114 @@
 [
   {
-    "title": "Suite Presidencial",
-    "capacity": 4,
-    "area": 120,
-    "description": "Nuestra suite más exclusiva con vistas panorámicas a la ciudad. Incluye sala de estar independiente, jacuzzi privado y servicio de conserjería 24/7.",
+    "title": "Suite Grand view",
+    "capacity": 2,
+    "area": 40,
+    "description": "Ubicada en los pisos altos del hotel, esta suite ofrece una vista panorámica de Medellín que transforma cada momento en una experiencia. Cuenta con cama King size  y detalles que acompañan tus rituales de bienestar: leer, meditar o simplemente contemplar.",
     "banner": "infinity-gallery-1.webp",
-    "beds": 2,
-    "bathrooms": 2,
-    "terrace": true,
-    "breakfast": true
+    "beds": 1,
+    "bathrooms": 1,
+    "terrace": false,
+    "breakfast": true,
+    "gallery": [
+      "infinity-gallery-1.webp",
+      "infinity-gallery-2.webp",
+      "infinity-gallery-3.webp"
+    ]
   },
   {
-    "title": "Habitación Deluxe",
+    "title": "Suite familiar",
+    "capacity": 4,
+    "area": 42,
+    "description": "",
+    "banner": "infinity-gallery-2.webp",
+    "beds": 2,
+    "bathrooms": 1,
+    "terrace": false,
+    "breakfast": true,
+    "gallery": [
+      "infinity-gallery-1.webp",
+      "infinity-gallery-2.webp",
+      "infinity-gallery-3.webp"
+    ]
+  },
+  {
+    "title": "Balcony",
     "capacity": 2,
-    "area": 65,
-    "description": "Habitación elegante con decoración moderna y todos los lujos necesarios para una estancia inolvidable. Vista al jardín del hotel.",
+    "area": 45,
+    "description": "",
+    "banner": "infinity-gallery-3.webp",
+    "beds": 1,
+    "bathrooms": 1,
+    "terrace": true,
+    "breakfast": true,
+    "gallery": [
+      "infinity-gallery-1.webp",
+      "infinity-gallery-2.webp",
+      "infinity-gallery-3.webp"
+    ]
+  },
+  {
+    "title": "Junior suite",
+    "capacity": 2,
+    "area": 36,
+    "description": "Una suite pensada para quienes disfrutan del equilibrio entre trabajo y descanso. Con cama King, espacio de trabajo, poltronas auxiliares y una iluminación envolvente, esta habitación invita a inspirarte y desconectar a tu ritmo.",
+    "banner": "infinity-gallery-1.webp",
+    "beds": 1,
+    "bathrooms": 1,
+    "terrace": false,
+    "breakfast": true,
+    "gallery": [
+      "infinity-gallery-1.webp",
+      "infinity-gallery-2.webp",
+      "infinity-gallery-3.webp"
+    ]
+  },
+  {
+    "title": "Estudio familiar",
+    "capacity": 3,
+    "area": 30,
+    "description": "",
+    "banner": "infinity-gallery-2.webp",
+    "beds": 2,
+    "bathrooms": 1,
+    "terrace": false,
+    "breakfast": true,
+    "gallery": [
+      "infinity-gallery-1.webp",
+      "infinity-gallery-2.webp",
+      "infinity-gallery-3.webp"
+    ]
+  },
+  {
+    "title": "Estudio 1 cama king",
+    "capacity": 2,
+    "area": 28,
+    "description": "Una opción perfecta para viajeros solos o en pareja. Este estudio cuenta con una cama King size, mesa auxiliar de trabajo y una ambientación cálida ideal para quienes desean descansar o trabajar en un entorno elegante, cómodo y silencioso.",
     "banner": "infinity-gallery-3.webp",
     "beds": 1,
     "bathrooms": 1,
     "terrace": false,
-    "breakfast": true
+    "breakfast": true,
+    "gallery": [
+      "infinity-gallery-1.webp",
+      "infinity-gallery-2.webp",
+      "infinity-gallery-3.webp"
+    ]
   },
   {
-    "title": "Suite Familiar",
-    "capacity": 6,
-    "area": 95,
-    "description": "Espaciosa suite perfecta para familias, con dos habitaciones conectadas y área de juegos para niños. Incluye cocina equipada.",
-    "banner": "infinity-gallery-2.webp",
-    "beds": 3,
-    "bathrooms": 2,
-    "terrace": true,
-    "breakfast": true
+    "title": "Estudio 2 camas dobles",
+    "capacity": 4,
+    "area": 30,
+    "description": "Diseñado para compartir sin perder privacidad ni confort. Disfruta de dos camas dobles, una mesa auxiliar de trabajo y una atmósfera sofisticada que equilibra productividad y relajación.",
+    "banner": "infinity-gallery-1.webp",
+    "beds": 2,
+    "bathrooms": 1,
+    "terrace": false,
+    "breakfast": true,
+    "gallery": [
+      "infinity-gallery-1.webp",
+      "infinity-gallery-2.webp",
+      "infinity-gallery-3.webp"
+    ]
   }
 ]

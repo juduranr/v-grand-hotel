@@ -1,0 +1,409 @@
+.restaurants-container {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+  height: 100vh;
+  outline: none; /* Quitar outline del focus */
+  /* Asegurar que el contenedor tenga la altura correcta */
+  min-height: 100vh;
+}
+
+.restaurants-section {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(100vh);
+  opacity: 0;
+  filter: blur(2px);
+  /* Asegurar que las secciones tengan el tamaño correcto */
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.restaurants-section.active {
+  opacity: 1;
+  transform: translateY(0);
+  z-index: 3;
+  filter: blur(0px);
+}
+
+.restaurants-section:not(.active) {
+  opacity: 0;
+  transform: translateY(100vh);
+  z-index: 1;
+  filter: blur(2px);
+}
+
+/* Estados de transición mejorados para arriba y abajo */
+.restaurants-section.transitioning-in-up {
+  animation: slideInFromBottom 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  filter: blur(0px);
+}
+
+.restaurants-section.transitioning-in-down {
+  animation: slideInFromTop 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  filter: blur(0px);
+}
+
+.restaurants-section.transitioning-out-down {
+  animation: slideOutToTop 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  filter: blur(2px);
+}
+
+.restaurants-section.transitioning-out-up {
+  animation: slideOutToBottom 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  filter: blur(2px);
+}
+
+.restaurants-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.restaurants-title {
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #333;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  font-family: 'Avenir', sans-serif;
+  position: relative;
+  z-index: 10;
+  will-change: transform, opacity;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.6s ease 0.2s;
+}
+
+.restaurants-section.active .restaurants-title {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.restaurants-section:not(.active) .restaurants-title {
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+.restaurants-description {
+  font-size: 1.1rem;
+  color: #666;
+  max-width: 600px;
+  line-height: 1.6;
+  margin: 2rem auto 0 auto;
+  font-family: 'Avenir', sans-serif;
+  position: relative;
+  z-index: 10;
+  will-change: transform, opacity;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.6s ease 0.4s;
+}
+
+.restaurants-section.active .restaurants-description {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.restaurants-section:not(.active) .restaurants-description {
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+.restaurants-carousel-container {
+  width: 100%;
+  margin: 3rem 0;
+  will-change: transform, opacity;
+  transition: all 0.6s ease 0.3s;
+}
+
+.restaurants-section.active .restaurants-carousel-container {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.restaurants-section:not(.active) .restaurants-carousel-container {
+  transform: translateY(40px) scale(0.95);
+  opacity: 0;
+}
+
+.restaurants-gallery {
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0 auto;
+  will-change: transform;
+}
+
+.restaurants-gallery-cell {
+  width: 70%;
+  height: 300px;
+  margin-right: 15px;
+  background: #333;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  will-change: transform;
+  transition: all 0.3s ease;
+}
+
+.restaurants-gallery-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  will-change: transform;
+  transition: transform 0.3s ease;
+}
+
+.restaurants-gallery-cell:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+}
+
+.restaurants-gallery-cell:hover img {
+  transform: scale(1.05);
+}
+
+/* Indicadores de navegación */
+.section-indicators {
+  position: fixed;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.section-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  will-change: transform, background-color;
+}
+
+.section-indicator.active {
+  background: #333;
+  border-color: #333;
+  transform: scale(1.2);
+}
+
+.section-indicator:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.1);
+}
+
+/* Animaciones mejoradas para arriba y abajo */
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100vh);
+    opacity: 0;
+    filter: blur(2px);
+  }
+  50% {
+    transform: translateY(20vh);
+    opacity: 0.5;
+    filter: blur(1px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 0;
+    filter: blur(2px);
+  }
+  50% {
+    transform: translateY(-20vh);
+    opacity: 0.5;
+    filter: blur(1px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes slideOutToTop {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  50% {
+    transform: translateY(-20vh);
+    opacity: 0.5;
+    filter: blur(1px);
+  }
+  100% {
+    transform: translateY(-100vh);
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+
+@keyframes slideOutToBottom {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  50% {
+    transform: translateY(20vh);
+    opacity: 0.5;
+    filter: blur(1px);
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+
+/* Indicador de scroll bloqueado */
+.scroll-lock-indicator {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-family: 'Avenir', sans-serif;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  animation: slideDownFromTop 0.5s ease;
+  pointer-events: none;
+}
+
+.scroll-lock-indicator span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.scroll-lock-indicator::before {
+  content: '🔒';
+  font-size: 0.9rem;
+}
+
+/* Animación de entrada para el indicador */
+@keyframes slideDownFromTop {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Debug info (solo en desarrollo) */
+.debug-info {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-family: monospace;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+.debug-info > div {
+  margin: 5px 0;
+  padding: 2px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.debug-info > div:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .restaurants-gallery-cell {
+    width: 85%;
+    height: 250px;
+    margin-right: 12px;
+  }
+  
+  .restaurants-carousel-container {
+    padding: 0 15px;
+  }
+  
+  .restaurants-title {
+    font-size: 2rem;
+  }
+  
+  .restaurants-description {
+    font-size: 1rem;
+    max-width: 600px;
+  }
+
+  .section-indicators {
+    right: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .restaurants-gallery-cell {
+    width: 95%;
+    height: 200px;
+    margin-right: 10px;
+  }
+  
+  .restaurants-carousel-container {
+    padding: 0 10px;
+  }
+  
+  .restaurants-title {
+    font-size: 1.8rem;
+  }
+  
+  .restaurants-description {
+    font-size: 0.95rem;
+    max-width: 500px;
+  }
+
+  .section-indicators {
+    right: 15px;
+  }
+}
