@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Restaurants.css';
 import galleryData from '../data/gallery.json';
+import { Button } from './ui/button';
+import { ArrowRight } from "@icon-park/react";
 
 declare global {
   interface Window {
@@ -19,113 +21,12 @@ const Restaurants: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [isScrollLocked, setIsScrollLocked] = useState(false);
-  const originalScrollPosition = useRef(0);
+  
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Función para bloquear el scroll
-  const lockScroll = () => {
-    if (isScrollLocked) return;
-    
-    originalScrollPosition.current = window.pageYOffset;
-    
-    // Aplicar estilos para bloquear el scroll de manera más suave
-    document.body.style.overflow = 'hidden';
-    document.body.style.height = '100vh';
-    
-    setIsScrollLocked(true);
-  };
-
-  // Función para desbloquear el scroll
-  const unlockScroll = () => {
-    if (!isScrollLocked) return;
-    
-    // Restaurar estilos del scroll
-    document.body.style.overflow = '';
-    document.body.style.height = '';
-    
-    // Restaurar posición del scroll
-    window.scrollTo(0, originalScrollPosition.current);
-    
-    setIsScrollLocked(false);
-  };
-
-  // Detectar cuando el componente entra en el viewport
-  useEffect(() => {
-    if (!isClient) return;
-
-    let isInView = false;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const wasInView = isInView;
-          
-          if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
-            isInView = true;
-            if (!wasInView) {
-              // Solo bloquear si no estaba bloqueado antes
-              lockScroll();
-            }
-          } else if (entry.intersectionRatio < 0.2) {
-            isInView = false;
-            if (wasInView) {
-              // Solo desbloquear si estaba bloqueado antes
-              unlockScroll();
-            }
-          }
-        });
-      },
-      {
-        threshold: [0.2, 0.3, 0.5, 0.8], // Múltiples umbrales para mejor detección
-        rootMargin: '0px'
-      }
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
-      }
-      // Asegurar que el scroll se desbloquee al desmontar
-      unlockScroll();
-    };
-  }, [isClient]);
-
-  // Agregar listener para detectar cuando el usuario sale del componente
-  useEffect(() => {
-    if (!isClient || !isScrollLocked) return;
-
-    const handleScroll = () => {
-      // Si el usuario hace scroll manual, desbloquear
-      if (Math.abs(window.pageYOffset - originalScrollPosition.current) > 100) {
-        unlockScroll();
-      }
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      // Si el usuario presiona teclas de navegación fuera del componente, desbloquear
-      if (['PageUp', 'PageDown', 'Home', 'End'].includes(event.key)) {
-        unlockScroll();
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('keydown', handleKeyDown);
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isClient, isScrollLocked]);
-
-  // Limpiar Flickity al desmontar
   useEffect(() => {
     return () => {
       [flickityInstance1, flickityInstance2, flickityInstance3].forEach(instance => {
@@ -137,13 +38,6 @@ const Restaurants: React.FC = () => {
           }
         }
       });
-    };
-  }, []);
-
-  // Limpiar scroll al desmontar
-  useEffect(() => {
-    return () => {
-      unlockScroll();
     };
   }, []);
 
@@ -176,16 +70,13 @@ const Restaurants: React.FC = () => {
     }
   };
 
-  // Inicializar sistema de navegación por pasos
   useEffect(() => {
     if (!isClient) return;
 
-    // Inicializar los carousels directamente
     initFlickity(carouselRef1, flickityInstance1, { autoPlay: 4000 });
     initFlickity(carouselRef2, flickityInstance2, { autoPlay: 5000 });
     initFlickity(carouselRef3, flickityInstance3, { autoPlay: 6000 });
 
-    // Sistema de navegación por teclado solo cuando el componente está enfocado
     const handleKeyDown = (event: KeyboardEvent) => {
       if (isTransitioning || !containerRef.current?.contains(event.target as Node)) return;
       
@@ -210,9 +101,7 @@ const Restaurants: React.FC = () => {
           goToSection(2);
           break;
         case 'Escape':
-          // Permitir salir de la sección con Escape
           event.preventDefault();
-          unlockScroll();
           break;
       }
     };
@@ -275,18 +164,18 @@ const Restaurants: React.FC = () => {
 
   const restaurantData = [
     {
-      title: "Restaurante Principal",
-      description: "Nuestro restaurante principal ofrece una experiencia gastronómica excepcional con platos de autor y la mejor cocina internacional.",
+      title: "Tres Generaciones",
+      description: "Sabores que cuentan historias, una tradición que une generaciones. Cocina italiana de autor en un ambiente sofisticado.",
       items: galleryData
     },
     {
-      title: "Bar Lounge",
-      description: "Disfruta de cócteles artesanales y tapas gourmet en nuestro elegante bar lounge con vistas panorámicas.",
+      title: "V-Coffee",
+      description: "Una terraza casual con coctelería y sabores locales, pensados para hacer de cada visita un momento inolvidable.",
       items: galleryData
     },
     {
-      title: "Restaurante de Especialidades",
-      description: "Descubre sabores únicos en nuestro restaurante de especialidades, donde la tradición se encuentra con la innovación.",
+      title: "ROOFTOP",
+      description: "Sabores que cuentan historias, una tradición que une generaciones. Cocina italiana de autor en un ambiente sofisticado.",
       items: galleryData
     }
   ];
@@ -343,7 +232,18 @@ const Restaurants: React.FC = () => {
       {/* Primera sección - Restaurante Principal */}
       <section className={`restaurants-section ${activeSection === 0 ? 'active' : ''}`}>
         <div className="restaurants-content">
+          <p className="restaurants-subtitle">GASTRONOMÍA</p>
+          <div className="restaurants-title-container">
+          <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
+            <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor"/>
+          </svg>
+          <hr />
           <h1 className="restaurants-title">{restaurantData[0].title}</h1>
+          <hr />
+          <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
+            <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor"/>
+          </svg>
+          </div>
           <div className="restaurants-carousel-container">
             <div ref={carouselRef1} className="restaurants-gallery js-flickity">
               {restaurantData[0].items.map((item, index) => (
@@ -353,14 +253,30 @@ const Restaurants: React.FC = () => {
               ))}
             </div>
           </div>
-          <p className="restaurants-description">{restaurantData[0].description}</p>
+          <div className='restaurants-description-container'>
+            <p className="restaurants-description">{restaurantData[0].description}</p>
+            <Button variant="link" className="restaurants-description-button">
+              Explora {restaurantData[0].title}<ArrowRight />
+            </Button>
+          </div>
         </div>
       </section>
 
       {/* Segunda sección - Bar Lounge */}
       <section className={`restaurants-section ${activeSection === 1 ? 'active' : ''}`}>
         <div className="restaurants-content">
+          <p className="restaurants-subtitle">GASTRONOMÍA</p>
+          <div className="restaurants-title-container">
+          <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
+            <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor"/>
+          </svg>
+          <hr />
           <h1 className="restaurants-title">{restaurantData[1].title}</h1>
+          <hr />
+          <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
+            <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor"/>
+          </svg>
+          </div>
           <div className="restaurants-carousel-container">
             <div ref={carouselRef2} className="restaurants-gallery js-flickity">
               {restaurantData[1].items.map((item, index) => (
@@ -370,14 +286,30 @@ const Restaurants: React.FC = () => {
               ))}
             </div>
           </div>
-          <p className="restaurants-description">{restaurantData[1].description}</p>
+          <div className='restaurants-description-container'>
+            <p className="restaurants-description">{restaurantData[1].description}</p>
+            <Button variant="link" className="restaurants-description-button">
+              Explora {restaurantData[1].title}<ArrowRight />
+            </Button>
+          </div>
         </div>
       </section>
 
       {/* Tercera sección - Restaurante de Especialidades */}
       <section className={`restaurants-section ${activeSection === 2 ? 'active' : ''}`}>
         <div className="restaurants-content">
+          <p className="restaurants-subtitle">GASTRONOMÍA</p>
+          <div className="restaurants-title-container">
+          <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
+            <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor"/>
+          </svg>
+          <hr />
           <h1 className="restaurants-title">{restaurantData[2].title}</h1>
+          <hr />
+          <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
+            <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor"/>
+          </svg>
+          </div>
           <div className="restaurants-carousel-container">
             <div ref={carouselRef3} className="restaurants-gallery js-flickity">
               {restaurantData[2].items.map((item, index) => (
@@ -387,42 +319,14 @@ const Restaurants: React.FC = () => {
               ))}
             </div>
           </div>
-          <p className="restaurants-description">{restaurantData[2].description}</p>
+          <div className='restaurants-description-container'>
+            <p className="restaurants-description">{restaurantData[2].description}</p>
+            <Button variant="link" className="restaurants-description-button">
+              Explora {restaurantData[2].title}<ArrowRight />
+            </Button>
+          </div>
         </div>
       </section>
-
-      {/* Indicadores de navegación */}
-      <div className="section-indicators">
-        <div 
-          className={`section-indicator ${activeSection === 0 ? 'active' : ''}`}
-          onClick={() => goToSection(0)}
-        />
-        <div 
-          className={`section-indicator ${activeSection === 1 ? 'active' : ''}`}
-          onClick={() => goToSection(1)}
-        />
-        <div 
-          className={`section-indicator ${activeSection === 2 ? 'active' : ''}`}
-          onClick={() => goToSection(2)}
-        />
-      </div>
-
-      {/* Indicador de scroll bloqueado */}
-      {isScrollLocked && (
-        <div className="scroll-lock-indicator">
-          <span>Scroll bloqueado - Usa ↑↓ para navegar</span>
-        </div>
-      )}
-
-      {/* Debug info (solo en desarrollo) */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="debug-info">
-          <div>Sección activa: {activeSection + 1}</div>
-          <div>Scroll bloqueado: {isScrollLocked ? 'Sí' : 'No'}</div>
-          <div>Transicionando: {isTransitioning ? 'Sí' : 'No'}</div>
-          <div>Posición original: {originalScrollPosition.current}</div>
-        </div>
-      )}
     </div>
   );
 };
