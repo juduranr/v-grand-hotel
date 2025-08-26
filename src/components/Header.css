@@ -7,13 +7,51 @@
   background: transparent;
   backdrop-filter: none;
   border-bottom: none;
-  padding: 1rem 0;
+  padding: 16px 0;
+  transition: all 0.3s ease;
+}
+
+/* Header cuando está scrolleado (después de hero) */
+.header--scrolled {
+  background: white;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header--scrolled .header__burger-line {
+  background-color: #1f2937;
+}
+
+.header--scrolled .header__menu-text {
+  color: #1f2937;
+}
+
+.header--scrolled .header__menu-text:hover {
+  color: rgba(31, 41, 55, 0.8);
+}
+
+.header--scrolled .header__logo {
+  filter: brightness(0) saturate(100%) invert(15%) sepia(8%) saturate(1018%) hue-rotate(120deg) brightness(94%) contrast(89%);
+}
+
+/* Ocultar logo y botón cuando el menú esté activo */
+.header__center--hidden,
+.header__right--hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.header__center,
+.header__right {
+  transition: all 0.3s ease;
 }
 
 .header__container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;

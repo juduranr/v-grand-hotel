@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from './ui';
 import Menu from './Menu';
 import headerLogo from '../assets/images/header-logo.svg';
@@ -6,14 +6,31 @@ import './Header.css';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      // Obtener la altura de la sección hero (aproximadamente 100vh)
+      const heroHeight = window.innerHeight;
+      const scrollPosition = window.scrollY;
+      
+      // Cambiar el estado cuando se pase la sección hero
+      setIsScrolled(scrollPosition > heroHeight * 0.8);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    
+    // Cleanup
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <>
-      <header className="header">
+      <header className={`header ${isScrolled ? 'header--scrolled' : ''}`}>
         <div className="header__container">
           {/* Left side - Burger menu */}
           <div className="header__left">
@@ -30,7 +47,7 @@ const Header: React.FC = () => {
           </div>
 
           {/* Center - Logo */}
-          <div className="header__center">
+          <div className={`header__center ${isMenuOpen ? 'header__center--hidden' : ''}`}>
             <img 
               src={headerLogo.src} 
               alt="V Grand Hotel" 
@@ -39,7 +56,7 @@ const Header: React.FC = () => {
           </div>
 
           {/* Right side - Reserve button */}
-          <div className="header__right">
+          <div className={`header__right ${isMenuOpen ? 'header__right--hidden' : ''}`}>
             <Button variant="default" size="regular">
               Reservar
             </Button>
