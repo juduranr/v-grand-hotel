@@ -1,0 +1,78 @@
+.room-summary {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	align-items: center;
+	text-align: center;
+}
+
+.summary-subtitle {
+	color: #4B5563;
+	font-size: 1rem;
+	text-transform: none;
+}
+
+.summary-title {
+	font-family: 'BeaufortforLOL', sans-serif;
+	font-size: 3rem;
+	line-height: 1.1;
+	letter-spacing: 1px;
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.summary-description {
+	color: #444;
+	font-size: 1.1rem;
+	line-height: 1.6;
+}
+
+.services {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	align-items: center;
+}
+
+.services-title {
+	font-weight: 600;
+	color: #111827;
+}
+
+.services-icons {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 10px;
+	justify-content: center;
+}
+
+.service-icon {
+	display: inline-flex;
+	width: 32px;
+	height: 32px;
+	align-items: center;
+	justify-content: center;
+	background: #5E6754;
+	border-radius: 8px;
+}
+
+.summary-cta { margin-top: 48px; }
+
+.btn-stay {
+	display: flex;
+	height: 56px;
+	padding: 17px 56px;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	background: #5E6754;
+	color: #ffffff;
+	text-decoration: none;
+	border-radius: 6px;
+	width: fit-content;
+	margin: 0 auto;
+}
+
+.btn-stay:hover { filter: brightness(1.05); }
+
+

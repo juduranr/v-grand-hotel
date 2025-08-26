@@ -1,0 +1,261 @@
+.rooms-page {
+	height: 100vh;
+	overflow-y: auto;
+	scroll-snap-type: y mandatory;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+/* Ocultar scrollbar en Webkit browsers */
+.rooms-page::-webkit-scrollbar {
+	display: none;
+}
+
+.hero-section,
+.room-section {
+	height: 100vh;
+	width: 100%;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed; /* Efecto parallax para fondos */
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+	scroll-snap-align: start;
+	overflow: hidden; /* Prevenir scroll interno */
+}
+
+.hero-section {
+	background-image: url('/images/hero.webp');
+	justify-content: center;
+	align-items: flex-end;
+	padding-bottom: 20px;
+}
+
+.hero-title {
+	font-size: 12rem;
+	font-weight: 400;
+	color: white;
+	text-align: center;
+	width: 100%;
+	margin: 0;
+	will-change: transform;
+	font-family: 'BeaufortforLOL', sans-serif;
+	position: relative;
+	z-index: 10;
+	opacity: 1 !important;
+	bottom: -20vh;
+	text-transform: uppercase;
+}
+
+.room-section {
+	position: relative;
+	cursor: none; /* ocultar cursor nativo dentro de la sección */
+}
+
+.room-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.4);
+	z-index: 1;
+	pointer-events: none;
+}
+
+.room-info {
+	flex: 1;
+	color: white;
+}
+
+.room-title {
+	color: #FFF;
+	text-transform: uppercase;
+font-family: "Beaufort for LOL";
+font-size: 6rem;
+font-style: normal;
+font-weight: 400;
+line-height: 110%;
+	opacity: 1 !important;
+	margin-left: 48px
+}
+
+.room-index {
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-end;
+	height: 100%;
+	padding-bottom: 4rem;
+}
+
+.index-number {
+	font-size: 8rem;
+	font-weight: 200;
+	color: rgba(255, 255, 255, 0.8);
+	line-height: 1;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+	will-change: transform;
+	opacity: 1 !important;
+	background: rgba(0, 0, 0, 0.2);
+	padding: 1rem 2rem;
+	border-radius: 50%;
+	min-width: 120px;
+	min-height: 120px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.hero-title {
+		font-size: 2.5rem;
+	}
+
+	.room-title {
+		font-size: 2.5rem;
+	}
+
+	.room-index {
+		position: absolute;
+		top: 2rem;
+		right: 2rem;
+		padding-bottom: 0;
+	}
+
+	.index-number {
+		font-size: 4rem;
+		min-width: 80px;
+		min-height: 80px;
+		padding: 0.5rem 1rem;
+	}
+
+	/* Desactivar background-attachment en móviles para mejor rendimiento */
+	.hero-section,
+	.room-section {
+		background-attachment: scroll;
+	}
+}
+
+@media (max-width: 480px) {
+	.hero-title {
+		font-size: 2rem;
+	}
+
+	.room-title {
+		font-size: 2rem;
+	}
+	
+	.index-number {
+		font-size: 3rem;
+		min-width: 60px;
+		min-height: 60px;
+		padding: 0.5rem;
+	}
+}
+
+/* Optimizaciones para animaciones */
+* {
+	box-sizing: border-box;
+}
+
+/* Prevenir scroll horizontal */
+html, body {
+	overflow-x: hidden;
+	width: 100%;
+}
+
+/* Navigation Dots */
+.navigation-dots {
+	position: absolute;
+	right: 4rem;
+	bottom: 4rem;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	z-index: 10;
+	pointer-events: none;
+}
+
+.dot {
+	color: #888888;
+	font-size: 20px;
+	font-weight: 400;
+	cursor: pointer;
+	transition: color 0.3s ease;
+	white-space: nowrap;
+	text-align: right;
+	pointer-events: auto;
+}
+
+/* Cursor personalizado */
+.custom-cursor {
+	position: fixed;
+	left: 0;
+	top: 0;
+	transform: translate(-50%, -50%);
+	z-index: 1000;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+
+.custom-cursor.visible {
+	opacity: 1;
+}
+
+.cursor-svg {
+	width: 120px;
+	height: 120px;
+}
+
+.cursor-text {
+	fill: white;
+	font-size: 14px;
+	font-weight: 500;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	font-family: 'BeaufortforLOL', sans-serif;
+}
+
+.rotate {
+	animation: rotate 6s linear infinite;
+	transform-origin: 100px 100px; /* centro del viewBox 200x200 */
+	transform-box: view-box;
+}
+
+.chevron path {
+	filter: drop-shadow(0 1px 1px rgba(0,0,0,0.5));
+}
+
+@keyframes rotate {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+.dot:hover {
+	color: white;
+}
+
+.dot.active {
+	color: white;
+	font-weight: 600;
+}
+
+/* Responsive para navigation dots */
+@media (max-width: 768px) {
+	.navigation-dots {
+		right: 2rem;
+		bottom: 2rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.navigation-dots {
+		right: 1rem;
+		bottom: 1rem;
+	}
+}

@@ -1,0 +1,9 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { RoomsPage } from '../../components';
+import roomsData from '../../data/rooms.json';
+---
+
+<Layout>
+	<RoomsPage client:load roomsData={roomsData} />
+</Layout>

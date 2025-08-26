@@ -1,18 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { Header, Hero, Discover, Purpose, Restaurants, Experiences, Events, Histories, LogosCarousel, Footer, PromosSheet } from '../components';
+import { Hero, Discover, Purpose, RoomsCarousel, Restaurants, Experiences, Events, Histories, LogosCarousel, PromosSheet } from '../components';
 ---
 
 <Layout>
-	<Header client:load />
 	<Hero client:load />
-	<Discover client:load />
 	<Purpose client:load />
+	<Discover client:load />
+	<RoomsCarousel client:load />
 	<Restaurants client:load />
 	<Experiences client:load />
 	<Events client:load />
 	<Histories client:load />
 	<LogosCarousel client:load />
-	<Footer client:load />
 	<PromosSheet client:load />
 </Layout>

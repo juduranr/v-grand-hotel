@@ -1,66 +1,40 @@
 .restaurants-container {
   width: 100%;
   position: relative;
-  overflow: hidden;
-  will-change: transform;
+  overflow-y: auto;
+  overflow-x: hidden;
   height: 100vh;
   outline: none;
   min-height: 100vh;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  /* Mejorar la experiencia de scroll */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Ocultar scrollbar en WebKit browsers */
+.restaurants-container::-webkit-scrollbar {
+  display: none;
 }
 
 .restaurants-section {
   width: 100%;
   height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  will-change: transform, opacity;
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateY(100vh);
-  opacity: 0;
-  filter: blur(2px);
-  /* Asegurar que las secciones tengan el tamaño correcto */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
   min-height: 100vh;
   box-sizing: border-box;
 }
 
-.restaurants-section.active {
-  opacity: 1;
-  transform: translateY(0);
-  z-index: 3;
-  filter: blur(0px);
-}
 
-.restaurants-section:not(.active) {
-  opacity: 0;
-  transform: translateY(100vh);
-  z-index: 1;
-  filter: blur(2px);
-}
 
-/* Estados de transición mejorados para arriba y abajo */
-.restaurants-section.transitioning-in-up {
-  animation: slideInFromBottom 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  filter: blur(0px);
-}
 
-.restaurants-section.transitioning-in-down {
-  animation: slideInFromTop 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  filter: blur(0px);
-}
-
-.restaurants-section.transitioning-out-down {
-  animation: slideOutToTop 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  filter: blur(2px);
-}
-
-.restaurants-section.transitioning-out-up {
-  animation: slideOutToBottom 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  filter: blur(2px);
-}
 
 .restaurants-content {
   height: 100vh;
@@ -71,6 +45,8 @@
   position: relative;
   width: 100%;
   padding: 0 140px;
+  /* Mejorar la experiencia de scroll snap */
+  scroll-snap-align: start;
 }
 
 .restaurants-title-container {
@@ -125,15 +101,7 @@ text-wrap: nowrap;
   transition: all 0.6s ease 0.2s;
 }
 
-.restaurants-section.active .restaurants-title {
-  transform: translateY(0);
-  opacity: 1;
-}
 
-.restaurants-section:not(.active) .restaurants-title {
-  transform: translateY(30px);
-  opacity: 0;
-}
 
 .restaurants-description-container {
   display: flex;
@@ -166,15 +134,7 @@ line-height: 130%;
   font-family: 'Avenir', sans-serif;
 }
 
-.restaurants-section.active .restaurants-description {
-  transform: translateY(0);
-  opacity: 1;
-}
 
-.restaurants-section:not(.active) .restaurants-description {
-  transform: translateY(30px);
-  opacity: 0;
-}
 
 .restaurants-carousel-container {
   width: 100%;
@@ -182,15 +142,7 @@ line-height: 130%;
   transition: all 0.6s ease 0.3s;
 }
 
-.restaurants-section.active .restaurants-carousel-container {
-  transform: translateY(0) scale(1);
-  opacity: 1;
-}
 
-.restaurants-section:not(.active) .restaurants-carousel-container {
-  transform: translateY(40px) scale(0.95);
-  opacity: 0;
-}
 
 .restaurants-gallery {
   overflow: hidden;
@@ -266,147 +218,11 @@ line-height: 130%;
   transform: scale(1.1);
 }
 
-/* Animaciones mejoradas para arriba y abajo */
-@keyframes slideInFromBottom {
-  0% {
-    transform: translateY(100vh);
-    opacity: 0;
-    filter: blur(2px);
-  }
-  50% {
-    transform: translateY(20vh);
-    opacity: 0.5;
-    filter: blur(1px);
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-    filter: blur(0px);
-  }
-}
 
-@keyframes slideInFromTop {
-  0% {
-    transform: translateY(-100vh);
-    opacity: 0;
-    filter: blur(2px);
-  }
-  50% {
-    transform: translateY(-20vh);
-    opacity: 0.5;
-    filter: blur(1px);
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-    filter: blur(0px);
-  }
-}
 
-@keyframes slideOutToTop {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-    filter: blur(0px);
-  }
-  50% {
-    transform: translateY(-20vh);
-    opacity: 0.5;
-    filter: blur(1px);
-  }
-  100% {
-    transform: translateY(-100vh);
-    opacity: 0;
-    filter: blur(2px);
-  }
-}
 
-@keyframes slideOutToBottom {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-    filter: blur(0px);
-  }
-  50% {
-    transform: translateY(20vh);
-    opacity: 0.5;
-    filter: blur(1px);
-  }
-  100% {
-    transform: translateY(100vh);
-    opacity: 0;
-    filter: blur(2px);
-  }
-}
 
-/* Indicador de scroll bloqueado */
-.scroll-lock-indicator {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-family: 'Avenir', sans-serif;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  animation: slideDownFromTop 0.5s ease;
-  pointer-events: none;
-}
 
-.scroll-lock-indicator span {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.scroll-lock-indicator::before {
-  content: '🔒';
-  font-size: 0.9rem;
-}
-
-/* Animación de entrada para el indicador */
-@keyframes slideDownFromTop {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-}
-
-/* Debug info (solo en desarrollo) */
-.debug-info {
-  position: fixed;
-  top: 80px;
-  left: 20px;
-  z-index: 1000;
-  background: rgba(0, 0, 0, 0.9);
-  color: white;
-  padding: 15px;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  font-family: monospace;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  pointer-events: none;
-}
-
-.debug-info > div {
-  margin: 5px 0;
-  padding: 2px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.debug-info > div:last-child {
-  border-bottom: none;
-}
 
 @media (max-width: 768px) {
   .restaurants-content {
