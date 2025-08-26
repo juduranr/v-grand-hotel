@@ -1,22 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { Header, Hero, Purpose, Discover, RoomsCarousel, Restaurants, Experiences, Events, Histories, Footer } from '../components';
-import galleryData from '../data/gallery.json';
+import { Header, Hero, Discover, Purpose, Restaurants, Experiences, Events, Histories, LogosCarousel, Footer, PromosSheet } from '../components';
 ---
 
 <Layout>
-  <Header client:load />
-  
-  <main>
-    <Hero client:load />
-    <Purpose client:load />
-    <Discover client:load />
-    <RoomsCarousel client:load />
-    <Restaurants client:load />
-    <Experiences client:load />
-    <Events client:load />
-    <Histories client:load />
-  </main>
-  
-  <Footer client:load />
+	<Header client:load />
+	<Hero client:load />
+	<Discover client:load />
+	<Purpose client:load />
+	<Restaurants client:load />
+	<Experiences client:load />
+	<Events client:load />
+	<Histories client:load />
+	<LogosCarousel client:load />
+	<Footer client:load />
+	<PromosSheet client:load />
 </Layout>

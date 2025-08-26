@@ -1,0 +1,198 @@
+/* Overlay de fondo */
+.promos-sheet-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(0px);
+  overflow: hidden;
+}
+
+.promos-sheet-overlay--visible {
+  opacity: 1;
+  visibility: visible;
+  backdrop-filter: blur(4px);
+}
+
+/* PromosSheet */
+.promos-sheet {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: 100vh;
+  background: #fff;
+  z-index: 10000;
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.promos-sheet--open {
+  right: 0;
+}
+
+/* Header del promos-sheet */
+.promos-sheet__header {
+  padding: 2rem;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+}
+
+.promos-sheet__title {
+  font-family: 'BeaufortforLOL', serif;
+  font-size: 1.5rem;
+  color: #2E3C35;
+  margin: 0;
+  font-weight: 600;
+}
+
+.promos-sheet__close-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: #e5e7eb;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  transition: all 0.3s ease;
+}
+
+.promos-sheet__close-btn:hover {
+  background: #d1d5db;
+  color: #374151;
+  transform: scale(1.1);
+}
+
+/* Contenido de promociones */
+.promos-sheet__content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.promos-sheet__promo {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.promos-sheet__promo:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.promos-sheet__promo-title {
+  font-family: 'BeaufortforLOL', serif;
+  font-size: 1.25rem;
+  color: #2E3C35;
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.promos-sheet__promo-description {
+  font-family: 'Avenir', sans-serif;
+  font-size: 1rem;
+  color: #6b7280;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.6;
+}
+
+.promos-sheet__promo-button {
+  font-family: 'Avenir', sans-serif;
+  font-size: 0.95rem;
+  color: #2E3C35;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.promos-sheet__promo-button:hover {
+  color: #1f2937;
+  transform: translateX(4px);
+}
+
+/* Botón flotante integrado */
+.floating-button {
+  position: fixed;
+  right: 0;
+  top: 50vh;
+  transform: translateY(-50%);
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  border-radius: 0;
+  padding: 32px 12px;
+}
+
+.floating-button:hover {
+  background: #f8f8f8;
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: -6px 0 25px rgba(0, 0, 0, 0.25);
+}
+
+.floating-button:active {
+  transform: translateY(-50%) scale(0.98);
+}
+
+.floating-button__text {
+  color: #2E3C35;
+  font-family: 'BeaufortforLOL', serif;
+  font-size: 20px;
+  font-weight: 600;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1;
+  transform: rotate(180deg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .promos-sheet {
+    width: 100%;
+    right: -100%;
+  }
+  
+  .promos-sheet__header {
+    padding: 1.5rem;
+  }
+  
+  .promos-sheet__content {
+    padding: 1.5rem;
+  }
+
+  .floating-button {
+    width: 32px;
+    height: 12px;
+  }
+
+  .floating-button__text {
+    font-size: 20px;
+  }
+}
