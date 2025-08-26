@@ -1,0 +1,186 @@
+.histories-container {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #2E3C35 0%, #191F1C 30%, #191F1C 100%);
+    color: #fff;
+}
+
+.histories-content-container {
+    /* Clases CSS removidas */
+}
+
+.histories-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 90px 140px 0px 140px;
+}
+
+.histories-subtitle {
+    font-size: 1rem;
+    color: #ccc;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.histories-title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.histories-title-container hr {
+    width: 60px;
+    height: 1px;
+    background-color: #ccc;
+    border: none;
+    margin: 0;
+}
+
+.histories-title-container .v-hotel-logo {
+    color: #ccc;
+    flex-shrink: 0;
+}
+
+.histories-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+    text-align: center;
+    color: #fff;
+}
+
+.histories-carousel {
+    width: 100%;
+    height: 450px;
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.histories-track {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+.histories-card {
+    position: absolute;
+    width: 432px;
+    height: 70vh;
+    overflow: hidden;
+    background: white;
+    transition: transform 0.5s ease-in-out, opacity 0.3s ease-in-out;
+    cursor: pointer;
+    z-index: 1;
+    will-change: transform;
+}
+
+.histories-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.histories-card:not([style*="zIndex: 10"]) {
+    z-index: 1;
+}
+
+.histories-track {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+.histories-bars {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 40px;
+    padding-bottom: 40px;
+}
+
+.histories-bar {
+    width: 30px;
+    height: 1px;
+    background: rgba(151, 154, 131, 0.2);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.histories-bar.active {
+    background: #979A83;
+}
+
+.histories-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 20;
+}
+
+.histories-arrow:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.histories-left {
+    left: calc(50% - 432px);
+}
+
+.histories-right {
+    right: calc(50% - 432px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .histories-title {
+        font-size: 2rem;
+    }
+    
+    .histories-header {
+        padding: 60px 20px 0px 20px;
+    }
+    
+    .histories-carousel {
+        height: 350px;
+        margin-top: 40px;
+    }
+    
+    .histories-card {
+        width: 320px;
+        height: 60vh;
+    }
+    
+    .histories-left {
+        left: calc(50% - 160px);
+    }
+    
+    .histories-right {
+        right: calc(50% - 160px);
+    }
+}

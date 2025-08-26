@@ -8,4 +8,6 @@ export { default as Menu } from './Menu';
 export { default as LogosCarousel } from './LogosCarousel';
 export { default as Experiences } from './Experiences';
 export { default as Events } from './Events';
+export { default as Histories } from './Histories';
+export { default as Footer } from './Footer';
 export * from './ui';
