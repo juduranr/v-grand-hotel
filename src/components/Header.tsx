@@ -30,7 +30,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header className={`header ${isScrolled ? 'header--scrolled' : ''}`}>
+      <header className={`header ${isScrolled ? 'header--scrolled' : ''} ${isMenuOpen ? 'header--menu-open' : ''}`}>
         <div className="header__container">
           {/* Left side - Burger menu */}
           <div className="header__left">

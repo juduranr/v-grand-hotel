@@ -43,6 +43,14 @@
   transition: all 0.3s ease;
 }
 
+/* Quitar fondo blanco cuando el menú esté activo */
+.header--menu-open {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
 .header__center,
 .header__right {
   transition: all 0.3s ease;
