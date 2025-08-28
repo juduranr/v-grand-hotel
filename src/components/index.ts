@@ -13,4 +13,3 @@ export { default as RoomsCarousel } from './RoomsCarousel';
 export { default as RoomsPage } from './RoomsPage';
 export { default as PromosSheet } from './PromosSheet';
 export { default as RoomSummary } from './RoomSummary';
-export * from './ui';

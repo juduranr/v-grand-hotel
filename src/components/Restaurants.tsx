@@ -3,7 +3,6 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Restaurants.css';
 import galleryData from '../data/gallery.json';
-import { Button } from './ui/button';
 import { ArrowRight } from "@icon-park/react";
 
 const Restaurants: React.FC = () => {
@@ -12,8 +11,59 @@ const Restaurants: React.FC = () => {
   const carouselRef2 = useRef<HTMLDivElement>(null);
   const carouselRef3 = useRef<HTMLDivElement>(null);
   
+  // Referencias para las animaciones de scroll
+  const section1Ref = useRef<HTMLDivElement>(null);
+  const section2Ref = useRef<HTMLDivElement>(null);
+  const section3Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Registrar el plugin ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Configurar ScrollTrigger para usar el contenedor como scroller
+    ScrollTrigger.defaults({
+      toggleActions: "restart pause resume pause",
+      scroller: ".restaurants-container"
+    });
+
+    // Función para detener el scroll de la página principal
+    const disablePageScroll = () => {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    };
+
+    // Función para reanudar el scroll de la página principal
+    const enablePageScroll = () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
+
+    // Variable para controlar el estado del scroll
+    let isScrollDisabled = false;
+
+    // Función mejorada para detectar la visibilidad del componente
+    const checkComponentVisibility = () => {
+      if (!containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Calcular qué porcentaje del viewport ocupa el componente
+      const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+      const visibilityRatio = visibleHeight / windowHeight;
+      
+      // Solo cambiar el estado si es necesario para evitar parpadeos
+      if (visibilityRatio >= 0.8 && !isScrollDisabled) {
+        // El componente ocupa al menos el 80% del viewport
+        disablePageScroll();
+        isScrollDisabled = true;
+      } else if (visibilityRatio < 0.8 && isScrollDisabled) {
+        // El componente no ocupa el viewport completo
+        enablePageScroll();
+        isScrollDisabled = false;
+      }
+    };
+
     // Inicializar Flickity para los carruseles
     const initFlickity = async (carouselRef: React.RefObject<HTMLDivElement | null>, options: any = {}) => {
       if (!carouselRef.current || galleryData.length === 0) return;
@@ -48,7 +98,198 @@ const Restaurants: React.FC = () => {
     initFlickity(carouselRef1, { autoPlay: 4000 });
     initFlickity(carouselRef2, { autoPlay: 5000 });
     initFlickity(carouselRef3, { autoPlay: 6000 });
+
+    // Animaciones de scroll para cada sección
+    if (section1Ref.current) {
+      gsap.fromTo(section1Ref.current.querySelector('.restaurants-title'), {
+        scale: 0.8,
+        opacity: 0
+      }, {
+        scrollTrigger: {
+          trigger: section1Ref.current,
+          start: "top center",
+          end: "bottom center",
+          toggleActions: "play none none reverse"
+        },
+        scale: 1,
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out"
+      });
+
+      gsap.fromTo(section1Ref.current.querySelector('.restaurants-carousel-container'), {
+        y: 100,
+        opacity: 0
+      }, {
+        scrollTrigger: {
+          trigger: section1Ref.current,
+          start: "top center",
+          end: "bottom center",
+          toggleActions: "play none none reverse"
+        },
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        ease: "power2.out"
+      });
+    }
+
+    if (section2Ref.current) {
+      gsap.fromTo(section2Ref.current.querySelector('.restaurants-title'), {
+        rotation: -5,
+        opacity: 0
+      }, {
+        scrollTrigger: {
+          trigger: section2Ref.current,
+          start: "top center",
+          end: "bottom center",
+          toggleActions: "play none none reverse"
+        },
+        rotation: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out"
+      });
+
+      gsap.fromTo(section2Ref.current.querySelector('.restaurants-carousel-container'), {
+        scale: 0.9,
+        opacity: 0
+      }, {
+        scrollTrigger: {
+          trigger: section2Ref.current,
+          start: "top center",
+          end: "bottom center",
+          toggleActions: "play none none reverse"
+        },
+        scale: 1,
+        opacity: 1,
+        duration: 1.2,
+        ease: "power2.out"
+      });
+    }
+
+    if (section3Ref.current) {
+      gsap.fromTo(section3Ref.current.querySelector('.restaurants-title'), {
+        y: -50,
+        opacity: 0
+      }, {
+        scrollTrigger: {
+          trigger: section3Ref.current,
+          start: "top center",
+          end: "bottom center",
+          toggleActions: "play none none reverse"
+        },
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out"
+      });
+
+      gsap.fromTo(section3Ref.current.querySelector('.restaurants-carousel-container'), {
+        x: -100,
+        opacity: 0
+      }, {
+        scrollTrigger: {
+          trigger: section3Ref.current,
+          start: "top center",
+          end: "bottom center",
+          toggleActions: "play none none reverse"
+        },
+        x: 0,
+        opacity: 1,
+        duration: 1.2,
+        ease: "power2.out"
+      });
+    }
+
+    // Animación para el botón de descripción (efecto yoyo)
+    gsap.to(".restaurants-description-button", {
+      scrollTrigger: {
+        trigger: ".restaurants-container",
+        start: "top top",
+        end: "bottom bottom",
+        toggleActions: "restart pause reverse pause"
+      },
+      scale: 1.05,
+      repeat: -1,
+      yoyo: true,
+      ease: "power2.inOut",
+      duration: 2
+    });
+
+    // Detectar cuando se sale del componente para reanudar el scroll
+    const handleScrollEnd = () => {
+      if (containerRef.current) {
+        const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
+        const isAtTop = scrollTop <= 10;
+        
+        if (isAtBottom || isAtTop) {
+          // Reanudar el scroll de la página
+          enablePageScroll();
+          isScrollDisabled = false;
+          
+          // Si está en la parte inferior, hacer scroll hacia abajo en la página
+          if (isAtBottom) {
+            setTimeout(() => {
+              window.scrollTo({
+                top: window.scrollY + 100,
+                behavior: 'smooth'
+              });
+            }, 100);
+          }
+          
+          // Si está en la parte superior, hacer scroll hacia arriba en la página
+          if (isAtTop) {
+            setTimeout(() => {
+              window.scrollTo({
+                top: window.scrollY - 100,
+                behavior: 'smooth'
+              });
+            }, 100);
+          }
+        }
+      }
+    };
+
+    // Agregar listener para detectar el fin del scroll
+    if (containerRef.current) {
+      containerRef.current.addEventListener('scroll', handleScrollEnd);
+    }
+
+    // Usar un solo método de detección más confiable
+    const throttledCheck = throttle(checkComponentVisibility, 100);
+    
+    // Agregar listeners para el scroll y resize
+    window.addEventListener('scroll', throttledCheck, { passive: true });
+    window.addEventListener('resize', throttledCheck, { passive: true });
+
+    // Verificación inicial
+    checkComponentVisibility();
+
+    // Limpiar ScrollTrigger y reanudar scroll al desmontar
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      enablePageScroll();
+      if (containerRef.current) {
+        containerRef.current.removeEventListener('scroll', handleScrollEnd);
+      }
+      window.removeEventListener('scroll', throttledCheck);
+      window.removeEventListener('resize', throttledCheck);
+    };
   }, []);
+
+  // Función throttle para mejorar el rendimiento
+  const throttle = (func: Function, limit: number) => {
+    let inThrottle: boolean;
+    return function(this: any, ...args: any[]) {
+      if (!inThrottle) {
+        func.apply(this, args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
+    }
+  };
 
   const restaurantData = [
     {
@@ -68,12 +309,10 @@ const Restaurants: React.FC = () => {
     }
   ];
 
-
-
   return (
     <div className="restaurants-container" ref={containerRef} tabIndex={0}>
       {/* Primera sección - Restaurante Principal */}
-      <section className="restaurants-section">
+      <section className="restaurants-section panel" ref={section1Ref}>
         <div className="restaurants-content">
           <p className="restaurants-subtitle" data-parallax>GASTRONOMÍA</p>
           <div className="restaurants-title-container" data-parallax>
@@ -98,15 +337,15 @@ const Restaurants: React.FC = () => {
           </div>
           <div className='restaurants-description-container' data-parallax>
             <p className="restaurants-description">{restaurantData[0].description}</p>
-            <Button variant="link" className="restaurants-description-button">
-              Explora {restaurantData[0].title}<ArrowRight />
-            </Button>
+            <button className="restaurants-description-button">
+              Ver más
+            </button>
           </div>
         </div>
       </section>
 
       {/* Segunda sección - Bar Lounge */}
-      <section className="restaurants-section">
+      <section className="restaurants-section panel purple" ref={section2Ref}>
         <div className="restaurants-content">
           <p className="restaurants-subtitle" data-parallax>GASTRONOMÍA</p>
           <div className="restaurants-title-container" data-parallax>
@@ -131,15 +370,15 @@ const Restaurants: React.FC = () => {
           </div>
           <div className='restaurants-description-container' data-parallax>
             <p className="restaurants-description">{restaurantData[1].description}</p>
-            <Button variant="link" className="restaurants-description-button">
-              Explora {restaurantData[1].title}<ArrowRight />
-            </Button>
+            <button className="restaurants-description-button">
+              Ver más
+            </button>
           </div>
         </div>
       </section>
 
       {/* Tercera sección - Restaurante de Especialidades */}
-      <section className="restaurants-section">
+      <section className="restaurants-section panel yoyo" ref={section3Ref}>
         <div className="restaurants-content">
           <p className="restaurants-subtitle">GASTRONOMÍA</p>
           <div className="restaurants-title-container">
@@ -164,9 +403,9 @@ const Restaurants: React.FC = () => {
           </div>
           <div className='restaurants-description-container'>
             <p className="restaurants-description">{restaurantData[2].description}</p>
-            <Button variant="link" className="restaurants-description-button">
-              Explora {restaurantData[2].title}<ArrowRight />
-            </Button>
+            <button className="restaurants-description-button">
+              Ver más
+            </button>
           </div>
         </div>
       </section>

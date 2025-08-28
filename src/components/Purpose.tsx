@@ -87,14 +87,14 @@ const Purpose: React.FC = () => {
         stagger: 0.03,
         scrollTrigger: {
           trigger: element,
-          scrub: 1,
-          start: "top center",
-          end: "bottom center"
+          scrub: 0,
+          start: "top 80%",
+          end: "bottom 20%"
         }
       });
     };
 
-    // Función para crear el efecto de gradiente para descripciones
+    // Función para crear el efecto de escritura para descripciones
     const createDescriptionReveal = (element: HTMLElement) => {
       // Crear un wrapper para el texto
       const textContent = element.textContent || '';
@@ -141,37 +141,37 @@ const Purpose: React.FC = () => {
       
       // Configurar la animación inicial
       gsap.set(allChars, {
-        backgroundPositionX: '100%'
+        opacity: 0
       });
       
       // Animar con ScrollTrigger
       gsap.to(allChars, {
-        backgroundPositionX: '0%',
-        ease: "none",
+        opacity: 1,
+        ease: "power2.out",
         stagger: 0.01,
         scrollTrigger: {
           trigger: element,
-          scrub: 1,
-          start: "top center",
-          end: "bottom center"
+          scrub: 0,
+          start: "top 80%",
+          end: "bottom 20%"
         }
       });
     };
 
-          // Aplicar la animación a los títulos
-      const titleElements = document.querySelectorAll('.purpose__content-title');
-      titleElements.forEach((title) => {
-        createTitleReveal(title as HTMLElement);
-      });
-      
-      // Aplicar la animación a las descripciones
-      if (purposeDescriptionRef.current) {
-        createDescriptionReveal(purposeDescriptionRef.current);
-      }
-      
-      if (pillarsDescriptionRef.current) {
-        createDescriptionReveal(pillarsDescriptionRef.current);
-      }
+    // Aplicar la animación a los títulos
+    const titleElements = document.querySelectorAll('.purpose__content-title');
+    titleElements.forEach((title) => {
+      createTitleReveal(title as HTMLElement);
+    });
+    
+    // Aplicar la animación a las descripciones
+    if (purposeDescriptionRef.current) {
+      createDescriptionReveal(purposeDescriptionRef.current);
+    }
+    
+    if (pillarsDescriptionRef.current) {
+      createDescriptionReveal(pillarsDescriptionRef.current);
+    }
 
     const handleScroll = () => {
       if (!sectionRef.current) return;
@@ -196,11 +196,7 @@ const Purpose: React.FC = () => {
           
           // Calcular la velocidad de parallax (diferente para cada imagen)
           const parallaxSpeed = 0.3 + (index * 0.1);
-          let translateY = distanceFromCenter * parallaxSpeed;
-          
-          // Limitar la transformación a un máximo de 200px en ambas direcciones
-          const maxTranslate = 200;
-          translateY = Math.max(-maxTranslate, Math.min(maxTranslate, translateY));
+          const translateY = distanceFromCenter * parallaxSpeed;
           
           imgRef.style.transform = `translateY(${translateY}px)`;
         }
@@ -247,61 +243,60 @@ const Purpose: React.FC = () => {
         </div>
         <LogosCarousel />
         <div className="content-container">
-        <div className="purpose__content">
-          <p className="purpose__content-subtitle">Propósito</p>
-          <h3 className="purpose__content-title">
-            V Grand Hotel Medellín: Bienestar urbano con alma colombiana
-          </h3>
-          <div ref={purposeDescriptionRef} className="purpose__content-description">
-            Descubre en V Grand Hotel una experiencia de lujo consciente en el corazón de Medellín. Un refugio contemporáneo donde el bienestar, el diseño y la cultura se encuentran para reconectar cuerpo, mente y espíritu. Bienvenido a una nueva forma de hospedarte: más humana, más consciente, más tú.
-          </div>
-
-        </div>
-        <div className="purpose__gallery">
-          <div className="purpose__gallery-wrapper">
-            <div className="purpose__gallery-item">
-              <img 
-                ref={(el) => addImageRef(el, 0)}
-                src={purposeGallery2.src} 
-                alt="Purpose" 
-              />
-            </div>
-            <div className="purpose__gallery-item">
-              <img 
-                ref={(el) => addImageRef(el, 1)}
-                src={purposeGallery1.src} 
-                alt="Purpose" 
-              />
-            </div>
-            <div className="purpose__gallery-item">
-              <img 
-                ref={(el) => addImageRef(el, 2)}
-                src={purposeGallery2.src} 
-                alt="Purpose" 
-              />
-            </div>
-            <div className="purpose__gallery-item">
-              <img 
-                ref={(el) => addImageRef(el, 3)}
-                src={purposeGallery3.src} 
-                alt="Purpose" 
-              />
+          <div className="purpose__content">
+            <p className="purpose__content-subtitle">Propósito</p>
+            <h3 className="purpose__content-title">
+              V Grand Hotel Medellín: Bienestar urbano con alma colombiana
+            </h3>
+            <div ref={purposeDescriptionRef} className="purpose__content-description">
+              Descubre en V Grand Hotel una experiencia de lujo consciente en el corazón de Medellín. Un refugio contemporáneo donde el bienestar, el diseño y la cultura se encuentran para reconectar cuerpo, mente y espíritu. Bienvenido a una nueva forma de hospedarte: más humana, más consciente, más tú.
             </div>
           </div>
-          <div className="purpose__gallery-title">
-            El lugar donde bien se está
+          <div className="purpose__gallery">
+            <div className="purpose__gallery-wrapper">
+              <div className="purpose__gallery-item">
+                <img 
+                  ref={(el) => addImageRef(el, 0)}
+                  src={purposeGallery2.src} 
+                  alt="Purpose" 
+                />
+              </div>
+              <div className="purpose__gallery-item">
+                <img 
+                  ref={(el) => addImageRef(el, 1)}
+                  src={purposeGallery1.src} 
+                  alt="Purpose" 
+                />
+              </div>
+              <div className="purpose__gallery-item">
+                <img 
+                  ref={(el) => addImageRef(el, 2)}
+                  src={purposeGallery2.src} 
+                  alt="Purpose" 
+                />
+              </div>
+              <div className="purpose__gallery-item">
+                <img 
+                  ref={(el) => addImageRef(el, 3)}
+                  src={purposeGallery3.src} 
+                  alt="Purpose" 
+                />
+              </div>
+            </div>
+            <div className="purpose__gallery-title">
+              El lugar donde bien se está
+            </div>
           </div>
-        </div>
-        <div className="pillars__content">
-          <p className="purpose__content-subtitle">Pilares V-Grand</p>
-          <h3 className="purpose__content-title">
-            Combinamos comodidad y sofisticación con servicios modernos de
-            calidad y bienestar.
-          </h3>
-          <div ref={pillarsDescriptionRef} className="purpose__content-description">
-            dolor sit amet consectetur. Hac eget interdum urna auctor. Enim consequat risus donec. Iaculis dignissim proin non arcu. Viverra adipiscing nec massa nunc tristique. Enim consequat risus sagittis donec. Iaculis dignissim proin non arcu.
+          <div className="pillars__content">
+            <p className="purpose__content-subtitle">Pilares V-Grand</p>
+            <h3 className="purpose__content-title">
+              Combinamos comodidad y sofisticación con servicios modernos de
+              calidad y bienestar.
+            </h3>
+            <div ref={pillarsDescriptionRef} className="purpose__content-description">
+              dolor sit amet consectetur. Hac eget interdum urna auctor. Enim consequat risus donec. Iaculis dignissim proin non arcu. Viverra adipiscing nec massa nunc tristique. Enim consequat risus sagittis donec. Iaculis dignissim proin non arcu.
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </section>

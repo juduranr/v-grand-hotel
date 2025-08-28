@@ -30,19 +30,6 @@ const Hero: React.FC = () => {
   useEffect(() => {
     if (!titleRef.current || !heroRef.current || !shadowRef.current) return;
 
-    // Solo crear el intervalo si no se ha hecho scroll
-    let titleInterval: NodeJS.Timeout | null = null;
-    
-    if (!hasScrolled) {
-      titleInterval = setInterval(() => {
-        setIsTransitioning(true);
-        setTimeout(() => {
-          setCurrentTitle((prev) => (prev + 1) % titles.length);
-          setIsTransitioning(false);
-        }, 400); // Mitad del tiempo de transición
-      }, 3000); // Aumenté el tiempo entre cambios
-    }
-
     gsap.to(titleRef.current, {
       scrollTrigger: {
         trigger: heroRef.current,
@@ -70,29 +57,63 @@ const Hero: React.FC = () => {
     });
 
     return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
+
+  // Efecto separado para manejar el intervalo del título
+  useEffect(() => {
+    let titleInterval: NodeJS.Timeout | null = null;
+    
+    if (!hasScrolled) {
+      titleInterval = setInterval(() => {
+        setIsTransitioning(true);
+        setTimeout(() => {
+          setCurrentTitle((prev) => (prev + 1) % titles.length);
+          setIsTransitioning(false);
+        }, 400);
+      }, 3000);
+    } else {
+      // Si se ha hecho scroll, asegurar que el título esté en "FEEL WELCOME"
+      setCurrentTitle(0);
+    }
+
+    return () => {
       if (titleInterval) {
         clearInterval(titleInterval);
       }
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, [hasScrolled, titles.length]);
 
-  // Efecto para detectar cuando el usuario vuelve hacia arriba
+  // Efecto para detectar cuando el usuario vuelve hacia arriba usando ScrollTrigger
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const heroTop = heroRef.current?.offsetTop || 0;
-      
-      // Si el usuario está en la parte superior del hero, reactivar la animación
-      if (scrollTop <= heroTop + 100) {
-        setHasScrolled(false);
-      }
-    };
+    if (!heroRef.current) return;
 
-    window.addEventListener('scroll', handleScroll);
-    
+    // Crear ScrollTrigger para controlar la animación del título
+    const scrollTrigger = ScrollTrigger.create({
+      trigger: heroRef.current,
+      start: "top 80%",
+      end: "bottom 20%",
+      onEnter: () => {
+        // Cuando el hero entra en la pantalla, reactivar la animación
+        setHasScrolled(false);
+      },
+      onLeave: () => {
+        // Cuando el hero sale de la pantalla, detener la animación
+        setHasScrolled(true);
+      },
+      onEnterBack: () => {
+        // Cuando el hero vuelve a entrar desde abajo, reactivar la animación
+        setHasScrolled(false);
+      },
+      onLeaveBack: () => {
+        // Cuando el hero sale hacia arriba, detener la animación
+        setHasScrolled(true);
+      }
+    });
+
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      scrollTrigger.kill();
     };
   }, []);
 

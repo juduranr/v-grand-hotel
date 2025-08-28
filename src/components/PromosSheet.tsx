@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Button } from './ui';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight } from '@icon-park/react';
 import './PromosSheet.css';
 
@@ -83,10 +82,10 @@ const PromosSheet: React.FC = () => {
               Disfruta de una experiencia romántica inolvidable con cena privada, 
               spa para dos y suite de lujo con vista panorámica.
             </p>
-            <Button variant="link" className="promos-sheet__promo-button">
+            <button className="promos-sheet__promo-button">
               Ver detalles
               <ArrowRight size={16} />
-            </Button>
+            </button>
           </div>
 
           <div className="promos-sheet__promo">
@@ -95,10 +94,10 @@ const PromosSheet: React.FC = () => {
               Perfecta para desconectar del estrés diario. Incluye alojamiento, 
               desayuno gourmet y acceso completo a nuestras instalaciones.
             </p>
-            <Button variant="link" className="promos-sheet__promo-button">
+            <button className="promos-sheet__promo-button">
               Ver detalles
               <ArrowRight size={16} />
-            </Button>
+            </button>
           </div>
 
           <div className="promos-sheet__promo">
@@ -107,10 +106,10 @@ const PromosSheet: React.FC = () => {
               Renueva tu energía con tratamientos de spa premium, masajes 
               terapéuticos y acceso a nuestro centro de bienestar.
             </p>
-            <Button variant="link" className="promos-sheet__promo-button">
+            <button className="promos-sheet__promo-button">
               Ver detalles
               <ArrowRight size={16} />
-            </Button>
+            </button>
           </div>
 
           <div className="promos-sheet__promo">
@@ -119,10 +118,10 @@ const PromosSheet: React.FC = () => {
               Degusta la mejor cocina local e internacional con nuestro 
               chef ejecutivo en un ambiente exclusivo y elegante.
             </p>
-            <Button variant="link" className="promos-sheet__promo-button">
+            <button className="promos-sheet__promo-button">
               Ver detalles
               <ArrowRight size={16} />
-            </Button>
+            </button>
           </div>
         </div>
       </aside>

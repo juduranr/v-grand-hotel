@@ -42,7 +42,7 @@
   font-family: var(--font-primary);
   font-weight: var(--font-weight-regular);
   font-size: clamp(1.125rem, 1.25rem, 1.5rem);
-  line-height: 1.7;
+  line-height: 150%;
   color: #ffffff;
   text-align: center;
 }
@@ -70,7 +70,7 @@
   font-family: var(--font-primary);
   font-weight: var(--font-weight-regular);
   font-size: clamp(1.125rem, 1.25rem, 1.5rem);
-  line-height: 1.7;
+  line-height: 150%;
   color: #ffffff;
   margin-bottom: 0;
 }
@@ -97,16 +97,12 @@
   transform: translateX(0);
 }
 
-/* Estilos para descripciones - efecto de gradiente */
+/* Estilos para descripciones - solo efecto de escritura */
 .text-char-description {
   display: inline-block;
-  background: linear-gradient(to right, rgb(255, 255, 255) 50%, rgb(37, 37, 37) 50%);
-  background-size: 200% 100%;
-  background-position-x: 100%;
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  will-change: background-position-x;
+  color: #ffffff;
+  opacity: 0;
+  will-change: opacity;
 }
 
 .text-space {
@@ -134,7 +130,7 @@
   font-family: var(--font-primary);
   font-weight: var(--font-weight-regular);
   font-size: clamp(1.125rem, 2.5vw, 1.25rem);
-  line-height: 1.7;
+  line-height: 150%;
   color: #ffffff;
   margin: 0;
   max-width: 600px;
@@ -175,7 +171,7 @@
 .purpose__gallery-title {
   font-family: var(--font-primary);
   font-weight: var(--font-weight-regular);
-  font-size: clamp(2rem, 4rem, 6rem);
+  font-size: clamp(3rem, 6rem, 8rem);
   color: #ffffff;
   position: absolute;
   top: 50%;
@@ -184,6 +180,12 @@
   text-align: center;
   z-index: 5;
   text-transform: uppercase;
+  font-style: italic;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 2rem;
+  line-height: 1.1;
+  letter-spacing: 0.05em;
 }
 
 .purpose__logo-container {
@@ -201,7 +203,7 @@
 }
 
 .purpose__logo-container img {
-  max-width: 285px;
+  height: 48px;
   height: auto;
   opacity: 0.25;
 }
@@ -215,6 +217,22 @@
   font-weight: var(--font-weight-regular);
   font-size: clamp(2rem, 2.5rem, 3rem);
   text-align: center;
+  text-transform: uppercase;
+}
+
+@media (min-width: 769px) {
+  .purpose__logo-title {
+    line-height: 1.1;
+    /* Mantener como máximo 2 líneas en desktop */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    /* Altura mínima para reservar espacio de dos líneas aunque el texto sea corto */
+    min-height: calc(2 * 1.1em);
+  }
 }
 
 .purpose__logo-line {

@@ -35,7 +35,7 @@
   font-size: 1.1rem;
   color: #ffffff;
   max-width: 600px;
-  line-height: 1.6;
+  line-height: 150%;
   margin-top: 1.5rem;
 }
 
@@ -48,6 +48,7 @@
   font-size: 2rem;
   font-weight: 300;
   color: #ffffff;
+  text-transform: uppercase;
 }
 
 .rooms-carousel__carousel {
@@ -127,6 +128,7 @@
   color: #ffffff;
   margin: 0;
   margin-bottom: 32px;
+  text-transform: uppercase;
 }
 
 .rooms-carousel__room-capacity {
@@ -167,7 +169,7 @@
 
 .rooms-carousel__room-description {
   color: #ffffff;
-  line-height: 1.6;
+  line-height: 150%;
   margin-bottom: 40px;
 }
 
@@ -308,6 +310,15 @@
   margin-bottom: 24px;
 }
 
+.rooms-carousel__all-rooms-title {
+  color: #FFF;
+font-size: 40px;
+font-style: normal;
+font-weight: 300;
+line-height: 100%;
+padding-bottom: 56px;
+}
+
 .rooms-carousel__all-rooms-grid-button {
   margin-top: 2rem;
   display: flex;
@@ -373,8 +384,7 @@
 
 /* Estilos para la sección de todas las habitaciones en grid */
 .rooms-carousel__all-rooms {
-  margin-top: 4rem;
-  padding-top: 2rem;
+  margin-top: 56px;
 }
 
 .rooms-carousel__all-rooms-grid {
@@ -405,17 +415,23 @@
 }
 
 .rooms-carousel__room-title-grid {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #ffffff;
+  color: #FFF;
+font-size: 24px;
+font-style: normal;
+font-weight: 300;
+line-height: 100%;
+padding-bottom: 8px;
 }
 
 .rooms-carousel__room-capacity-grid {
-  font-size: 1.1rem;
-  color: #979A83;
-  margin-bottom: 1.5rem;
-  font-weight: 500;
+  color: #FFF;
+padding-bottom: 16px;
+font-family: Avenir;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 100%; /* 14px */
+letter-spacing: 1.4px;
 }
 
 .rooms-carousel__room-details-grid {
@@ -426,24 +442,45 @@
 
 .rooms-carousel__all-icons-grid {
   display: flex;
-  gap: 0.75rem;
+  gap: 8px;
   flex-wrap: wrap;
+  padding-bottom: 24px;
 }
 
 .rooms-carousel__room-icon-grid {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
 }
 
 .rooms-carousel__all-texts-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: #FFF;
+font-family: Avenir;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 120%;
+max-width: 238px;
+}
+
+.rooms-carousel__carousel-button {
+  color: #EFEFEF;
+text-align: center;
+font-family: "BeaufortforLOL";
+font-size: 20px;
+font-style: italic;
+font-weight: 500;
+line-height: 150%; /* 30px */
+letter-spacing: 0.4px;
+text-decoration-line: underline;
+text-decoration-style: solid;
+text-decoration-skip-ink: auto;
+text-decoration-thickness: auto;
+text-underline-offset: auto;
+text-underline-position: from-font;
+display: flex;
+align-items: center;
+gap: 8px;
 }
 
 .rooms-carousel__all-texts-grid span {

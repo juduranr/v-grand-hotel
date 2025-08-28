@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from './ui';
 import Menu from './Menu';
 import headerLogo from '../assets/images/header-logo.svg';
 import './Header.css';
@@ -7,6 +6,8 @@ import './Header.css';
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -14,23 +15,33 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Obtener la altura de la sección hero (aproximadamente 100vh)
+      const currentScrollY = window.scrollY;
       const heroHeight = window.innerHeight;
-      const scrollPosition = window.scrollY;
       
       // Cambiar el estado cuando se pase la sección hero
-      setIsScrolled(scrollPosition > heroHeight * 0.8);
+      setIsScrolled(currentScrollY > heroHeight * 0.8);
+      
+      // Lógica para ocultar/mostrar el header
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down - ocultar header
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up - mostrar header
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll);
     
     // Cleanup
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   return (
     <>
-      <header className={`header ${isScrolled ? 'header--scrolled' : ''} ${isMenuOpen ? 'header--menu-open' : ''}`}>
+      <header className={`header ${isScrolled ? 'header--scrolled' : ''} ${isMenuOpen ? 'header--menu-open' : ''} ${!isVisible ? 'header--hidden' : ''}`}>
         <div className="header__container">
           {/* Left side - Burger menu */}
           <div className="header__left">
@@ -57,14 +68,13 @@ const Header: React.FC = () => {
 
           {/* Right side - Reserve button */}
           <div className={`header__right ${isMenuOpen ? 'header__right--hidden' : ''}`}>
-            <Button variant="default" size="regular">
+            <button className="header__reserve-button">
               Reservar
-            </Button>
+            </button>
           </div>
         </div>
       </header>
-
-      {/* Menu component */}
+      
       <Menu isOpen={isMenuOpen} onClose={toggleMenu} />
     </>
   );

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./RoomsCarousel.css";
-import { Button } from "./ui/button";
 import roomsData from "../data/rooms.json";
 import { DoubleBed, Sofa, Tub, KnifeFork, Sunbath, ArrowRight, Left, Right } from "@icon-park/react";
 // Usamos imágenes desde public/images para rutas estáticas
@@ -53,10 +52,8 @@ const RoomsCarousel: React.FC = () => {
           <div className="rooms-carousel__controls">
             <div className="rooms-carousel__indicators">
               {roomsData.map((_, index) => (
-                <Button
+                <button
                   key={index}
-                  variant="ghost"
-                  size="regular"
                   className={`rooms-carousel__indicator rooms-carousel__indicator--custom ${
                     index === currentIndex ? "active" : ""
                   }`}
@@ -64,12 +61,12 @@ const RoomsCarousel: React.FC = () => {
                   aria-label={`Ir a habitación ${index + 1}`}
                 >
                   {index + 1}
-                </Button>
+                </button>
               ))}
             </div>
-            <Button variant="link" className="rooms-carousel__carousel-button">
-              Ver todas las habitaciones <ArrowRight />
-            </Button>
+            <button className="rooms-carousel__carousel-button">
+              Ver todas las habitaciones <ArrowRight size={24} />
+            </button>
           </div>
           <div className="rooms-carousel__carousel-container">
             <div
@@ -102,7 +99,7 @@ const RoomsCarousel: React.FC = () => {
                       <div className="rooms-carousel__room-details">
                         <div className="rooms-carousel__all-icons">
                           {Array(room.beds)
-                            .fill(<DoubleBed fill="#ffffff" strokeWidth={2} />)
+                            .fill(<DoubleBed fill="#ffffff" strokeWidth={2} size={32} />)
                             .map((icon, i) => (
                               <span
                                 key={`beds-${i}`}
@@ -112,7 +109,7 @@ const RoomsCarousel: React.FC = () => {
                               </span>
                             ))}
                           {Array(room.bathrooms)
-                            .fill(<Tub fill="#ffffff" strokeWidth={2} />)
+                            .fill(<Tub fill="#ffffff" strokeWidth={2} size={32} />)
                             .map((icon, i) => (
                               <span
                                 key={`bathrooms-${i}`}
@@ -123,12 +120,12 @@ const RoomsCarousel: React.FC = () => {
                             ))}
                           {room.terrace && (
                             <span className="rooms-carousel__room-icon">
-                              <Sunbath fill="#ffffff" strokeWidth={2} />
+                              <Sunbath fill="#ffffff" strokeWidth={2} size={32} />
                             </span>
                           )}
                           {room.breakfast && (
                             <span className="rooms-carousel__room-icon">
-                              <KnifeFork fill="#ffffff" strokeWidth={2} />
+                              <KnifeFork fill="#ffffff" strokeWidth={2} size={32} />
                             </span>
                           )}
                         </div>
@@ -156,24 +153,20 @@ const RoomsCarousel: React.FC = () => {
                         className="rooms-carousel__room-image"
                       />
                       <div className="rooms-carousel__navigation">
-                        <Button
-                          variant="outline"
-                          size="icon"
+                        <button
                           className="rooms-carousel__nav-button rooms-carousel__nav-button--prev rooms-carousel__nav-button--custom"
                           onClick={prevSlide}
                           aria-label="Anterior habitación"
                         >
-                          <Left />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="icon"
+                          <Left size={32} />
+                        </button>
+                        <button
                           className="rooms-carousel__nav-button rooms-carousel__nav-button--next rooms-carousel__nav-button--custom"
                           onClick={nextSlide}
                           aria-label="Siguiente habitación"
                         >
-                          <Right />
-                        </Button>
+                          <Right size={32} />
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -183,21 +176,14 @@ const RoomsCarousel: React.FC = () => {
           </div>
         </div>
         <div className="rooms-carousel__all-rooms">
+          <h2 className="rooms-carousel__all-rooms-title">Distribución de las habitaciones:</h2>
           <div className="rooms-carousel__all-rooms-grid">
             {roomsData.map((room, index) => (
               <div key={index} className="rooms-carousel__room-card-grid">
                 <div className="rooms-carousel__room-content-grid">
-                  <h3 className="rooms-carousel__room-title-grid">
-                    {room.title}
-                  </h3>
-                  <p className="rooms-carousel__room-capacity-grid">
-                    {room.capacity} PAX
-                  </p>
-
-                  <div className="rooms-carousel__room-details-grid">
-                    <div className="rooms-carousel__all-icons-grid">
+                <div className="rooms-carousel__all-icons-grid">
                       {Array(room.beds)
-                        .fill(<DoubleBed fill="#ffffff" strokeWidth={2} />)
+                        .fill(<DoubleBed fill="#ffffff" strokeWidth={2} size={32} />)
                         .map((icon, i) => (
                           <span
                             key={`beds-grid-${i}`}
@@ -207,7 +193,7 @@ const RoomsCarousel: React.FC = () => {
                           </span>
                         ))}
                       {Array(room.bathrooms)
-                        .fill(<Tub fill="#ffffff" strokeWidth={2} />)
+                        .fill(<Tub fill="#ffffff" strokeWidth={2} size={32} />)
                         .map((icon, i) => (
                           <span
                             key={`bathrooms-grid-${i}`}
@@ -218,15 +204,21 @@ const RoomsCarousel: React.FC = () => {
                         ))}
                       {room.terrace && (
                         <span className="rooms-carousel__room-icon-grid">
-                          <Sunbath fill="#ffffff" strokeWidth={2} />
+                          <Sunbath fill="#ffffff" strokeWidth={2} size={32} />
                         </span>
                       )}
                       {room.breakfast && (
                         <span className="rooms-carousel__room-icon-grid">
-                          <KnifeFork fill="#ffffff" strokeWidth={2} />
+                          <KnifeFork fill="#ffffff" strokeWidth={2} size={32} />
                         </span>
                       )}
                     </div>
+                  <h3 className="rooms-carousel__room-title-grid">
+                    {room.title}
+                  </h3>
+                  <p className="rooms-carousel__room-capacity-grid">
+                    {room.capacity} PAX
+                  </p>
                     <div className="rooms-carousel__all-texts-grid">
                       <span>
                         {room.capacity} persona{room.capacity > 1 ? "s" : ""}
@@ -241,6 +233,9 @@ const RoomsCarousel: React.FC = () => {
                       {room.terrace && <span>terraza</span>}
                       {room.breakfast && <span>desayuno incluido</span>}
                     </div>
+
+                  <div className="rooms-carousel__room-details-grid">
+                    
                   </div>
                 </div>
               </div>
@@ -249,9 +244,9 @@ const RoomsCarousel: React.FC = () => {
         </div>
         <div className="rooms-carousel__all-rooms-grid-button">
           <p>Para más información de tarifas y disponibilidad, visita nuestra</p>
-          <Button variant="link" className="rooms-carousel__carousel-button">
-            Página de reservas <ArrowRight />
-          </Button>
+          <button className="rooms-carousel__carousel-button">
+            Página de reservas <ArrowRight size={24} />
+          </button>
         </div>
       </div>
     </section>

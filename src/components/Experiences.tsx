@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import './Experiences.css'
-import { Button } from './ui/button';
-import { ArrowRight, Down } from "@icon-park/react";
+import { ArrowRight } from "@icon-park/react";
 
 interface ExperienceItem {
     id: number;
@@ -9,36 +8,45 @@ interface ExperienceItem {
     description: string;
     image: string;
     hoverImage: string;
+    activities: string[];
 }
 
 const experiencesData: ExperienceItem[] = [
     {
         id: 1,
-        title: "Arte y Cultura",
-        description: "Explora las galerías de arte contemporáneo, museos históricos y espacios culturales que hacen de Medellín un centro artístico vibrante.",
+        title: "Conecta con la esencia de Medellín",
+        description: "Te invitamos a descubrir la ciudad a través de nuestras experiencias locales: catas de café, visitas guiadas a espacios culturales y encuentros con artistas y emprendedores. Porque creemos que el turismo también puede ser transformación personal.",
         image: "/images/purpose-gallery-1.webp",
-        hoverImage: "/images/purpose-gallery-2.webp"
+        hoverImage: "/images/purpose-gallery-2.webp",
+        activities: [
+            "Tour de la comuna 13",
+            "Pasadía por el centro de Medellín",
+            "Evento deportivo Estadio Atanasio Girardot"
+        ]
     },
     {
         id: 2,
-        title: "Gastronomía Local",
-        description: "Descubre los sabores auténticos de Medellín a través de restaurantes tradicionales, mercados locales y experiencias culinarias únicas.",
+        title: "Eventos con propósito",
+        description: "Descubre el placer de las pequeñas cosas. Te invitamos a vivir momentos inolvidables con nuestras experiencias personalizadas.",
         image: "/images/purpose-gallery-2.webp",
-        hoverImage: "/images/purpose-gallery-3.webp"
+        hoverImage: "/images/purpose-gallery-3.webp",
+        activities: [
+            "Cata de café local",
+            "Visita a espacios culturales",
+            "Encuentro con artistas"
+        ]
     },
     {
         id: 3,
-        title: "Naturaleza y Aventura",
-        description: "Conecta con la naturaleza en los parques urbanos, senderos de montaña y actividades al aire libre que rodean la ciudad.",
+        title: "Un espacio vivo, abierto a la ciudad",
+        description: "Descubre el placer de las pequeñas cosas. Te invitamos a vivir momentos inolvidables con nuestras experiencias personalizadas.",
         image: "/images/purpose-gallery-3.webp",
-        hoverImage: "/images/infinity-gallery-1.webp"
-    },
-    {
-        id: 4,
-        title: "Innovación y Tecnología",
-        description: "Sumérgete en el ecosistema de innovación de Medellín, visitando centros tecnológicos y espacios de coworking.",
-        image: "/images/infinity-gallery-1.webp",
-        hoverImage: "/images/infinity-gallery-2.webp"
+        hoverImage: "/images/infinity-gallery-1.webp",
+        activities: [
+            "Exploración gastronómica",
+            "Rutas de innovación",
+            "Experiencias en la naturaleza"
+        ]
     }
 ];
 
@@ -67,9 +75,9 @@ const Experiences = () => {
                 <p className='experiences-description'>
                     Desde V Grand Hotel podrás explorar lo mejor de la ciudad: arte, moda, gastronomía, innovación y naturaleza. Además, somos parte activa de los eventos más importantes. No solo te recibimos, te conectamos con lo que hace única a esta ciudad vibrante.
                 </p>
-                <Button className="experiences-button">
+                <button className="experiences-button">
                     Ver todas las experiencias
-                </Button>
+                </button>
                 
                 <div className='experiences-accordion-grid'>
                     {/* Grid de imágenes - Solo muestra la imagen del acordeón activo */}
@@ -99,16 +107,17 @@ const Experiences = () => {
                                         <h3 className='accordion-title'>{item.title}</h3>
                                         <div className='accordion-content'>
                                             <p className='accordion-description'>{item.description}</p>
-                                            <Button variant="link" className="accordion-button">
-                                                Explorar experiencia
-                                                <ArrowRight size={16} />
-                                            </Button>
+                                            <div className="activities-buttons">
+                                                {item.activities.map((activity, activityIndex) => (
+                                                    <button key={activityIndex} className="activity-button">
+                                                        <span className="activity-text">{activity}</span>
+                                                        <ArrowRight size={16} />
+                                                    </button>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
-                                    <Down 
-                                        className={`accordion-icon ${activeAccordion === item.id ? 'rotated' : ''}`}
-                                        size={20}
-                                    />
+
                                 </div>
                             </div>
                         ))}

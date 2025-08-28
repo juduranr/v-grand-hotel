@@ -9,6 +9,12 @@
   border-bottom: none;
   padding: 16px 0;
   transition: all 0.3s ease;
+  transform: translateY(0);
+}
+
+/* Header oculto cuando se baja el scroll */
+.header--hidden {
+  transform: translateY(-100%);
 }
 
 /* Header cuando está scrolleado (después de hero) */
@@ -129,13 +135,25 @@
 }
 
 .header__logo {
-  height: 40px;
+  height: 32px;
   width: auto;
   transition: transform 0.2s ease;
 }
 
-.header__logo:hover {
-  transform: scale(1.05);
+.header__reserve-button {
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.8px;
+  font-family: BeaufortforLOL;
+  color: white; /* Texto blanco por defecto cuando el header es transparente */
+  transition: color 0.3s ease;
+}
+
+/* Cuando el header tiene fondo blanco (scrolled), el botón mantiene su color original */
+.header--scrolled .header__reserve-button {
+  color: #1f2937; /* Color oscuro cuando hay fondo blanco */
 }
 
 /* Right side - Reserve button */

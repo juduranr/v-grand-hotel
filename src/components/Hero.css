@@ -81,8 +81,8 @@
 .hero__description-text{
   color: #fff;
   font-family: 'Avenir', sans-serif;
-  font-weight: 400; /* Regular weight */
-  line-height: 1.6;
+  font-weight: 300; /* Regular weight */
+  line-height: 150%;
   letter-spacing: 0.02em;
 }
 

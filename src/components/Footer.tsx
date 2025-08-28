@@ -1,10 +1,6 @@
 import React from 'react';
-import { Button } from './ui';
-import {
-  ArrowRight
-} from '@icon-park/react';
-import './Footer.css';
-import VLogo from '../assets/images/v-logo-complete.svg'
+import { ArrowRight } from "@icon-park/react";
+import footerLogo from '../assets/images/v-logo-complete.svg';
 import fbIcon from '../assets/images/fb.svg';
 import igIcon from '../assets/images/ig.svg';
 import xIcon from '../assets/images/x.svg';
@@ -13,6 +9,7 @@ import logo1 from '../assets/images/logo-1.svg';
 import logo2 from '../assets/images/logo-2.svg';
 import logo3 from '../assets/images/logo-3.svg';
 import logo4 from '../assets/images/logo-4.svg';
+import './Footer.css';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -23,7 +20,7 @@ const Footer: React.FC = () => {
         <div className="footer__main">
           <div className="footer__column footer__logo-column">
             <img 
-              src={VLogo.src} 
+              src={footerLogo.src} 
               alt="V Grand Hotel" 
               className="footer__logo"
             />
@@ -79,14 +76,13 @@ const Footer: React.FC = () => {
             <h3 className="footer__title">Dirección</h3>
             <div className="footer__address">
               <p className="footer__address-text">123 Luxury Avenue, Downtown District, City, State 12345</p>
-              <Button 
-                variant="link" 
-                size="regular"
+              <button 
+                className="footer__directions-button"
                 onClick={() => window.open('https://maps.google.com/?q=123+Luxury+Avenue+Downtown+District+City+State+12345', '_blank')}
               >
                 Cómo llegar
-                <ArrowRight theme="outline" size="18" className="footer__contact-icon" />
-              </Button>
+                <ArrowRight theme="outline" size={18} className="footer__contact-icon" />
+              </button>
             </div>
           </div>
 

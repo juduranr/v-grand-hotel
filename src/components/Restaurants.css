@@ -12,6 +12,8 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
+  /* Asegurar que el scroll snapping funcione correctamente */
+  scroll-snap-stop: always;
 }
 
 /* Ocultar scrollbar en WebKit browsers */
@@ -30,12 +32,42 @@
   scroll-snap-stop: always;
   min-height: 100vh;
   box-sizing: border-box;
+  /* Asegurar que cada sección ocupe exactamente el viewport */
+  flex-shrink: 0;
 }
 
+/* Estilos específicos para los paneles */
+.panel {
+  scroll-snap-align: start;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* Asegurar que el scroll snapping funcione */
+  flex-shrink: 0;
+}
 
+/* Panel púrpura - segunda sección */
+.panel.purple {
+  background: linear-gradient(135deg, #f8f9ff 0%, #e8eaff 100%);
+}
 
+/* Panel yoyo - tercera sección */
+.panel.yoyo {
+  background: linear-gradient(135deg, #fff8f0 0%, #fff0e8 100%);
+}
 
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
 
+/* Mejorar la transición entre secciones */
+.restaurants-section {
+  transition: transform 0.3s ease-out;
+}
+
+/* Asegurar que el contenido se mantenga centrado */
 .restaurants-content {
   height: 100vh;
   display: flex;
@@ -47,6 +79,8 @@
   padding: 0 140px;
   /* Mejorar la experiencia de scroll snap */
   scroll-snap-align: start;
+  /* Asegurar que el contenido no se desborde */
+  overflow: hidden;
 }
 
 .restaurants-title-container {
@@ -117,7 +151,7 @@ font-family: Avenir;
 font-size: 20px;
 font-style: normal;
 font-weight: 350;
-line-height: 130%;
+line-height: 150%;
   position: relative;
   z-index: 10;
   will-change: transform, opacity;

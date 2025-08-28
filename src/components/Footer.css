@@ -40,7 +40,7 @@
 
 .footer__title {
   font-family: var(--font-primary);
-  font-weight: 500;
+  font-weight: 400;
   font-size: 20px;
   position: relative;
   color: #333;
@@ -121,10 +121,11 @@
 /* Social media section */
 .footer__social-title {
   font-family: var(--font-primary);
-  font-weight: var(--font-weight-medium);
+  font-weight: 400;
   font-size: 1.1rem;
   margin-bottom: 1rem;
   color: #333;
+  text-transform: uppercase;
 }
 
 .footer__social-links {

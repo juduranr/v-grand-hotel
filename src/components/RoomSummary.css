@@ -24,7 +24,7 @@
 .summary-description {
 	color: #444;
 	font-size: 1.1rem;
-	line-height: 1.6;
+	line-height: 150%;
 }
 
 .services {
@@ -37,6 +37,7 @@
 .services-title {
 	font-weight: 600;
 	color: #111827;
+	text-transform: uppercase;
 }
 
 .services-icons {
