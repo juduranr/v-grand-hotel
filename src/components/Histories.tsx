@@ -13,16 +13,31 @@ const historiesImages = [
 const Histories = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
+    const [animTargetIndex, setAnimTargetIndex] = useState<number | null>(null);
+    const [direction, setDirection] = useState<1 | -1>(1);
+
+    const normalizeIndex = (idx: number) => (idx + historiesImages.length) % historiesImages.length;
+
+    const chooseDirection = (from: number, to: number): 1 | -1 => {
+        const n = historiesImages.length;
+        const forward = (to - from + n) % n;
+        const backward = (from - to + n) % n;
+        return forward <= backward ? 1 : -1;
+    };
 
     const updateCarousel = (newIndex: number) => {
         if (isAnimating) return;
+        const target = normalizeIndex(newIndex);
+        const dir = chooseDirection(currentIndex, target);
+        setDirection(dir);
+        setAnimTargetIndex(target);
         setIsAnimating(true);
 
-        const index = (newIndex + historiesImages.length) % historiesImages.length;
-        setCurrentIndex(index);
-
-        setTimeout(() => {
+        // Completar animación y fijar el nuevo índice
+        window.setTimeout(() => {
+            setCurrentIndex(target);
             setIsAnimating(false);
+            setAnimTargetIndex(null);
         }, 500);
     };
 
@@ -56,57 +71,73 @@ const Histories = () => {
                     </div>
                 </div>
                 <div className="histories-carousel">
-                    <button className="histories-arrow histories-left" onClick={() => updateCarousel(currentIndex - 1)}>‹</button>
+                    <button className="histories-arrow histories-left" onClick={() => updateCarousel(currentIndex - 1)} aria-label="Anterior">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="81" height="80" viewBox="0 0 81 80" fill="none">
+                            <path d="M40.5026 73.3337C22.0933 73.3337 7.16927 58.4097 7.16927 40.0003C7.16927 21.5908 22.0933 6.66699 40.5026 6.66699C58.9121 6.66699 73.8359 21.5908 73.8359 40.0003C73.8359 58.4097 58.9121 73.3337 40.5026 73.3337Z" stroke="white" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M44.6992 51.7657L32.9659 39.999L44.6992 28.2324" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                    </button>
                     <div className="histories-track">
-                        {historiesImages.map((image, i) => {
-                            let relativeIndex = i - currentIndex;
-                            
-                            // Ajustar para el loop infinito de manera más suave
-                            if (relativeIndex > 2) {
-                                relativeIndex -= historiesImages.length;
-                            } else if (relativeIndex < -2) {
-                                relativeIndex += historiesImages.length;
-                            }
-                            
-                            const isVisible = Math.abs(relativeIndex) <= 2;
-                            
-                            let position;
-                            let scale;
-                            
-                            if (relativeIndex === 0) {
-                                position = 0; // Elemento activo
-                                scale = 1.0; // Escala del elemento activo
-                            } else if (relativeIndex === 1 || relativeIndex === -1) {
-                                position = relativeIndex * 432; // Elementos adyacentes
-                                scale = 0.9; // Escala de elementos adyacentes
-                            } else if (relativeIndex === 2 || relativeIndex === -2) {
-                                position = relativeIndex * 410; // Elementos siguientes (570/2 = 285)
-                                scale = 0.8; // Escala de elementos siguientes
-                            } else {
-                                // Para elementos fuera del rango visible, mantenerlos ocultos sin animación
-                                position = relativeIndex * 300;
-                                scale = 0.8;
-                            }
-                            
+                        {[-2, -1, 0, 1, 2].map((slotOffset) => {
+                            const currentImgIndex = normalizeIndex(currentIndex + slotOffset);
+                            const idleNextIndex = normalizeIndex(currentIndex + (direction === 1 ? 1 : -1) + slotOffset);
+                            const targetIndex = animTargetIndex ?? currentIndex;
+                            const nextImgIndex = isAnimating ? normalizeIndex(targetIndex + slotOffset) : idleNextIndex;
+
+                            const isCenter = slotOffset === 0;
+                            const isNear = Math.abs(slotOffset) === 1;
+                            const position = slotOffset === 0
+                                ? 0
+                                : (Math.abs(slotOffset) === 1 ? slotOffset * 432 : slotOffset * 410);
+                            const scale = isCenter ? 1.0 : isNear ? 0.9 : 0.8;
+
+                            const panesOrder = direction === 1
+                                ? [
+                                    <div className="histories-card-pane" key="current"><img src={historiesImages[currentImgIndex]} alt={"Historia actual"} /></div>,
+                                    <div className="histories-card-pane" key="next"><img src={historiesImages[nextImgIndex]} alt={"Historia siguiente"} /></div>
+                                  ]
+                                : [
+                                    <div className="histories-card-pane" key="next"><img src={historiesImages[nextImgIndex]} alt={"Historia siguiente"} /></div>,
+                                    <div className="histories-card-pane" key="current"><img src={historiesImages[currentImgIndex]} alt={"Historia actual"} /></div>
+                                  ];
+
+                            const baseTransform = direction === -1 ? 'translateX(-50%)' : 'translateX(0%)';
+                            const targetTransform = direction === -1 ? 'translateX(0%)' : 'translateX(-50%)';
+                            const styleTransform = isAnimating ? targetTransform : baseTransform;
+                            const innerClass = `histories-card-inner${isAnimating ? '' : ' no-transition'}`;
+
+                            const handleClick = () => {
+                                if (slotOffset > 0) updateCarousel(currentIndex + 1);
+                                else if (slotOffset < 0) updateCarousel(currentIndex - 1);
+                            };
+
                             return (
-                                <div 
-                                    key={i} 
+                                <div
+                                    key={slotOffset}
                                     className="histories-card"
-                                    style={{ 
+                                    style={{
                                         transform: `translateX(${position}px) scale(${scale})`,
-                                        opacity: isVisible ? (i === currentIndex ? 1 : 0.8) : 0,
-                                        zIndex: i === currentIndex ? 10 : Math.max(1, 10 - Math.abs(relativeIndex)),
-                                        visibility: isVisible ? 'visible' : 'hidden',
-                                        transition: isVisible ? 'all 0.5s ease-in-out' : 'none'
+                                        opacity: isCenter ? 1 : 0.9,
+                                        zIndex: isCenter ? 10 : Math.max(1, 10 - Math.abs(slotOffset))
                                     }}
-                                    onClick={() => updateCarousel(i)}
                                 >
-                                    <img src={image} alt={`Historia ${i + 1}`} />
+                                    <div
+                                        className={innerClass}
+                                        style={{ transform: styleTransform }}
+                                        onClick={handleClick}
+                                    >
+                                        {panesOrder}
+                                    </div>
                                 </div>
                             );
                         })}
                     </div>
-                    <button className="histories-arrow histories-right" onClick={() => updateCarousel(currentIndex + 1)}>›</button>
+                    <button className="histories-arrow histories-right" onClick={() => updateCarousel(currentIndex + 1)} aria-label="Siguiente">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="81" height="80" viewBox="0 0 81 80" fill="none" style={{ transform: 'scaleX(-1)' }}>
+                            <path d="M40.5026 73.3337C22.0933 73.3337 7.16927 58.4097 7.16927 40.0003C7.16927 21.5908 22.0933 6.66699 40.5026 6.66699C58.9121 6.66699 73.8359 21.5908 73.8359 40.0003C73.8359 58.4097 58.9121 73.3337 40.5026 73.3337Z" stroke="white" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M44.6992 51.7657L32.9659 39.999L44.6992 28.2324" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                    </button>
                 </div>
 
                 {/* Indicadores de barras */}

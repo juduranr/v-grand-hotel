@@ -10,7 +10,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 90px 140px 0px 140px;
+    width: 90vw;
+    margin: 0 auto;
 }
 
 .histories-subtitle {
@@ -28,10 +29,11 @@
     justify-content: center;
     gap: 1rem;
     margin-bottom: 2rem;
+    width: 100%;
 }
 
 .histories-title-container hr {
-    width: 60px;
+    width: 100%;
     height: 1px;
     background-color: #ccc;
     border: none;
@@ -51,6 +53,7 @@
     text-align: center;
     color: #fff;
     text-transform: uppercase;
+    min-width: 500px;
 }
 
 .histories-carousel {
@@ -88,6 +91,40 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* Contenedor interno deslizante que empuja la imagen actual */
+.histories-card-inner {
+    position: relative;
+    width: 200%;
+    height: 100%;
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.histories-card-inner.no-transition {
+    transition: none !important;
+}
+
+.histories-card-pane {
+    width: 50%;
+    height: 100%;
+}
+
+.histories-card-pane img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Animaciones: izquierda/derecha empujando */
+.histories-card-inner.slide-left {
+    transform: translateX(-50%);
+}
+
+.histories-card-inner.slide-right {
+    transform: translateX(0%);
 }
 
 .histories-card:not([style*="zIndex: 10"]) {
@@ -130,20 +167,26 @@
     transform: translateY(-50%);
     background: transparent;
     color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid white;
-    font-size: 1.5rem;
+    width: 81px;
+    height: 80px;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    outline: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 20;
 }
 
-.histories-arrow:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.8);
-}
+.histories-arrow:focus { outline: none; }
+.histories-arrow:hover { opacity: 0.9; }
+
+.histories-arrow svg { width: 81px; height: 80px; display: block; }
 
 .histories-left {
     left: calc(50% - 432px);

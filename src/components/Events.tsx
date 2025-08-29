@@ -13,31 +13,49 @@ const eventsImages = [
 
 const Events = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false);
+    const [animTargetIndex, setAnimTargetIndex] = useState<number | null>(null);
+    const [direction, setDirection] = useState<1 | -1>(1);
+
+    const normalizeIndex = (idx: number) => (idx + eventsImages.length) % eventsImages.length;
+    const chooseDirection = (from: number, to: number): 1 | -1 => {
+        const n = eventsImages.length;
+        const forward = (to - from + n) % n;
+        const backward = (from - to + n) % n;
+        return forward <= backward ? 1 : -1;
+    };
+
+    const updateCarousel = (newIndex: number) => {
+        if (isAnimating) return;
+        const target = normalizeIndex(newIndex);
+        const dir = chooseDirection(currentImageIndex, target);
+        setDirection(dir);
+        setAnimTargetIndex(target);
+        setIsAnimating(true);
+        window.setTimeout(() => {
+            setCurrentImageIndex(target);
+            setIsAnimating(false);
+            setAnimTargetIndex(null);
+        }, 500);
+    };
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setCurrentImageIndex((prevIndex) =>
-                prevIndex === eventsImages.length - 1 ? 0 : prevIndex + 1
-            );
+            updateCarousel(currentImageIndex + 1);
         }, 4000);
-
         return () => clearInterval(interval);
-    }, []);
+    }, [currentImageIndex]);
 
     const goToImage = (index: number) => {
-        setCurrentImageIndex(index);
+        updateCarousel(index);
     };
 
     const nextImage = () => {
-        setCurrentImageIndex((prevIndex) =>
-            prevIndex === eventsImages.length - 1 ? 0 : prevIndex + 1
-        );
+        updateCarousel(currentImageIndex + 1);
     };
 
     const prevImage = () => {
-        setCurrentImageIndex((prevIndex) =>
-            prevIndex === 0 ? eventsImages.length - 1 : prevIndex - 1
-        );
+        updateCarousel(currentImageIndex - 1);
     };
 
     const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -83,21 +101,31 @@ const Events = () => {
                 <div className='events-carousel'>
                     <div className='events-carousel__container'>
                         <div className='events-carousel__track'>
-                            {eventsImages.map((image, index) => (
-                                <div
-                                    key={index}
-                                    className={`events-carousel__item ${
-                                        index === currentImageIndex ? 'active' : ''
-                                    }`}
-                                    style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
-                                >
-                                    <img
-                                        src={image}
-                                        alt={`Evento ${index + 1}`}
-                                        className='events-carousel__image'
-                                    />
-                                </div>
-                            ))}
+                            <div className='events-carousel__stage'>
+                                {(() => {
+                                    const currentSrc = eventsImages[currentImageIndex];
+                                    const target = animTargetIndex ?? currentImageIndex;
+                                    const nextSrc = eventsImages[normalizeIndex(target)];
+                                    const baseTransform = direction === -1 ? 'translateX(-50%)' : 'translateX(0%)';
+                                    const targetTransform = direction === -1 ? 'translateX(0%)' : 'translateX(-50%)';
+                                    const styleTransform = isAnimating ? targetTransform : baseTransform;
+                                    const innerClass = `events-card-inner${isAnimating ? '' : ' no-transition'}`;
+                                    const panes = direction === 1
+                                        ? [
+                                            <div className='events-card-pane' key='current'><img src={currentSrc} alt={'Evento actual'} className='events-carousel__image' /></div>,
+                                            <div className='events-card-pane' key='next'><img src={nextSrc} alt={'Siguiente evento'} className='events-carousel__image' /></div>
+                                          ]
+                                        : [
+                                            <div className='events-card-pane' key='next'><img src={nextSrc} alt={'Siguiente evento'} className='events-carousel__image' /></div>,
+                                            <div className='events-card-pane' key='current'><img src={currentSrc} alt={'Evento actual'} className='events-carousel__image' /></div>
+                                          ];
+                                    return (
+                                        <div className={innerClass} style={{ transform: styleTransform }}>
+                                            {panes}
+                                        </div>
+                                    );
+                                })()}
+                            </div>
                         </div>
                         
                         {/* Áreas clickeables para navegación */}

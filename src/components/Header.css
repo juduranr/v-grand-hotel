@@ -63,9 +63,8 @@
 }
 
 .header__container {
-  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 40px;
+  width: 90vw;
   display: flex;
   align-items: center;
   justify-content: space-between;

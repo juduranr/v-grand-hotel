@@ -4,13 +4,28 @@ import './PromosSheet.css';
 
 const PromosSheet: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isButtonHidden, setIsButtonHidden] = useState(false);
+  const BUTTON_ANIMATION_MS = 600;
 
   const handleToggle = () => {
-    setIsOpen(!isOpen);
+    if (!isOpen) {
+      // Abrir: ocultar botón hacia la derecha y luego abrir sheet
+      setIsButtonHidden(true);
+      window.setTimeout(() => {
+        setIsOpen(true);
+      }, BUTTON_ANIMATION_MS);
+      return;
+    }
+    // Cerrar: reutilizar handleClose
+    handleClose();
   };
 
   const handleClose = () => {
+    // Cerrar sheet y luego mostrar el botón tras la animación del sheet
     setIsOpen(false);
+    window.setTimeout(() => {
+      setIsButtonHidden(false);
+    }, BUTTON_ANIMATION_MS);
   };
 
   useEffect(() => {
@@ -41,9 +56,10 @@ const PromosSheet: React.FC = () => {
     <>
       {/* Botón flotante integrado */}
       <button
-        className={`floating-button ${isOpen ? 'floating-button--open' : ''}`}
+        className={`floating-button ${isOpen ? 'floating-button--open' : ''} ${isButtonHidden ? 'floating-button--hidden' : ''}`}
         onClick={handleToggle}
         aria-label={isOpen ? 'Cerrar promociones' : 'Abrir promociones'}
+        disabled={false}
       >
         <span className="floating-button__text">PROMOS</span>
       </button>

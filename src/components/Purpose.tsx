@@ -8,6 +8,7 @@ import purposeGallery2 from "../assets/images/purpose-gallery-2.webp";
 import purposeGallery3 from "../assets/images/purpose-gallery-3.webp";
 import LogosCarousel from "./LogosCarousel";
 import "./Purpose.css";
+import { defaultPurposeConfig } from "./Purpose.config";
 
 // Registrar el plugin ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -195,8 +196,23 @@ const Purpose: React.FC = () => {
           const distanceFromCenter = windowHeight / 2 - imgCenterY;
           
           // Calcular la velocidad de parallax (diferente para cada imagen)
-          const parallaxSpeed = 0.3 + (index * 0.1);
-          const translateY = distanceFromCenter * parallaxSpeed;
+          const parallaxSpeed = defaultPurposeConfig.parallax.baseSpeed + (index * defaultPurposeConfig.parallax.speedMultiplier);
+          let translateY = distanceFromCenter * parallaxSpeed;
+          
+          // Aplicar límites escalonados específicos para cada imagen
+          const imageLimits = [
+            defaultPurposeConfig.parallax.limits.image1,
+            defaultPurposeConfig.parallax.limits.image2,
+            defaultPurposeConfig.parallax.limits.image3,
+            defaultPurposeConfig.parallax.limits.image4
+          ];
+          
+          if (imageLimits[index]) {
+            translateY = Math.max(
+              imageLimits[index].upper, 
+              Math.min(imageLimits[index].lower, translateY)
+            );
+          }
           
           imgRef.style.transform = `translateY(${translateY}px)`;
         }
