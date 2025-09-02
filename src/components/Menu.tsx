@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './Menu.css';
+import { DISCOVER_IMAGES, PURPOSE_IMAGES } from "../config/env";
 
-// Importar las imágenes
-import infinityGallery1 from '../assets/images/infinity-gallery-1.webp';
-import infinityGallery2 from '../assets/images/infinity-gallery-2.webp';
-import infinityGallery3 from '../assets/images/infinity-gallery-3.webp';
-import purposeGallery1 from '../assets/images/purpose-gallery-1.webp';
-import purposeGallery2 from '../assets/images/purpose-gallery-2.webp';
-
-// Tipo para las imágenes
-type ImageType = typeof infinityGallery1;
+// Tipo para las URLs de imágenes
+type ImageType = string;
 
 interface MenuProps {
   isOpen: boolean;
@@ -20,7 +14,7 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
   const [showContent, setShowContent] = useState(false);
-  const [currentBackground, setCurrentBackground] = useState<ImageType>(infinityGallery1);
+  const [currentBackground, setCurrentBackground] = useState<ImageType>(DISCOVER_IMAGES.GALLERY_1);
 
   useEffect(() => {
     if (isOpen) {
@@ -51,17 +45,17 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose }) => {
   };
 
   const handleMenuLeave = () => {
-    setCurrentBackground(infinityGallery1);
+    setCurrentBackground(DISCOVER_IMAGES.GALLERY_1);
   };
 
   if (!shouldRender) return null;
 
   const menuItems = [
-    { id: 'rooms', label: 'Rooms', href: '/rooms', background: infinityGallery1 },
-    { id: 'gastro', label: 'Gastronomía', href: '/gastro', background: purposeGallery1 },
-    { id: 'behind-us', label: 'Behind us', href: '/behind-us', background: infinityGallery2 },
-    { id: 'services-experiences', label: 'Services/Experiences', href: '/services-experiences', background: purposeGallery2 },
-    { id: 'events', label: 'Special Events', href: '/events', background: infinityGallery3 },
+    { id: 'rooms', label: 'Habitaciones', href: '/rooms', background: DISCOVER_IMAGES.GALLERY_1 },
+    { id: 'gastro', label: 'Gastronomía', href: '/gastro', background: PURPOSE_IMAGES.GALLERY_1 },
+    { id: 'behind-us', label: 'Nuestra historia', href: '/behind-us', background: DISCOVER_IMAGES.GALLERY_2 },
+    { id: 'services-experiences', label: 'Experiencias', href: '/experiences', background: PURPOSE_IMAGES.GALLERY_2 },
+    { id: 'events', label: 'Eventos', href: '/events', background: DISCOVER_IMAGES.GALLERY_3 },
   ];
 
   return (
@@ -69,7 +63,7 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose }) => {
       className={`menu-overlay ${isVisible ? 'open' : ''}`} 
       onClick={handleBackdropClick}
       style={{
-        background: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${currentBackground.src})`
+        background: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${currentBackground})`
       }}
     >
       <div 
@@ -77,9 +71,9 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <nav className="menu__nav">
-          <ul className="menu__list">
+          <div className="menu__list">
             {menuItems.map((item) => (
-              <li key={item.id} className="menu__item">
+              <div key={item.id} className="menu__item">
                 <a 
                   href={item.href} 
                   className="menu__link"
@@ -89,9 +83,9 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose }) => {
                 >
                   {item.label}
                 </a>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         </nav>
       </div>
     </div>

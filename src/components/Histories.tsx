@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import './Histories.css'
+import { PURPOSE_IMAGES } from "../config/env";
 
 const historiesImages = [
-    "/images/purpose-gallery-1.webp",
-    "/images/purpose-gallery-2.webp",
-    "/images/purpose-gallery-3.webp",
-    "/images/infinity-gallery-1.webp",
-    "/images/infinity-gallery-2.webp",
-    "/images/infinity-gallery-3.webp"
+    PURPOSE_IMAGES.GALLERY_1,
+    PURPOSE_IMAGES.GALLERY_2,
+    PURPOSE_IMAGES.GALLERY_3,
+    PURPOSE_IMAGES.GALLERY_1,
+    PURPOSE_IMAGES.GALLERY_2,
+    PURPOSE_IMAGES.GALLERY_3
 ];
 
 const Histories = () => {
@@ -15,6 +16,7 @@ const Histories = () => {
     const [isAnimating, setIsAnimating] = useState(false);
     const [animTargetIndex, setAnimTargetIndex] = useState<number | null>(null);
     const [direction, setDirection] = useState<1 | -1>(1);
+    const [animDirection, setAnimDirection] = useState<1 | -1>(1);
 
     const normalizeIndex = (idx: number) => (idx + historiesImages.length) % historiesImages.length;
 
@@ -27,18 +29,41 @@ const Histories = () => {
 
     const updateCarousel = (newIndex: number) => {
         if (isAnimating) return;
+        
         const target = normalizeIndex(newIndex);
         const dir = chooseDirection(currentIndex, target);
-        setDirection(dir);
-        setAnimTargetIndex(target);
-        setIsAnimating(true);
-
-        // Completar animación y fijar el nuevo índice
-        window.setTimeout(() => {
-            setCurrentIndex(target);
+        
+        // Si estamos cambiando de dirección, resetear completamente el estado
+        if (direction !== dir) {
             setIsAnimating(false);
             setAnimTargetIndex(null);
-        }, 500);
+            setDirection(dir);
+            setAnimDirection(dir);
+            
+            // Pequeño delay para asegurar que el estado se resetee
+            setTimeout(() => {
+                setAnimTargetIndex(target);
+                setIsAnimating(true);
+                
+                setTimeout(() => {
+                    setCurrentIndex(target);
+                    setIsAnimating(false);
+                    setAnimTargetIndex(null);
+                }, 500);
+            }, 10);
+        } else {
+            // Navegación en la misma dirección - lógica normal
+            setAnimDirection(dir);
+            setDirection(dir);
+            setAnimTargetIndex(target);
+            setIsAnimating(true);
+
+            setTimeout(() => {
+                setCurrentIndex(target);
+                setIsAnimating(false);
+                setAnimTargetIndex(null);
+            }, 500);
+        }
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -80,9 +105,8 @@ const Histories = () => {
                     <div className="histories-track">
                         {[-2, -1, 0, 1, 2].map((slotOffset) => {
                             const currentImgIndex = normalizeIndex(currentIndex + slotOffset);
-                            const idleNextIndex = normalizeIndex(currentIndex + (direction === 1 ? 1 : -1) + slotOffset);
                             const targetIndex = animTargetIndex ?? currentIndex;
-                            const nextImgIndex = isAnimating ? normalizeIndex(targetIndex + slotOffset) : idleNextIndex;
+                            const nextImgIndex = isAnimating ? normalizeIndex(targetIndex + slotOffset) : normalizeIndex(currentIndex + (animDirection === 1 ? 1 : -1) + slotOffset);
 
                             const isCenter = slotOffset === 0;
                             const isNear = Math.abs(slotOffset) === 1;
@@ -91,18 +115,72 @@ const Histories = () => {
                                 : (Math.abs(slotOffset) === 1 ? slotOffset * 432 : slotOffset * 410);
                             const scale = isCenter ? 1.0 : isNear ? 0.9 : 0.8;
 
-                            const panesOrder = direction === 1
+                            // Determinar el orden de los panes basado en la dirección de animación
+                            const panesOrder = animDirection === 1
                                 ? [
-                                    <div className="histories-card-pane" key="current"><img src={historiesImages[currentImgIndex]} alt={"Historia actual"} /></div>,
-                                    <div className="histories-card-pane" key="next"><img src={historiesImages[nextImgIndex]} alt={"Historia siguiente"} /></div>
+                                    <div className="histories-card-pane" key="current">
+                                        <img 
+                                            src={historiesImages[currentImgIndex]} 
+                                            alt={"Historia actual"}
+                                            onError={(e) => {
+                                                (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                                                (e.target as HTMLImageElement).style.display = 'flex';
+                                                (e.target as HTMLImageElement).style.alignItems = 'center';
+                                                (e.target as HTMLImageElement).style.justifyContent = 'center';
+                                                (e.target as HTMLImageElement).style.color = '#fff';
+                                                (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                                            }}
+                                        />
+                                    </div>,
+                                    <div className="histories-card-pane" key="next">
+                                        <img 
+                                            src={historiesImages[nextImgIndex]} 
+                                            alt={"Historia siguiente"}
+                                            onError={(e) => {
+                                                (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                                                (e.target as HTMLImageElement).style.display = 'flex';
+                                                (e.target as HTMLImageElement).style.alignItems = 'center';
+                                                (e.target as HTMLImageElement).style.justifyContent = 'center';
+                                                (e.target as HTMLImageElement).style.color = '#fff';
+                                                (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                                            }}
+                                        />
+                                    </div>
                                   ]
                                 : [
-                                    <div className="histories-card-pane" key="next"><img src={historiesImages[nextImgIndex]} alt={"Historia siguiente"} /></div>,
-                                    <div className="histories-card-pane" key="current"><img src={historiesImages[currentImgIndex]} alt={"Historia actual"} /></div>
+                                    <div className="histories-card-pane" key="next">
+                                        <img 
+                                            src={historiesImages[nextImgIndex]} 
+                                            alt={"Historia siguiente"}
+                                            onError={(e) => {
+                                                (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                                                (e.target as HTMLImageElement).style.display = 'flex';
+                                                (e.target as HTMLImageElement).style.alignItems = 'center';
+                                                (e.target as HTMLImageElement).style.justifyContent = 'center';
+                                                (e.target as HTMLImageElement).style.color = '#fff';
+                                                (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                                            }}
+                                        />
+                                    </div>,
+                                    <div className="histories-card-pane" key="current">
+                                        <img 
+                                            src={historiesImages[currentImgIndex]} 
+                                            alt={"Historia actual"}
+                                            onError={(e) => {
+                                                (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                                                (e.target as HTMLImageElement).style.display = 'flex';
+                                                (e.target as HTMLImageElement).style.alignItems = 'center';
+                                                (e.target as HTMLImageElement).style.justifyContent = 'center';
+                                                (e.target as HTMLImageElement).style.color = '#fff';
+                                                (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                                            }}
+                                        />
+                                    </div>
                                   ];
 
-                            const baseTransform = direction === -1 ? 'translateX(-50%)' : 'translateX(0%)';
-                            const targetTransform = direction === -1 ? 'translateX(0%)' : 'translateX(-50%)';
+                            // Calcular las transformaciones basadas en la dirección de animación
+                            const baseTransform = animDirection === -1 ? 'translateX(-50%)' : 'translateX(0%)';
+                            const targetTransform = animDirection === -1 ? 'translateX(0%)' : 'translateX(-50%)';
                             const styleTransform = isAnimating ? targetTransform : baseTransform;
                             const innerClass = `histories-card-inner${isAnimating ? '' : ' no-transition'}`;
 

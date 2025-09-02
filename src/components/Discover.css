@@ -65,9 +65,53 @@
   font-family: var(--font-primary);
   font-size: clamp(2rem, 2.5rem, 3rem);
   text-align: center;
+  width: 600px;
+  margin: 0 auto;
 }
 
 .discover__background_title h2{
   font-weight: 400;
   text-transform: uppercase;
+}
+
+/* Animación GSAP gestiona la entrada del título; se elimina la animación CSS previa */
+
+/* Lightbox */
+.discover__lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+}
+
+.discover__lightbox_image {
+  max-width: 95vw;
+  max-height: 85vh;
+  object-fit: contain;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.discover__lightbox_close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease-in-out;
+}
+
+.discover__lightbox_close:hover {
+  background: rgba(255,255,255,0.2);
 }

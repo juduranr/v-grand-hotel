@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import './Events.css'
+import { EVENTS_IMAGES } from "../config/env";
 
 // Datos de imágenes para el carousel
 const eventsImages = [
-    "/images/purpose-gallery-1.webp",
-    "/images/purpose-gallery-2.webp",
-    "/images/purpose-gallery-3.webp",
-    "/images/infinity-gallery-1.webp",
-    "/images/infinity-gallery-2.webp",
-    "/images/infinity-gallery-3.webp"
+    EVENTS_IMAGES.EVENT_1,
+    EVENTS_IMAGES.EVENT_2,
+    EVENTS_IMAGES.EVENT_3
+];
+
+// Títulos para cada imagen
+const eventsTitles = [
+    "Salón grand",
+    "Salón v", 
+    "Terraza"
 ];
 
 const Events = () => {
@@ -112,12 +117,68 @@ const Events = () => {
                                     const innerClass = `events-card-inner${isAnimating ? '' : ' no-transition'}`;
                                     const panes = direction === 1
                                         ? [
-                                            <div className='events-card-pane' key='current'><img src={currentSrc} alt={'Evento actual'} className='events-carousel__image' /></div>,
-                                            <div className='events-card-pane' key='next'><img src={nextSrc} alt={'Siguiente evento'} className='events-carousel__image' /></div>
+                                            <div className='events-card-pane' key='current'>
+                                                <img 
+                                                    src={currentSrc} 
+                                                    alt={'Evento actual'} 
+                                                    className='events-carousel__image'
+                                                    onError={(e) => {
+                                                        (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                                                        (e.target as HTMLImageElement).style.display = 'flex';
+                                                        (e.target as HTMLImageElement).style.alignItems = 'center';
+                                                        (e.target as HTMLImageElement).style.justifyContent = 'center';
+                                                        (e.target as HTMLImageElement).style.color = '#fff';
+                                                        (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                                                    }}
+                                                />
+                                            </div>,
+                                            <div className='events-card-pane' key='next'>
+                                                <img 
+                                                    src={nextSrc} 
+                                                    alt={'Siguiente evento'} 
+                                                    className='events-carousel__image'
+                                                    onError={(e) => {
+                                                        (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                                                        (e.target as HTMLImageElement).style.display = 'flex';
+                                                        (e.target as HTMLImageElement).style.alignItems = 'center';
+                                                        (e.target as HTMLImageElement).style.justifyContent = 'center';
+                                                        (e.target as HTMLImageElement).style.color = '#fff';
+                                                        (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                                                    }}
+                                                />
+                                            </div>
                                           ]
                                         : [
-                                            <div className='events-card-pane' key='next'><img src={nextSrc} alt={'Siguiente evento'} className='events-carousel__image' /></div>,
-                                            <div className='events-card-pane' key='current'><img src={currentSrc} alt={'Evento actual'} className='events-carousel__image' /></div>
+                                            <div className='events-card-pane' key='next'>
+                                                <img 
+                                                    src={nextSrc} 
+                                                    alt={'Siguiente evento'} 
+                                                    className='events-carousel__image'
+                                                    onError={(e) => {
+                                                        (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                                                        (e.target as HTMLImageElement).style.display = 'flex';
+                                                        (e.target as HTMLImageElement).style.alignItems = 'center';
+                                                        (e.target as HTMLImageElement).style.justifyContent = 'center';
+                                                        (e.target as HTMLImageElement).style.color = '#fff';
+                                                        (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                                                    }}
+                                                />
+                                            </div>,
+                                            <div className='events-card-pane' key='current'>
+                                                <img 
+                                                    src={currentSrc} 
+                                                    alt={'Evento actual'} 
+                                                    className='events-carousel__image'
+                                                    onError={(e) => {
+                                                        (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                                                        (e.target as HTMLImageElement).style.display = 'flex';
+                                                        (e.target as HTMLImageElement).style.alignItems = 'center';
+                                                        (e.target as HTMLImageElement).style.justifyContent = 'center';
+                                                        (e.target as HTMLImageElement).style.color = '#fff';
+                                                        (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                                                    }}
+                                                />
+                                            </div>
                                           ];
                                     return (
                                         <div className={innerClass} style={{ transform: styleTransform }}>
@@ -140,6 +201,13 @@ const Events = () => {
                                 onClick={nextImage}
                                 title="Imagen siguiente"
                             ></div>
+                        </div>
+
+                        {/* Overlay con título en esquina inferior izquierda */}
+                        <div className='events-carousel__overlay'>
+                            <div className='events-carousel__overlay-title'>
+                                <h3>{eventsTitles[currentImageIndex]}</h3>
+                            </div>
                         </div>
                     </div>
                     

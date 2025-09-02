@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import heroImage from '../assets/images/hero.webp';
+import { IMAGES_BASE_URL } from '../config/env';
 import './Hero.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -11,15 +11,45 @@ const Hero: React.FC = () => {
   const heroRef = useRef<HTMLElement>(null);
   const shadowRef = useRef<HTMLDivElement>(null);
   const descriptionRef = useRef<HTMLDivElement>(null);
-  const [currentTitle, setCurrentTitle] = useState(0);
-  const [hasScrolled, setHasScrolled] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [showHighQuality, setShowHighQuality] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const highQualityVideoRef = useRef<HTMLVideoElement>(null);
 
-  const titles = ["FEEL WELCOME", "FEEL GRAND", "FEEL MEDELLÍN"];
+  const secondWords = ["WELCOME", "GRAND", "MEDELLÍN"];
+
+  // URLs de los videos
+  const lightVideoUrl = `${IMAGES_BASE_URL}hero/Video-Header_WebM.webm`;
+  const highQualityVideoUrl = `${IMAGES_BASE_URL}hero/Video-Header_HQ.mp4`;
+
+  // Efecto para cargar el video de alta calidad después del ligero
+  useEffect(() => {
+    if (videoLoaded && highQualityVideoRef.current) {
+      // Precargar el video de alta calidad
+      highQualityVideoRef.current.load();
+      
+      // Cuando el video de alta calidad esté listo, mostrarlo
+      const handleHighQualityCanPlay = () => {
+        setShowHighQuality(true);
+        if (videoRef.current && highQualityVideoRef.current) {
+          // Sincronizar el tiempo de reproducción
+          highQualityVideoRef.current.currentTime = videoRef.current.currentTime;
+          highQualityVideoRef.current.play();
+        }
+      };
+
+      highQualityVideoRef.current.addEventListener('canplaythrough', handleHighQualityCanPlay);
+      
+      return () => {
+        if (highQualityVideoRef.current) {
+          highQualityVideoRef.current.removeEventListener('canplaythrough', handleHighQualityCanPlay);
+        }
+      };
+    }
+  }, [videoLoaded]);
 
   const handleScrollDown = () => {
     if (descriptionRef.current) {
-      setHasScrolled(true);
       descriptionRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
@@ -61,70 +91,39 @@ const Hero: React.FC = () => {
     };
   }, []);
 
-  // Efecto separado para manejar el intervalo del título
-  useEffect(() => {
-    let titleInterval: NodeJS.Timeout | null = null;
-    
-    if (!hasScrolled) {
-      titleInterval = setInterval(() => {
-        setIsTransitioning(true);
-        setTimeout(() => {
-          setCurrentTitle((prev) => (prev + 1) % titles.length);
-          setIsTransitioning(false);
-        }, 400);
-      }, 3000);
-    } else {
-      // Si se ha hecho scroll, asegurar que el título esté en "FEEL WELCOME"
-      setCurrentTitle(0);
-    }
+  // La animación del texto cambiante ahora es puramente CSS, no se requiere intervalo en JS
 
-    return () => {
-      if (titleInterval) {
-        clearInterval(titleInterval);
-      }
-    };
-  }, [hasScrolled, titles.length]);
-
-  // Efecto para detectar cuando el usuario vuelve hacia arriba usando ScrollTrigger
-  useEffect(() => {
-    if (!heroRef.current) return;
-
-    // Crear ScrollTrigger para controlar la animación del título
-    const scrollTrigger = ScrollTrigger.create({
-      trigger: heroRef.current,
-      start: "top 80%",
-      end: "bottom 20%",
-      onEnter: () => {
-        // Cuando el hero entra en la pantalla, reactivar la animación
-        setHasScrolled(false);
-      },
-      onLeave: () => {
-        // Cuando el hero sale de la pantalla, detener la animación
-        setHasScrolled(true);
-      },
-      onEnterBack: () => {
-        // Cuando el hero vuelve a entrar desde abajo, reactivar la animación
-        setHasScrolled(false);
-      },
-      onLeaveBack: () => {
-        // Cuando el hero sale hacia arriba, detener la animación
-        setHasScrolled(true);
-      }
-    });
-
-    return () => {
-      scrollTrigger.kill();
-    };
-  }, []);
+  // ScrollTrigger relacionado con detener/activar el cambio de título ya no es necesario
 
   return (
     <section className="hero" ref={heroRef}>
       <div className="hero__background">
-        <img 
-          src={heroImage.src} 
-          alt="V Grand Hotel Hero" 
-          className="hero__image"
-        />
+        {/* Video ligero (WebM) - se carga primero */}
+        <video 
+          ref={videoRef}
+          className={`hero__video ${showHighQuality ? 'hero__video--hidden' : ''}`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          onLoadedData={() => setVideoLoaded(true)}
+          onError={(e) => console.error('Error loading light video:', e)}
+        >
+          <source src={lightVideoUrl} type="video/webm" />
+        </video>
+
+        {/* Video de alta calidad (MP4) - se carga después */}
+        <video 
+          ref={highQualityVideoRef}
+          className={`hero__video ${!showHighQuality ? 'hero__video--hidden' : ''}`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          onError={(e) => console.error('Error loading high quality video:', e)}
+        >
+          <source src={highQualityVideoUrl} type="video/mp4" />
+        </video>
         
         {/* Botón media luna con flecha */}
         <div className="hero__scroll-button">
@@ -150,8 +149,13 @@ const Hero: React.FC = () => {
         </div>
       </div>
 
-      <h2 className={`hero__title ${isTransitioning ? 'hero__title--fade' : ''}`} ref={titleRef}>
-        {hasScrolled ? "FEEL WELCOME" : titles[currentTitle]}
+      <h2 className="hero__title" ref={titleRef}>
+        <span className="hero__title-fixed">FEEL</span>
+        <span className="hero__title-changing">
+          <span>WELCOME</span>
+          <span>GRAND</span>
+          <span>MEDELLÍN</span>
+        </span>
       </h2>
 
       {/* Concave shadow element */}

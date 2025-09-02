@@ -1,29 +1,66 @@
 import React, { useState } from "react";
 import "./RoomsCarousel.css";
 import roomsData from "../data/rooms.json";
-import { DoubleBed, Sofa, Tub, KnifeFork, Sunbath, ArrowRight, Left, Right } from "@icon-park/react";
+import { DoubleBed, Sofa, Tub, KnifeFork, Sunbath, ArrowRight } from "@icon-park/react";
 // Usamos imágenes desde public/images para rutas estáticas
 
 const RoomsCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   // Mapping function to get image source based on banner filename
   const getImageSource = (banner: string) => `/images/${banner}`;
 
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === roomsData.length - 1 ? 0 : prevIndex + 1
-    );
+    if (isTransitioning) return;
+    
+    setIsTransitioning(true);
+    const nextIndex = currentIndex + 1;
+    setCurrentIndex(nextIndex);
+    
+    // Si llegamos al elemento duplicado del primero, saltar al primero real sin transición
+    if (nextIndex === roomsData.length) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentIndex(0);
+      }, 500);
+    } else {
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 500);
+    }
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? roomsData.length - 1 : prevIndex - 1
-    );
+    if (isTransitioning) return;
+    
+    setIsTransitioning(true);
+    const prevIndex = currentIndex - 1;
+    setCurrentIndex(prevIndex);
+    
+    // Si llegamos al elemento duplicado del último, saltar al último real sin transición
+    if (prevIndex === -1) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentIndex(roomsData.length - 1);
+      }, 500);
+    } else {
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 500);
+    }
   };
 
   const goToSlide = (index: number) => {
+    if (isTransitioning) return;
+    
+    setIsTransitioning(true);
     setCurrentIndex(index);
+    
+    // Reset transition state after animation completes
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 500);
   };
 
   return (
@@ -70,9 +107,87 @@ const RoomsCarousel: React.FC = () => {
           </div>
           <div className="rooms-carousel__carousel-container">
             <div
-              className="rooms-carousel__carousel-track"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+              className={`rooms-carousel__carousel-track ${isTransitioning ? 'transitioning' : ''}`}
+              style={{ transform: `translateX(-${(currentIndex + 1) * 100}%)` }}
             >
+              {/* Elemento duplicado del último para wrap hacia atrás */}
+              <div className="rooms-carousel__carousel-item">
+                <div className="rooms-carousel__room-card">
+                  <div className="rooms-carousel__room-content">
+                    <p className="rooms-carousel__room-subtitle">
+                      Habitación
+                    </p>
+                    <h3 className="rooms-carousel__room-title">
+                      {roomsData[roomsData.length - 1].title}
+                    </h3>
+                    <p className="rooms-carousel__room-capacity">
+                      {roomsData[roomsData.length - 1].capacity} personas
+                    </p>
+                    {roomsData[roomsData.length - 1].description && (
+                      <p className="rooms-carousel__room-description">
+                        {roomsData[roomsData.length - 1].description}
+                      </p>
+                    )}
+                    <div className="rooms-carousel__room-details">
+                      <div className="rooms-carousel__all-icons">
+                        {Array(roomsData[roomsData.length - 1].beds)
+                          .fill(<DoubleBed fill="#ffffff" strokeWidth={2} size={32} />)
+                          .map((icon, i) => (
+                            <span
+                              key={`beds-${i}`}
+                              className="rooms-carousel__room-icon"
+                            >
+                              {icon}
+                            </span>
+                          ))}
+                        {Array(roomsData[roomsData.length - 1].bathrooms)
+                          .fill(<Tub fill="#ffffff" strokeWidth={2} size={32} />)
+                          .map((icon, i) => (
+                            <span
+                              key={`bathrooms-${i}`}
+                              className="rooms-carousel__room-icon"
+                            >
+                              {icon}
+                            </span>
+                          ))}
+                        {roomsData[roomsData.length - 1].terrace && (
+                          <span className="rooms-carousel__room-icon">
+                            <Sunbath fill="#ffffff" strokeWidth={2} size={32} />
+                          </span>
+                        )}
+                        {roomsData[roomsData.length - 1].breakfast && (
+                          <span className="rooms-carousel__room-icon">
+                            <KnifeFork fill="#ffffff" strokeWidth={2} size={32} />
+                          </span>
+                        )}
+                      </div>
+                      <div className="rooms-carousel__all-texts">
+                        <span>
+                          {roomsData[roomsData.length - 1].capacity} persona
+                          {roomsData[roomsData.length - 1].capacity > 1 ? "s" : ""}
+                        </span>
+                        <span>{roomsData[roomsData.length - 1].area}m²</span>
+                        <span>
+                          {roomsData[roomsData.length - 1].beds} cama{roomsData[roomsData.length - 1].beds > 1 ? "s" : ""}
+                        </span>
+                        <span>
+                          {roomsData[roomsData.length - 1].bathrooms} baño{roomsData[roomsData.length - 1].bathrooms > 1 ? "s" : ""}
+                        </span>
+                        {roomsData[roomsData.length - 1].terrace && <span>terraza</span>}
+                        {roomsData[roomsData.length - 1].breakfast && <span>desayuno incluido</span>}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="rooms-carousel__room-image-container">
+                    <img
+                      src={getImageSource(roomsData[roomsData.length - 1].banner)}
+                      alt={roomsData[roomsData.length - 1].title}
+                      className="rooms-carousel__room-image"
+                    />
+                  </div>
+                </div>
+              </div>
+              
               {roomsData.map((room, index) => (
                 <div
                   key={index}
@@ -154,24 +269,108 @@ const RoomsCarousel: React.FC = () => {
                       />
                       <div className="rooms-carousel__navigation">
                         <button
-                          className="rooms-carousel__nav-button rooms-carousel__nav-button--prev rooms-carousel__nav-button--custom"
+                          className="rooms-carousel__nav-button rooms-carousel__nav-button--prev"
                           onClick={prevSlide}
                           aria-label="Anterior habitación"
                         >
-                          <Left size={32} />
+                          <svg xmlns="http://www.w3.org/2000/svg" width="81" height="80" viewBox="0 0 81 80" fill="none">
+                            <path d="M40.5026 73.3337C22.0933 73.3337 7.16927 58.4097 7.16927 40.0003C7.16927 21.5908 22.0933 6.66699 40.5026 6.66699C58.9121 6.66699 73.8359 21.5908 73.8359 40.0003C73.8359 58.4097 58.9121 73.3337 40.5026 73.3337Z" stroke="white" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M44.6992 51.7657L32.9659 39.999L44.6992 28.2324" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
                         </button>
                         <button
-                          className="rooms-carousel__nav-button rooms-carousel__nav-button--next rooms-carousel__nav-button--custom"
+                          className="rooms-carousel__nav-button rooms-carousel__nav-button--next"
                           onClick={nextSlide}
                           aria-label="Siguiente habitación"
                         >
-                          <Right size={32} />
+                          <svg xmlns="http://www.w3.org/2000/svg" width="81" height="80" viewBox="0 0 81 80" fill="none" style={{ transform: 'scaleX(-1)' }}>
+                            <path d="M40.5026 73.3337C22.0933 73.3337 7.16927 58.4097 7.16927 40.0003C7.16927 21.5908 22.0933 6.66699 40.5026 6.66699C58.9121 6.66699 73.8359 21.5908 73.8359 40.0003C73.8359 58.4097 58.9121 73.3337 40.5026 73.3337Z" stroke="white" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M44.6992 51.7657L32.9659 39.999L44.6992 28.2324" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
                         </button>
                       </div>
                     </div>
                   </div>
                 </div>
               ))}
+              
+              {/* Elemento duplicado del primero para wrap hacia adelante */}
+              <div className="rooms-carousel__carousel-item">
+                <div className="rooms-carousel__room-card">
+                  <div className="rooms-carousel__room-content">
+                    <p className="rooms-carousel__room-subtitle">
+                      Habitación
+                    </p>
+                    <h3 className="rooms-carousel__room-title">
+                      {roomsData[0].title}
+                    </h3>
+                    <p className="rooms-carousel__room-capacity">
+                      {roomsData[0].capacity} personas
+                    </p>
+                    {roomsData[0].description && (
+                      <p className="rooms-carousel__room-description">
+                        {roomsData[0].description}
+                      </p>
+                    )}
+                    <div className="rooms-carousel__room-details">
+                      <div className="rooms-carousel__all-icons">
+                        {Array(roomsData[0].beds)
+                          .fill(<DoubleBed fill="#ffffff" strokeWidth={2} size={32} />)
+                          .map((icon, i) => (
+                            <span
+                              key={`beds-${i}`}
+                              className="rooms-carousel__room-icon"
+                            >
+                              {icon}
+                            </span>
+                          ))}
+                        {Array(roomsData[0].bathrooms)
+                          .fill(<Tub fill="#ffffff" strokeWidth={2} size={32} />)
+                          .map((icon, i) => (
+                            <span
+                              key={`bathrooms-${i}`}
+                              className="rooms-carousel__room-icon"
+                            >
+                              {icon}
+                            </span>
+                          ))}
+                        {roomsData[0].terrace && (
+                          <span className="rooms-carousel__room-icon">
+                            <Sunbath fill="#ffffff" strokeWidth={2} size={32} />
+                          </span>
+                        )}
+                        {roomsData[0].breakfast && (
+                          <span className="rooms-carousel__room-icon">
+                            <KnifeFork fill="#ffffff" strokeWidth={2} size={32} />
+                          </span>
+                        )}
+                      </div>
+                      <div className="rooms-carousel__all-texts">
+                        <span>
+                          {roomsData[0].capacity} persona
+                          {roomsData[0].capacity > 1 ? "s" : ""}
+                        </span>
+                        <span>{roomsData[0].area}m²</span>
+                        <span>
+                          {roomsData[0].beds} cama{roomsData[0].beds > 1 ? "s" : ""}
+                        </span>
+                        <span>
+                          {roomsData[0].bathrooms} baño{roomsData[0].bathrooms > 1 ? "s" : ""}
+                        </span>
+                        {roomsData[0].terrace && <span>terraza</span>}
+                        {roomsData[0].breakfast && <span>desayuno incluido</span>}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="rooms-carousel__room-image-container">
+                    <img
+                      src={getImageSource(roomsData[0].banner)}
+                      alt={roomsData[0].title}
+                      className="rooms-carousel__room-image"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

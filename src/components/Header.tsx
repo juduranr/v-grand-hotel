@@ -6,8 +6,6 @@ import './Header.css';
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -17,31 +15,20 @@ const Header: React.FC = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const heroHeight = window.innerHeight;
-      
       // Cambiar el estado cuando se pase la sección hero
       setIsScrolled(currentScrollY > heroHeight * 0.8);
-      
-      // Lógica para ocultar/mostrar el header
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down - ocultar header
-        setIsVisible(false);
-      } else if (currentScrollY < lastScrollY) {
-        // Scrolling up - mostrar header
-        setIsVisible(true);
-      }
-      
-      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll);
-    
+    // Establecer estado inicial
+    handleScroll();
     // Cleanup
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   return (
     <>
-      <header className={`header ${isScrolled ? 'header--scrolled' : ''} ${isMenuOpen ? 'header--menu-open' : ''} ${!isVisible ? 'header--hidden' : ''}`}>
+      <header className={`header ${isScrolled ? 'header--scrolled' : ''} ${isMenuOpen ? 'header--menu-open' : ''}`}>
         <div className="header__container">
           {/* Left side - Burger menu */}
           <div className="header__left">

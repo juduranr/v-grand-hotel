@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './Experiences.css'
 import { ArrowRight } from "@icon-park/react";
+import { EXPERIENCES_IMAGES } from "../config/env";
 
 interface ExperienceItem {
     id: number;
@@ -16,8 +17,8 @@ const experiencesData: ExperienceItem[] = [
         id: 1,
         title: "Conecta con la esencia de Medellín",
         description: "Te invitamos a descubrir la ciudad a través de nuestras experiencias locales: catas de café, visitas guiadas a espacios culturales y encuentros con artistas y emprendedores. Porque creemos que el turismo también puede ser transformación personal.",
-        image: "/images/purpose-gallery-1.webp",
-        hoverImage: "/images/purpose-gallery-2.webp",
+        image: EXPERIENCES_IMAGES.ACCORDEON_1,
+        hoverImage: EXPERIENCES_IMAGES.ACCORDEON_2,
         activities: [
             "Tour de la comuna 13",
             "Pasadía por el centro de Medellín",
@@ -27,9 +28,9 @@ const experiencesData: ExperienceItem[] = [
     {
         id: 2,
         title: "Eventos con propósito",
-        description: "Descubre el placer de las pequeñas cosas. Te invitamos a vivir momentos inolvidables con nuestras experiencias personalizadas.",
-        image: "/images/purpose-gallery-2.webp",
-        hoverImage: "/images/purpose-gallery-3.webp",
+        description: "Desde brunches íntimos hasta eventos corporativos con alma, en V Grand diseñamos cada encuentro para que esté cargado de intención, estética y calidez. Nuestro equipo se encarga de los detalles para que tú solo te encargues de disfrutar.",
+        image: EXPERIENCES_IMAGES.ACCORDEON_2,
+        hoverImage: EXPERIENCES_IMAGES.ACCORDEON_3,
         activities: [
             "Cata de café local",
             "Visita a espacios culturales",
@@ -39,9 +40,9 @@ const experiencesData: ExperienceItem[] = [
     {
         id: 3,
         title: "Un espacio vivo, abierto a la ciudad",
-        description: "Descubre el placer de las pequeñas cosas. Te invitamos a vivir momentos inolvidables con nuestras experiencias personalizadas.",
-        image: "/images/purpose-gallery-3.webp",
-        hoverImage: "/images/infinity-gallery-1.webp",
+        description: "Más que un hotel, somos un punto de encuentro para locales y viajeros. Abrazamos el arte, la moda, el diseño y la gastronomía como formas de crear comunidad. Aquí siempre está pasando algo: una exposición, una charla, una experiencia que vale la pena vivir.",
+        image: EXPERIENCES_IMAGES.ACCORDEON_3,
+        hoverImage: EXPERIENCES_IMAGES.ACCORDEON_1,
         activities: [
             "Exploración gastronómica",
             "Rutas de innovación",
@@ -89,6 +90,14 @@ const Experiences = () => {
                                 src={experiencesData.find(item => item.id === activeAccordion)?.image} 
                                 alt={experiencesData.find(item => item.id === activeAccordion)?.title}
                                 className='experience-image'
+                                onError={(e) => {
+                                    (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                                    (e.target as HTMLImageElement).style.display = 'flex';
+                                    (e.target as HTMLImageElement).style.alignItems = 'center';
+                                    (e.target as HTMLImageElement).style.justifyContent = 'center';
+                                    (e.target as HTMLImageElement).style.color = '#fff';
+                                    (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                                }}
                             />
                         </div>
                     </div>

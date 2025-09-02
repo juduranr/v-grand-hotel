@@ -149,6 +149,14 @@
         height: 50vh;
     }
     
+    .events-carousel__overlay {
+        padding: 1.5rem;
+    }
+    
+    .events-carousel__overlay-title h3 {
+        font-size: 1.3rem;
+    }
+    
     .events-carousel__indicators {
         justify-content: center;
         padding-left: 0;
@@ -181,6 +189,14 @@
     
     .events-carousel__container {
         height: 40vh;
+    }
+    
+    .events-carousel__overlay {
+        padding: 1rem;
+    }
+    
+    .events-carousel__overlay-title h3 {
+        font-size: 1.1rem;
     }
     
     .events-carousel__indicators {
@@ -293,6 +309,28 @@
 .events-carousel__click-area--right,
 .events-carousel__click-area--right:hover {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="81" height="80" viewBox="0 0 81 80" fill="none"><path d="M40.4974 73.3337C58.9067 73.3337 73.8307 58.4097 73.8307 40.0003C73.8307 21.5908 58.9067 6.66699 40.4974 6.66699C22.0879 6.66699 7.16406 21.5908 7.16406 40.0003C7.16406 58.4097 22.0879 73.3337 40.4974 73.3337Z" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M36.3008 51.7657L48.0341 39.999L36.3008 28.2324" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>') 40 40, auto;
+}
+
+/* Overlay con título en esquina inferior izquierda */
+.events-carousel__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    padding: 2rem;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.events-carousel__overlay-title h3 {
+    color: #fff;
+    font-size: 80px;
+    font-weight: 400;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* Indicadores en la parte inferior alineados a la izquierda */

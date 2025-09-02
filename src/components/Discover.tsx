@@ -1,19 +1,23 @@
 import React, { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
-import infinityGallery1 from "../assets/images/infinity-gallery-1.webp";
-import infinityGallery2 from "../assets/images/infinity-gallery-2.webp";
-import infinityGallery3 from "../assets/images/infinity-gallery-3.webp";
-import discoverImage from "../assets/images/discover.webp";
 import "./Discover.css";
+import { DISCOVER_IMAGES } from "../config/env";
 
 const Discover: React.FC = () => {
   const [isScrolling, setIsScrolling] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
   const animationRef = useRef<gsap.core.Tween | null>(null);
   const zoomAnimationRef = useRef<gsap.core.Tween | null>(null);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+  const lightboxImageRef = useRef<HTMLImageElement | null>(null);
+  const lightboxOpenAnimRef = useRef<gsap.core.Timeline | null>(null);
+  const lightboxCloseAnimRef = useRef<gsap.core.Timeline | null>(null);
+  const titleRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -130,6 +134,85 @@ const Discover: React.FC = () => {
     };
   }, [isHovering]);
 
+  // Abrir lightbox
+  const handleOpenLightbox = (src: string) => {
+    setLightboxSrc(src);
+    setLightboxOpen(true);
+    document.documentElement.style.overflow = 'hidden';
+  };
+
+  // Cerrar lightbox
+  const handleCloseLightbox = () => {
+    // Animación de salida antes de desmontar
+    if (dialogRef.current) {
+      const elements: Array<HTMLElement | null> = [dialogRef.current, lightboxImageRef.current];
+      lightboxCloseAnimRef.current?.kill();
+      lightboxCloseAnimRef.current = gsap.timeline({
+        onComplete: () => {
+          setLightboxOpen(false);
+          setLightboxSrc(null);
+          document.documentElement.style.overflow = '';
+        }
+      })
+      .to(elements[1], { scale: 0.95, duration: 0.2, ease: 'power2.inOut' }, 0)
+      .to(elements[0], { autoAlpha: 0, duration: 0.2, ease: 'power2.inOut' }, 0);
+    } else {
+      setLightboxOpen(false);
+      setLightboxSrc(null);
+      document.documentElement.style.overflow = '';
+    }
+  };
+
+  // Cerrar con Escape y click fuera
+  useEffect(() => {
+    if (!lightboxOpen) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleCloseLightbox();
+      }
+    };
+
+    const onClickOutside = (e: MouseEvent) => {
+      if (dialogRef.current && e.target === dialogRef.current) {
+        handleCloseLightbox();
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('click', onClickOutside);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('click', onClickOutside);
+    };
+  }, [lightboxOpen]);
+
+  // Animación de entrada cuando el lightbox abre
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const overlay = dialogRef.current;
+    const lightboxImg = lightboxImageRef.current;
+    if (!overlay) return;
+    // Estado inicial
+    gsap.set(overlay, { autoAlpha: 0 });
+    if (lightboxImg) gsap.set(lightboxImg, { scale: 0.95 });
+    // Animar
+    lightboxOpenAnimRef.current?.kill();
+    lightboxOpenAnimRef.current = gsap.timeline()
+      .to(overlay, { autoAlpha: 1, duration: 0.25, ease: 'power2.out' }, 0)
+      .to(lightboxImg, { scale: 1, duration: 0.25, ease: 'power2.out' }, 0);
+    return () => {
+      lightboxOpenAnimRef.current?.kill();
+    };
+  }, [lightboxOpen]);
+
+  // Animación del título al entrar al componente
+  useEffect(() => {
+    if (!titleRef.current) return;
+    gsap.set(titleRef.current, { autoAlpha: 0, y: 40 });
+    gsap.to(titleRef.current, { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.2 });
+  }, []);
+
   return (
     <section className="discover">
       <div className="discover__container">
@@ -139,56 +222,223 @@ const Discover: React.FC = () => {
             className="discover__infinity-gallery-track"
           >
             <div className="discover__infinity-gallery-item">
-              <img src={infinityGallery1.src} alt="Infinity Gallery" />
+              <img 
+                src={DISCOVER_IMAGES.GALLERY_1} 
+                alt="Infinity Gallery" 
+                onClick={() => handleOpenLightbox(DISCOVER_IMAGES.GALLERY_1)}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                  (e.target as HTMLImageElement).style.display = 'flex';
+                  (e.target as HTMLImageElement).style.alignItems = 'center';
+                  (e.target as HTMLImageElement).style.justifyContent = 'center';
+                  (e.target as HTMLImageElement).style.color = '#fff';
+                  (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                }}
+              />
             </div>
             <div className="discover__infinity-gallery-item">
-              <img src={infinityGallery2.src} alt="Infinity Gallery" />
+              <img 
+                src={DISCOVER_IMAGES.GALLERY_2} 
+                alt="Infinity Gallery" 
+                onClick={() => handleOpenLightbox(DISCOVER_IMAGES.GALLERY_2)}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                  (e.target as HTMLImageElement).style.display = 'flex';
+                  (e.target as HTMLImageElement).style.alignItems = 'center';
+                  (e.target as HTMLImageElement).style.justifyContent = 'center';
+                  (e.target as HTMLImageElement).style.color = '#fff';
+                  (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                }}
+              />
             </div>
             <div className="discover__infinity-gallery-item">
-              <img src={infinityGallery3.src} alt="Infinity Gallery" />
+              <img 
+                src={DISCOVER_IMAGES.GALLERY_3} 
+                alt="Infinity Gallery" 
+                onClick={() => handleOpenLightbox(DISCOVER_IMAGES.GALLERY_3)}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                  (e.target as HTMLImageElement).style.display = 'flex';
+                  (e.target as HTMLImageElement).style.alignItems = 'center';
+                  (e.target as HTMLImageElement).style.justifyContent = 'center';
+                  (e.target as HTMLImageElement).style.color = '#fff';
+                  (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                }}
+              />
             </div>
             <div className="discover__infinity-gallery-item">
-              <img src={infinityGallery1.src} alt="Infinity Gallery" />
+              <img 
+                src={DISCOVER_IMAGES.GALLERY_1} 
+                alt="Infinity Gallery" 
+                onClick={() => handleOpenLightbox(DISCOVER_IMAGES.GALLERY_1)}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                  (e.target as HTMLImageElement).style.display = 'flex';
+                  (e.target as HTMLImageElement).style.alignItems = 'center';
+                  (e.target as HTMLImageElement).style.justifyContent = 'center';
+                  (e.target as HTMLImageElement).style.color = '#fff';
+                  (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                }}
+              />
             </div>
             <div className="discover__infinity-gallery-item">
-              <img src={infinityGallery2.src} alt="Infinity Gallery" />
+              <img 
+                src={DISCOVER_IMAGES.GALLERY_2} 
+                alt="Infinity Gallery" 
+                onClick={() => handleOpenLightbox(DISCOVER_IMAGES.GALLERY_2)}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                  (e.target as HTMLImageElement).style.display = 'flex';
+                  (e.target as HTMLImageElement).style.alignItems = 'center';
+                  (e.target as HTMLImageElement).style.justifyContent = 'center';
+                  (e.target as HTMLImageElement).style.color = '#fff';
+                  (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                }}
+              />
             </div>
             <div className="discover__infinity-gallery-item">
-              <img src={infinityGallery3.src} alt="Infinity Gallery" />
+              <img 
+                src={DISCOVER_IMAGES.GALLERY_3} 
+                alt="Infinity Gallery" 
+                onClick={() => handleOpenLightbox(DISCOVER_IMAGES.GALLERY_3)}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                  (e.target as HTMLImageElement).style.display = 'flex';
+                  (e.target as HTMLImageElement).style.alignItems = 'center';
+                  (e.target as HTMLImageElement).style.justifyContent = 'center';
+                  (e.target as HTMLImageElement).style.color = '#fff';
+                  (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                }}
+              />
             </div>
             <div className="discover__infinity-gallery-item">
-              <img src={infinityGallery1.src} alt="Infinity Gallery" />
+              <img 
+                src={DISCOVER_IMAGES.GALLERY_1} 
+                alt="Infinity Gallery" 
+                onClick={() => handleOpenLightbox(DISCOVER_IMAGES.GALLERY_1)}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                  (e.target as HTMLImageElement).style.display = 'flex';
+                  (e.target as HTMLImageElement).style.alignItems = 'center';
+                  (e.target as HTMLImageElement).style.justifyContent = 'center';
+                  (e.target as HTMLImageElement).style.color = '#fff';
+                  (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                }}
+              />
             </div>
             <div className="discover__infinity-gallery-item">
-              <img src={infinityGallery2.src} alt="Infinity Gallery" />
+              <img 
+                src={DISCOVER_IMAGES.GALLERY_2} 
+                alt="Infinity Gallery" 
+                onClick={() => handleOpenLightbox(DISCOVER_IMAGES.GALLERY_2)}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                  (e.target as HTMLImageElement).style.display = 'flex';
+                  (e.target as HTMLImageElement).style.alignItems = 'center';
+                  (e.target as HTMLImageElement).style.justifyContent = 'center';
+                  (e.target as HTMLImageElement).style.color = '#fff';
+                  (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                }}
+              />
             </div>
             <div className="discover__infinity-gallery-item">
-              <img src={infinityGallery3.src} alt="Infinity Gallery" />
+              <img 
+                src={DISCOVER_IMAGES.GALLERY_3} 
+                alt="Infinity Gallery" 
+                onClick={() => handleOpenLightbox(DISCOVER_IMAGES.GALLERY_3)}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                  (e.target as HTMLImageElement).style.display = 'flex';
+                  (e.target as HTMLImageElement).style.alignItems = 'center';
+                  (e.target as HTMLImageElement).style.justifyContent = 'center';
+                  (e.target as HTMLImageElement).style.color = '#fff';
+                  (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                }}
+              />
             </div>
             <div className="discover__infinity-gallery-item">
-              <img src={infinityGallery1.src} alt="Infinity Gallery" />
+              <img 
+                src={DISCOVER_IMAGES.GALLERY_1} 
+                alt="Infinity Gallery" 
+                onClick={() => handleOpenLightbox(DISCOVER_IMAGES.GALLERY_1)}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                  (e.target as HTMLImageElement).style.display = 'flex';
+                  (e.target as HTMLImageElement).style.alignItems = 'center';
+                  (e.target as HTMLImageElement).style.justifyContent = 'center';
+                  (e.target as HTMLImageElement).style.color = '#fff';
+                  (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                }}
+              />
             </div>
             <div className="discover__infinity-gallery-item">
-              <img src={infinityGallery2.src} alt="Infinity Gallery" />
+              <img 
+                src={DISCOVER_IMAGES.GALLERY_2} 
+                alt="Infinity Gallery" 
+                onClick={() => handleOpenLightbox(DISCOVER_IMAGES.GALLERY_2)}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                  (e.target as HTMLImageElement).style.display = 'flex';
+                  (e.target as HTMLImageElement).style.alignItems = 'center';
+                  (e.target as HTMLImageElement).style.justifyContent = 'center';
+                  (e.target as HTMLImageElement).style.color = '#fff';
+                  (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                }}
+              />
             </div>
             <div className="discover__infinity-gallery-item">
-              <img src={infinityGallery3.src} alt="Infinity Gallery" />
+              <img 
+                src={DISCOVER_IMAGES.GALLERY_3} 
+                alt="Infinity Gallery" 
+                onClick={() => handleOpenLightbox(DISCOVER_IMAGES.GALLERY_3)}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                  (e.target as HTMLImageElement).style.display = 'flex';
+                  (e.target as HTMLImageElement).style.alignItems = 'center';
+                  (e.target as HTMLImageElement).style.justifyContent = 'center';
+                  (e.target as HTMLImageElement).style.color = '#fff';
+                  (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                }}
+              />
             </div>
           </div>
         </div>
         <div className="discover__background">
           <img
             ref={imageRef}
-            src={discoverImage.src}
+            src={`${DISCOVER_IMAGES.HERO}`}
             alt="V Grand Hotel Discover"
             className="discover__image"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
+            onClick={() => handleOpenLightbox(DISCOVER_IMAGES.HERO)}
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+              (e.target as HTMLImageElement).style.display = 'flex';
+              (e.target as HTMLImageElement).style.alignItems = 'center';
+              (e.target as HTMLImageElement).style.justifyContent = 'center';
+              (e.target as HTMLImageElement).style.color = '#fff';
+              (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+            }}
           />
-          <div className="discover__background_title">
+          <div ref={titleRef} className="discover__background_title">
             <h2>Descubre lo que tenemos para tí</h2>
           </div>
         </div>
+        {lightboxOpen && (
+          <div
+            ref={dialogRef}
+            className="discover__lightbox"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Imagen ampliada"
+          >
+            <button className="discover__lightbox_close" onClick={handleCloseLightbox} aria-label="Cerrar imagen">✕</button>
+            {lightboxSrc && (
+              <img ref={lightboxImageRef} className="discover__lightbox_image" src={lightboxSrc} alt="Imagen ampliada" />
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

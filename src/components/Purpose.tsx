@@ -3,12 +3,10 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import vHotelLogo from "../assets/images/v-hotel.svg";
 import grandHotelLogo from "../assets/images/grand-hotel.svg";
-import purposeGallery1 from "../assets/images/purpose-gallery-1.webp";
-import purposeGallery2 from "../assets/images/purpose-gallery-2.webp";
-import purposeGallery3 from "../assets/images/purpose-gallery-3.webp";
 import LogosCarousel from "./LogosCarousel";
 import "./Purpose.css";
 import { defaultPurposeConfig } from "./Purpose.config";
+import { PURPOSE_IMAGES } from "../config/env";
 
 // Registrar el plugin ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -273,29 +271,61 @@ const Purpose: React.FC = () => {
               <div className="purpose__gallery-item">
                 <img 
                   ref={(el) => addImageRef(el, 0)}
-                  src={purposeGallery2.src} 
+                  src={PURPOSE_IMAGES.GALLERY_2} 
                   alt="Purpose" 
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                    (e.target as HTMLImageElement).style.display = 'flex';
+                    (e.target as HTMLImageElement).style.alignItems = 'center';
+                    (e.target as HTMLImageElement).style.justifyContent = 'center';
+                    (e.target as HTMLImageElement).style.color = '#fff';
+                    (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                  }}
                 />
               </div>
               <div className="purpose__gallery-item">
                 <img 
                   ref={(el) => addImageRef(el, 1)}
-                  src={purposeGallery1.src} 
+                  src={PURPOSE_IMAGES.GALLERY_1} 
                   alt="Purpose" 
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                    (e.target as HTMLImageElement).style.display = 'flex';
+                    (e.target as HTMLImageElement).style.alignItems = 'center';
+                    (e.target as HTMLImageElement).style.justifyContent = 'center';
+                    (e.target as HTMLImageElement).style.color = '#fff';
+                    (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                  }}
                 />
               </div>
               <div className="purpose__gallery-item">
                 <img 
                   ref={(el) => addImageRef(el, 2)}
-                  src={purposeGallery2.src} 
+                  src={PURPOSE_IMAGES.GALLERY_2} 
                   alt="Purpose" 
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                    (e.target as HTMLImageElement).style.display = 'flex';
+                    (e.target as HTMLImageElement).style.alignItems = 'center';
+                    (e.target as HTMLImageElement).style.justifyContent = 'center';
+                    (e.target as HTMLImageElement).style.color = '#fff';
+                    (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                  }}
                 />
               </div>
               <div className="purpose__gallery-item">
                 <img 
                   ref={(el) => addImageRef(el, 3)}
-                  src={purposeGallery3.src} 
+                  src={PURPOSE_IMAGES.GALLERY_3} 
                   alt="Purpose" 
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                    (e.target as HTMLImageElement).style.display = 'flex';
+                    (e.target as HTMLImageElement).style.alignItems = 'center';
+                    (e.target as HTMLImageElement).style.justifyContent = 'center';
+                    (e.target as HTMLImageElement).style.color = '#fff';
+                    (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                  }}
                 />
               </div>
             </div>

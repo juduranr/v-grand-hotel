@@ -1,69 +1,32 @@
 import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Restaurants.css';
 import galleryData from '../data/gallery.json';
-import { ArrowRight } from "@icon-park/react";
+import { RESTAURANTS_IMAGES } from '../config/env';
+
+// Extender HTMLDivElement para incluir la propiedad flickity
+declare global {
+  interface HTMLDivElement {
+    flickity?: any;
+  }
+}
 
 const Restaurants: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  // Referencias para la sección de galería (sin títulos)
+  const galleryCarouselRef1 = useRef<HTMLDivElement>(null);
+  const galleryCarouselRef2 = useRef<HTMLDivElement>(null);
+  const galleryCarouselRef3 = useRef<HTMLDivElement>(null);
+
+  // Referencias para los nuevos carouseles sin títulos (sección anterior)
+  const simpleCarouselRef1 = useRef<HTMLDivElement>(null);
+  const simpleCarouselRef2 = useRef<HTMLDivElement>(null);
+  const simpleCarouselRef3 = useRef<HTMLDivElement>(null);
+
+  // Referencias para las secciones con títulos
   const carouselRef1 = useRef<HTMLDivElement>(null);
   const carouselRef2 = useRef<HTMLDivElement>(null);
   const carouselRef3 = useRef<HTMLDivElement>(null);
-  
-  // Referencias para las animaciones de scroll
-  const section1Ref = useRef<HTMLDivElement>(null);
-  const section2Ref = useRef<HTMLDivElement>(null);
-  const section3Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Registrar el plugin ScrollTrigger
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Configurar ScrollTrigger para usar el contenedor como scroller
-    ScrollTrigger.defaults({
-      toggleActions: "restart pause resume pause",
-      scroller: ".restaurants-container"
-    });
-
-    // Función para detener el scroll de la página principal
-    const disablePageScroll = () => {
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
-    };
-
-    // Función para reanudar el scroll de la página principal
-    const enablePageScroll = () => {
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-    };
-
-    // Variable para controlar el estado del scroll
-    let isScrollDisabled = false;
-
-    // Función mejorada para detectar la visibilidad del componente
-    const checkComponentVisibility = () => {
-      if (!containerRef.current) return;
-
-      const rect = containerRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      // Calcular qué porcentaje del viewport ocupa el componente
-      const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
-      const visibilityRatio = visibleHeight / windowHeight;
-      
-      // Solo cambiar el estado si es necesario para evitar parpadeos
-      if (visibilityRatio >= 0.8 && !isScrollDisabled) {
-        // El componente ocupa al menos el 80% del viewport
-        disablePageScroll();
-        isScrollDisabled = true;
-      } else if (visibilityRatio < 0.8 && isScrollDisabled) {
-        // El componente no ocupa el viewport completo
-        enablePageScroll();
-        isScrollDisabled = false;
-      }
-    };
-
     // Inicializar Flickity para los carruseles
     const initFlickity = async (carouselRef: React.RefObject<HTMLDivElement | null>, options: any = {}) => {
       if (!carouselRef.current || galleryData.length === 0) return;
@@ -71,7 +34,12 @@ const Restaurants: React.FC = () => {
       try {
         const Flickity = (await import('flickity')).default;
         await import('flickity/css/flickity.css');
-        
+
+        // Limpiar instancia previa si existe
+        if (carouselRef.current.flickity) {
+          carouselRef.current.flickity.destroy();
+        }
+
         const defaultOptions = {
           wrapAround: true,
           autoPlay: 3000,
@@ -87,328 +55,222 @@ const Restaurants: React.FC = () => {
           setGallerySize: true,
           ...options
         };
-        
-        new Flickity(carouselRef.current!, defaultOptions);
+
+        const flickityInstance = new Flickity(carouselRef.current!, defaultOptions);
+
+        // Forzar resize después de la inicialización
+        setTimeout(() => {
+          if (flickityInstance) {
+            flickityInstance.resize();
+          }
+        }, 50);
       } catch (error) {
         console.error('Error al cargar Flickity:', error);
       }
     };
 
-    // Inicializar los carruseles
-    initFlickity(carouselRef1, { autoPlay: 4000 });
-    initFlickity(carouselRef2, { autoPlay: 5000 });
-    initFlickity(carouselRef3, { autoPlay: 6000 });
 
-    // Animaciones de scroll para cada sección
-    if (section1Ref.current) {
-      gsap.fromTo(section1Ref.current.querySelector('.restaurants-title'), {
-        scale: 0.8,
-        opacity: 0
-      }, {
-        scrollTrigger: {
-          trigger: section1Ref.current,
-          start: "top center",
-          end: "bottom center",
-          toggleActions: "play none none reverse"
-        },
-        scale: 1,
-        opacity: 1,
-        duration: 1,
-        ease: "power2.out"
-      });
 
-      gsap.fromTo(section1Ref.current.querySelector('.restaurants-carousel-container'), {
-        y: 100,
-        opacity: 0
-      }, {
-        scrollTrigger: {
-          trigger: section1Ref.current,
-          start: "top center",
-          end: "bottom center",
-          toggleActions: "play none none reverse"
-        },
-        y: 0,
-        opacity: 1,
-        duration: 1.2,
-        ease: "power2.out"
-      });
-    }
+    // Delay para asegurar que el DOM esté completamente renderizado
+    const timer = setTimeout(() => {
+      // Inicializar TODOS los carruseles con la misma función
+      initFlickity(simpleCarouselRef1, { autoPlay: 3000 });
+      initFlickity(simpleCarouselRef2, { autoPlay: 3500 });
+      initFlickity(simpleCarouselRef3, { autoPlay: 4000 });
+      initFlickity(galleryCarouselRef1, { autoPlay: 4000 });
+      initFlickity(galleryCarouselRef2, { autoPlay: 5000 });
+      initFlickity(galleryCarouselRef3, { autoPlay: 6000 });
+      initFlickity(carouselRef1, { autoPlay: 4000 });
+      initFlickity(carouselRef2, { autoPlay: 5000 });
+      initFlickity(carouselRef3, { autoPlay: 6000 });
+    }, 100);
 
-    if (section2Ref.current) {
-      gsap.fromTo(section2Ref.current.querySelector('.restaurants-title'), {
-        rotation: -5,
-        opacity: 0
-      }, {
-        scrollTrigger: {
-          trigger: section2Ref.current,
-          start: "top center",
-          end: "bottom center",
-          toggleActions: "play none none reverse"
-        },
-        rotation: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power2.out"
-      });
-
-      gsap.fromTo(section2Ref.current.querySelector('.restaurants-carousel-container'), {
-        scale: 0.9,
-        opacity: 0
-      }, {
-        scrollTrigger: {
-          trigger: section2Ref.current,
-          start: "top center",
-          end: "bottom center",
-          toggleActions: "play none none reverse"
-        },
-        scale: 1,
-        opacity: 1,
-        duration: 1.2,
-        ease: "power2.out"
-      });
-    }
-
-    if (section3Ref.current) {
-      gsap.fromTo(section3Ref.current.querySelector('.restaurants-title'), {
-        y: -50,
-        opacity: 0
-      }, {
-        scrollTrigger: {
-          trigger: section3Ref.current,
-          start: "top center",
-          end: "bottom center",
-          toggleActions: "play none none reverse"
-        },
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power2.out"
-      });
-
-      gsap.fromTo(section3Ref.current.querySelector('.restaurants-carousel-container'), {
-        x: -100,
-        opacity: 0
-      }, {
-        scrollTrigger: {
-          trigger: section3Ref.current,
-          start: "top center",
-          end: "bottom center",
-          toggleActions: "play none none reverse"
-        },
-        x: 0,
-        opacity: 1,
-        duration: 1.2,
-        ease: "power2.out"
-      });
-    }
-
-    // Animación para el botón de descripción (efecto yoyo)
-    gsap.to(".restaurants-description-button", {
-      scrollTrigger: {
-        trigger: ".restaurants-container",
-        start: "top top",
-        end: "bottom bottom",
-        toggleActions: "restart pause reverse pause"
-      },
-      scale: 1.05,
-      repeat: -1,
-      yoyo: true,
-      ease: "power2.inOut",
-      duration: 2
-    });
-
-    // Detectar cuando se sale del componente para reanudar el scroll
-    const handleScrollEnd = () => {
-      if (containerRef.current) {
-        const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
-        const isAtTop = scrollTop <= 10;
-        
-        if (isAtBottom || isAtTop) {
-          // Reanudar el scroll de la página
-          enablePageScroll();
-          isScrollDisabled = false;
-          
-          // Si está en la parte inferior, hacer scroll hacia abajo en la página
-          if (isAtBottom) {
-            setTimeout(() => {
-              window.scrollTo({
-                top: window.scrollY + 100,
-                behavior: 'smooth'
-              });
-            }, 100);
-          }
-          
-          // Si está en la parte superior, hacer scroll hacia arriba en la página
-          if (isAtTop) {
-            setTimeout(() => {
-              window.scrollTo({
-                top: window.scrollY - 100,
-                behavior: 'smooth'
-              });
-            }, 100);
-          }
-        }
-      }
-    };
-
-    // Agregar listener para detectar el fin del scroll
-    if (containerRef.current) {
-      containerRef.current.addEventListener('scroll', handleScrollEnd);
-    }
-
-    // Usar un solo método de detección más confiable
-    const throttledCheck = throttle(checkComponentVisibility, 100);
-    
-    // Agregar listeners para el scroll y resize
-    window.addEventListener('scroll', throttledCheck, { passive: true });
-    window.addEventListener('resize', throttledCheck, { passive: true });
-
-    // Verificación inicial
-    checkComponentVisibility();
-
-    // Limpiar ScrollTrigger y reanudar scroll al desmontar
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-      enablePageScroll();
-      if (containerRef.current) {
-        containerRef.current.removeEventListener('scroll', handleScrollEnd);
-      }
-      window.removeEventListener('scroll', throttledCheck);
-      window.removeEventListener('resize', throttledCheck);
+      clearTimeout(timer);
+      // Limpiar instancias de Flickity al desmontar
+      const refs = [simpleCarouselRef1, simpleCarouselRef2, simpleCarouselRef3, galleryCarouselRef1, galleryCarouselRef2, galleryCarouselRef3, carouselRef1, carouselRef2, carouselRef3];
+      refs.forEach(ref => {
+        if (ref.current && ref.current.flickity) {
+          ref.current.flickity.destroy();
+        }
+      });
     };
   }, []);
-
-  // Función throttle para mejorar el rendimiento
-  const throttle = (func: Function, limit: number) => {
-    let inThrottle: boolean;
-    return function(this: any, ...args: any[]) {
-      if (!inThrottle) {
-        func.apply(this, args);
-        inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
-      }
-    }
-  };
 
   const restaurantData = [
     {
       title: "Tres Generaciones",
       description: "Sabores que cuentan historias, una tradición que une generaciones. Cocina italiana de autor en un ambiente sofisticado.",
-      items: galleryData
+      items: [
+        { src: RESTAURANTS_IMAGES.TRES_GENERACIONES_1, alt: "Tres Generaciones - Imagen 1" },
+        { src: RESTAURANTS_IMAGES.TRES_GENERACIONES_2, alt: "Tres Generaciones - Imagen 2" },
+        { src: RESTAURANTS_IMAGES.TRES_GENERACIONES_3, alt: "Tres Generaciones - Imagen 3" }
+      ]
     },
     {
       title: "V-Coffee",
       description: "Una terraza casual con coctelería y sabores locales, pensados para hacer de cada visita un momento inolvidable.",
-      items: galleryData
+      items: [
+        { src: RESTAURANTS_IMAGES.V_COFFEE_1, alt: "V-Coffee - Imagen 1" },
+        { src: RESTAURANTS_IMAGES.V_COFFEE_2, alt: "V-Coffee - Imagen 2" },
+        { src: RESTAURANTS_IMAGES.V_COFFEE_3, alt: "V-Coffee - Imagen 3" }
+      ]
     },
     {
       title: "ROOFTOP",
       description: "Sabores que cuentan historias, una tradición que une generaciones. Cocina italiana de autor en un ambiente sofisticado.",
-      items: galleryData
+      items: [
+        { src: RESTAURANTS_IMAGES.ROOFTOP_1, alt: "ROOFTOP - Imagen 1" },
+        { src: RESTAURANTS_IMAGES.ROOFTOP_2, alt: "ROOFTOP - Imagen 2" },
+        { src: RESTAURANTS_IMAGES.ROOFTOP_3, alt: "ROOFTOP - Imagen 3" }
+      ]
     }
   ];
 
   return (
-    <div className="restaurants-container" ref={containerRef} tabIndex={0}>
-      {/* Primera sección - Restaurante Principal */}
-      <section className="restaurants-section panel" ref={section1Ref}>
-        <div className="restaurants-content">
-          <p className="restaurants-subtitle" data-parallax>GASTRONOMÍA</p>
-          <div className="restaurants-title-container" data-parallax>
-          <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
-            <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor"/>
-          </svg>
-          <hr />
-          <h1 className="restaurants-title">{restaurantData[0].title}</h1>
-          <hr />
-          <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
-            <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor"/>
-          </svg>
-          </div>
-          <div className="restaurants-carousel-container" data-parallax>
-            <div ref={carouselRef1} className="restaurants-gallery js-flickity">
-              {restaurantData[0].items.map((item, index) => (
-                <div key={`carousel1-${index}`} className="restaurants-gallery-cell">
-                  <img src={item.src} alt={item.alt} loading="lazy" />
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className='restaurants-description-container' data-parallax>
-            <p className="restaurants-description">{restaurantData[0].description}</p>
-            <button className="restaurants-description-button">
-              Ver más
-            </button>
-          </div>
-        </div>
-      </section>
+    <div className="restaurants-container">
 
-      {/* Segunda sección - Bar Lounge */}
-      <section className="restaurants-section panel purple" ref={section2Ref}>
-        <div className="restaurants-content">
-          <p className="restaurants-subtitle" data-parallax>GASTRONOMÍA</p>
-          <div className="restaurants-title-container" data-parallax>
-          <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
-            <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor"/>
-          </svg>
-          <hr />
-          <h1 className="restaurants-title">{restaurantData[1].title}</h1>
-          <hr />
-          <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
-            <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor"/>
-          </svg>
-          </div>
-          <div className="restaurants-carousel-container" data-parallax>
-            <div ref={carouselRef2} className="restaurants-gallery js-flickity">
-              {restaurantData[1].items.map((item, index) => (
-                <div key={`carousel2-${index}`} className="restaurants-gallery-cell">
-                  <img src={item.src} alt={item.alt} loading="lazy" />
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className='restaurants-description-container' data-parallax>
-            <p className="restaurants-description">{restaurantData[1].description}</p>
-            <button className="restaurants-description-button">
-              Ver más
-            </button>
-          </div>
-        </div>
-      </section>
+      {/* Nueva sección - Carouseles simples sin títulos */}
+      
 
-      {/* Tercera sección - Restaurante de Especialidades */}
-      <section className="restaurants-section panel yoyo" ref={section3Ref}>
-        <div className="restaurants-content">
-          <p className="restaurants-subtitle">GASTRONOMÍA</p>
-          <div className="restaurants-title-container">
-          <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
-            <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor"/>
-          </svg>
-          <hr />
-          <h1 className="restaurants-title">{restaurantData[2].title}</h1>
-          <hr />
-          <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
-            <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor"/>
-          </svg>
-          </div>
-          <div className="restaurants-carousel-container">
-            <div ref={carouselRef3} className="restaurants-gallery js-flickity">
-              {restaurantData[2].items.map((item, index) => (
-                <div key={`carousel3-${index}`} className="restaurants-gallery-cell">
-                  <img src={item.src} alt={item.alt} loading="lazy" />
-                </div>
-              ))}
+      {/* Wrapper para las secciones que se superponen */}
+      <div className="restaurants-sections-wrapper">
+
+              <section className="simple-carousels-section">
+          <div className="simple-carousels-container">
+            {/* Primer carousel - Tres Generaciones */}
+            <div className="simple-carousel-wrapper">
+              <div ref={simpleCarouselRef1} className="restaurants-gallery js-flickity">
+                {restaurantData[0].items.map((item, index) => (
+                  <div key={`simple1-${index}`} className="restaurants-gallery-cell">
+                    <img src={item.src} alt={item.alt} loading="lazy" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Segundo carousel - V-Coffee */}
+            <div className="simple-carousel-wrapper">
+              <div ref={simpleCarouselRef2} className="restaurants-gallery js-flickity">
+                {restaurantData[1].items.map((item, index) => (
+                  <div key={`simple2-${index}`} className="restaurants-gallery-cell">
+                    <img src={item.src} alt={item.alt} loading="lazy" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Tercer carousel - ROOFTOP */}
+            <div className="simple-carousel-wrapper">
+              <div ref={simpleCarouselRef3} className="restaurants-gallery js-flickity">
+                {restaurantData[2].items.map((item, index) => (
+                  <div key={`simple3-${index}`} className="restaurants-gallery-cell">
+                    <img src={item.src} alt={item.alt} loading="lazy" />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-          <div className='restaurants-description-container'>
-            <p className="restaurants-description">{restaurantData[2].description}</p>
-            <button className="restaurants-description-button">
-              Ver más
-            </button>
+        </section>
+        {/* Primera sección - Restaurante Principal */}
+        <section className="restaurants-section panel">
+          <div className="restaurants-content">
+            <p className="restaurants-subtitle">GASTRONOMÍA</p>
+            <div className="restaurants-title-container">
+              <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
+                <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor" />
+              </svg>
+              <hr />
+              <h1 className="restaurants-title">{restaurantData[0].title}</h1>
+              <hr />
+              <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
+                <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor" />
+              </svg>
+            </div>
+            <div className="restaurants-carousel-container">
+              <div ref={carouselRef1} className="restaurants-gallery js-flickity">
+                {restaurantData[0].items.map((item, index) => (
+                  <div key={`carousel1-${index}`} className="restaurants-gallery-cell">
+                    <img src={item.src} alt={item.alt} loading="lazy" />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className='restaurants-description-container'>
+              <p className="restaurants-description">{restaurantData[0].description}</p>
+              <button className="restaurants-description-button">
+                Ver más
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* Segunda sección - Bar Lounge */}
+        <section className="restaurants-section panel purple">
+          <div className="restaurants-content">
+            <p className="restaurants-subtitle">GASTRONOMÍA</p>
+            <div className="restaurants-title-container">
+              <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
+                <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor" />
+              </svg>
+              <hr />
+              <h1 className="restaurants-title">{restaurantData[1].title}</h1>
+              <hr />
+              <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
+                <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor" />
+              </svg>
+            </div>
+            <div className="restaurants-carousel-container">
+              <div ref={carouselRef2} className="restaurants-gallery js-flickity">
+                {restaurantData[1].items.map((item, index) => (
+                  <div key={`carousel2-${index}`} className="restaurants-gallery-cell">
+                    <img src={item.src} alt={item.alt} loading="lazy" />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className='restaurants-description-container'>
+              <p className="restaurants-description">{restaurantData[1].description}</p>
+              <button className="restaurants-description-button">
+                Ver más
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Tercera sección - Restaurante de Especialidades */}
+        <section className="restaurants-section panel yoyo">
+          <div className="restaurants-content">
+            <p className="restaurants-subtitle">GASTRONOMÍA</p>
+            <div className="restaurants-title-container">
+              <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
+                <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor" />
+              </svg>
+              <hr />
+              <h1 className="restaurants-title">{restaurantData[2].title}</h1>
+              <hr />
+              <svg width="32" height="35" viewBox="0 0 292 323" fill="none" xmlns="http://www.w3.org/2000/svg" className="v-hotel-logo">
+                <path d="M247.337 6.20131C259.826 3.88532 272.352 3.54913 286 6.64957C268.762 12.7757 265.547 28.39 259.414 41.8377C252.123 57.8629 244.233 73.5518 234.25 88.0828C228.043 97.0853 221.2 105.565 212.525 112.289C194.727 126.073 178.499 124.055 164.589 106.461C156.998 96.8611 151.651 85.9536 146.865 74.7845C141.967 63.2419 137.443 51.5126 132.507 39.97C128.88 31.4904 124.954 23.0856 118.971 16.0256C114.073 10.2356 107.753 6.68693 100.088 10.2356C92.0863 13.9711 90.1419 20.8817 91.8246 29.2118C93.6194 38.0275 98.1438 45.5358 102.743 53.0441C118.373 78.4079 136.508 101.979 154.605 125.512C189.38 170.749 195.923 219.31 174.909 272.017C172.89 277.06 171.17 282.215 169.338 287.333C164.676 300.531 167.58 310.816 178.05 318.188C156.213 323.641 153.259 322.334 144.809 303.694C104.313 214.117 63.7434 124.578 23.3603 34.9271C18.3124 23.758 13.5262 12.701 1 6.23867C16.8915 6.23867 32.783 6.16396 48.6745 6.16396C33.6804 12.9252 36.4848 22.488 41.8318 34.2547C79.5601 117.257 116.84 200.52 154.306 283.635C155.951 287.295 157.933 290.844 160.252 295.439C185.715 240.453 193.867 187.372 155.764 135.523C138.415 111.915 121.364 88.1201 104.463 64.1758C97.2464 53.9406 90.3663 43.2945 87.5619 30.7807C83.8227 14.0832 90.142 5.08067 107.006 2.57791C127.235 -0.44782 142.079 8.4426 150.567 28.4274C157.335 44.3778 159.354 61.5236 163.392 78.1464C165.449 86.7007 167.73 95.2175 171.88 103.025C179.471 117.332 190.053 120.395 204.224 112.438C213.946 106.984 221.013 98.6542 227.482 89.8385C239.933 72.8794 249.356 54.1647 257.62 34.9271C264.238 19.5743 262.107 14.7182 247.412 6.23867" fill="currentColor" />
+              </svg>
+            </div>
+            <div className="restaurants-carousel-container">
+              <div ref={carouselRef3} className="restaurants-gallery js-flickity">
+                {restaurantData[2].items.map((item, index) => (
+                  <div key={`carousel3-${index}`} className="restaurants-gallery-cell">
+                    <img src={item.src} alt={item.alt} loading="lazy" />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className='restaurants-description-container'>
+              <p className="restaurants-description">{restaurantData[2].description}</p>
+              <button className="restaurants-description-button">
+                Ver más
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   );
 };
