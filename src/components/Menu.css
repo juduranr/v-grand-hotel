@@ -77,7 +77,6 @@
   font-family: var(--font-primary, 'BeaufortforLOL', serif);
   font-weight: 400;
   font-size: 80px;
-  letter-spacing: 0.05em;
   transition: all 0.3s ease;
   position: relative;
   text-transform: uppercase;

@@ -13,9 +13,17 @@ export const PURPOSE_IMAGES = {
 
 // URLs específicas para las imágenes de discover
 export const DISCOVER_IMAGES = {
-  GALLERY_1: `${IMAGES_BASE_URL}discover/infinity-gallery-1.webp`,
-  GALLERY_2: `${IMAGES_BASE_URL}discover/infinity-gallery-2.webp`,
-  GALLERY_3: `${IMAGES_BASE_URL}discover/infinity-gallery-3.webp`,
+  GALLERY_1: `${IMAGES_BASE_URL}discover/purpose (1).webp`,
+  GALLERY_2: `${IMAGES_BASE_URL}discover/purpose (2).webp`,
+  GALLERY_3: `${IMAGES_BASE_URL}discover/purpose (3).webp`,
+  GALLERY_4: `${IMAGES_BASE_URL}discover/purpose (4).webp`,
+  GALLERY_5: `${IMAGES_BASE_URL}discover/purpose (5).webp`,
+  GALLERY_6: `${IMAGES_BASE_URL}discover/purpose (6).webp`,
+  GALLERY_7: `${IMAGES_BASE_URL}discover/purpose (7).webp`,
+  GALLERY_8: `${IMAGES_BASE_URL}discover/purpose (8).webp`,
+  GALLERY_9: `${IMAGES_BASE_URL}discover/purpose (9).webp`,
+  GALLERY_10: `${IMAGES_BASE_URL}discover/purpose (10).webp`,
+  GALLERY_11: `${IMAGES_BASE_URL}discover/purpose (11).webp`,
   HERO: `${IMAGES_BASE_URL}discover/discover.webp`,
 };
 
