@@ -41,6 +41,24 @@ export const EVENTS_IMAGES = {
   EVENT_3: `${IMAGES_BASE_URL}events/events-3.webp`
 };
 
+// URLs específicas para las imágenes de stories
+export const STORIES_IMAGES = {
+  STORY_1: `${IMAGES_BASE_URL}story/story (1).webp`,
+  STORY_2: `${IMAGES_BASE_URL}story/story (2).webp`,
+  STORY_3: `${IMAGES_BASE_URL}story/story (3).webp`,
+  STORY_4: `${IMAGES_BASE_URL}story/story (4).webp`,
+  STORY_5: `${IMAGES_BASE_URL}story/story (5).webp`,
+  STORY_6: `${IMAGES_BASE_URL}story/story (6).webp`,
+};
+
+// URLs específicas para los videos de stories
+export const STORIES_VIDEOS = {
+  STORY_1: `${IMAGES_BASE_URL}story/story (1).webm`,
+  STORY_2: `${IMAGES_BASE_URL}story/story (2).webm`,
+  STORY_3: `${IMAGES_BASE_URL}story/story (3).webm`,
+  STORY_4: `${IMAGES_BASE_URL}story/story (4).webm`,
+};
+
 // URLs específicas para las imágenes de restaurantes
 export const RESTAURANTS_IMAGES = {
   // V-Coffee

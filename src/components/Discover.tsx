@@ -247,7 +247,7 @@ const Discover: React.FC = () => {
         start: "top bottom-=10%",
         end: "center bottom-=30%",
         scrub: 1,
-        markers: true
+        //markers: true
       }
     });
   }, []);

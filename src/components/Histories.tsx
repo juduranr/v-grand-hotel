@@ -1,14 +1,37 @@
 import React, { useState, useEffect } from 'react'
 import './Histories.css'
-import { PURPOSE_IMAGES } from "../config/env";
+import { STORIES_IMAGES, STORIES_VIDEOS } from "../config/env";
 
+// Array con todas las imágenes de stories
 const historiesImages = [
-    PURPOSE_IMAGES.GALLERY_1,
-    PURPOSE_IMAGES.GALLERY_2,
-    PURPOSE_IMAGES.GALLERY_3,
-    PURPOSE_IMAGES.GALLERY_1,
-    PURPOSE_IMAGES.GALLERY_2,
-    PURPOSE_IMAGES.GALLERY_3
+    STORIES_IMAGES.STORY_1,
+    STORIES_IMAGES.STORY_2,
+    STORIES_IMAGES.STORY_3,
+    STORIES_IMAGES.STORY_4,
+    STORIES_IMAGES.STORY_5,
+    STORIES_IMAGES.STORY_6,
+];
+
+// Array con todos los videos de stories
+const historiesVideos = [
+    STORIES_VIDEOS.STORY_1,
+    STORIES_VIDEOS.STORY_2,
+    STORIES_VIDEOS.STORY_3,
+    STORIES_VIDEOS.STORY_4,
+];
+
+// Array combinado que intercala videos e imágenes
+const historiesContent = [
+    { type: 'video', src: historiesVideos[0] }, // story (1).webm
+    { type: 'image', src: historiesImages[0] }, // story (1).webp
+    { type: 'video', src: historiesVideos[1] }, // story (2).webm
+    { type: 'image', src: historiesImages[1] }, // story (2).webp
+    { type: 'video', src: historiesVideos[2] }, // story (3).webm
+    { type: 'image', src: historiesImages[2] }, // story (3).webp
+    { type: 'video', src: historiesVideos[3] }, // story (4).webm
+    { type: 'image', src: historiesImages[3] }, // story (4).webp
+    { type: 'image', src: historiesImages[4] }, // story (5).webp
+    { type: 'image', src: historiesImages[5] }, // story (6).webp
 ];
 
 const Histories = () => {
@@ -18,10 +41,10 @@ const Histories = () => {
     const [direction, setDirection] = useState<1 | -1>(1);
     const [animDirection, setAnimDirection] = useState<1 | -1>(1);
 
-    const normalizeIndex = (idx: number) => (idx + historiesImages.length) % historiesImages.length;
+    const normalizeIndex = (idx: number) => (idx + historiesContent.length) % historiesContent.length;
 
     const chooseDirection = (from: number, to: number): 1 | -1 => {
-        const n = historiesImages.length;
+        const n = historiesContent.length;
         const forward = (to - from + n) % n;
         const backward = (from - to + n) % n;
         return forward <= backward ? 1 : -1;
@@ -115,67 +138,61 @@ const Histories = () => {
                                 : (Math.abs(slotOffset) === 1 ? slotOffset * 432 : slotOffset * 410);
                             const scale = isCenter ? 1.0 : isNear ? 0.9 : 0.8;
 
+                            // Función para renderizar el contenido (imagen o video)
+                            const renderContent = (index: number, key: string) => {
+                                const content = historiesContent[index];
+                                const isVideo = content.type === 'video';
+                                const shouldPlay = isCenter && isVideo; // Solo reproducir si está en el centro y es video
+                                
+                                if (isVideo) {
+                                    return (
+                                        <div className="histories-card-pane" key={key}>
+                                            <video 
+                                                src={content.src}
+                                                autoPlay={shouldPlay}
+                                                loop
+                                                muted
+                                                playsInline
+                                                onError={(e) => {
+                                                    (e.target as HTMLVideoElement).style.backgroundColor = '#1a1a1a';
+                                                    (e.target as HTMLVideoElement).style.display = 'flex';
+                                                    (e.target as HTMLVideoElement).style.alignItems = 'center';
+                                                    (e.target as HTMLVideoElement).style.justifyContent = 'center';
+                                                    (e.target as HTMLVideoElement).style.color = '#fff';
+                                                    (e.target as HTMLVideoElement).innerHTML = 'Video no disponible';
+                                                }}
+                                            />
+                                        </div>
+                                    );
+                                } else {
+                                    return (
+                                        <div className="histories-card-pane" key={key}>
+                                            <img 
+                                                src={content.src} 
+                                                alt={`Historia ${index + 1}`}
+                                                onError={(e) => {
+                                                    (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
+                                                    (e.target as HTMLImageElement).style.display = 'flex';
+                                                    (e.target as HTMLImageElement).style.alignItems = 'center';
+                                                    (e.target as HTMLImageElement).style.justifyContent = 'center';
+                                                    (e.target as HTMLImageElement).style.color = '#fff';
+                                                    (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
+                                                }}
+                                            />
+                                        </div>
+                                    );
+                                }
+                            };
+
                             // Determinar el orden de los panes basado en la dirección de animación
                             const panesOrder = animDirection === 1
                                 ? [
-                                    <div className="histories-card-pane" key="current">
-                                        <img 
-                                            src={historiesImages[currentImgIndex]} 
-                                            alt={"Historia actual"}
-                                            onError={(e) => {
-                                                (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
-                                                (e.target as HTMLImageElement).style.display = 'flex';
-                                                (e.target as HTMLImageElement).style.alignItems = 'center';
-                                                (e.target as HTMLImageElement).style.justifyContent = 'center';
-                                                (e.target as HTMLImageElement).style.color = '#fff';
-                                                (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
-                                            }}
-                                        />
-                                    </div>,
-                                    <div className="histories-card-pane" key="next">
-                                        <img 
-                                            src={historiesImages[nextImgIndex]} 
-                                            alt={"Historia siguiente"}
-                                            onError={(e) => {
-                                                (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
-                                                (e.target as HTMLImageElement).style.display = 'flex';
-                                                (e.target as HTMLImageElement).style.alignItems = 'center';
-                                                (e.target as HTMLImageElement).style.justifyContent = 'center';
-                                                (e.target as HTMLImageElement).style.color = '#fff';
-                                                (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
-                                            }}
-                                        />
-                                    </div>
+                                    renderContent(currentImgIndex, "current"),
+                                    renderContent(nextImgIndex, "next")
                                   ]
                                 : [
-                                    <div className="histories-card-pane" key="next">
-                                        <img 
-                                            src={historiesImages[nextImgIndex]} 
-                                            alt={"Historia siguiente"}
-                                            onError={(e) => {
-                                                (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
-                                                (e.target as HTMLImageElement).style.display = 'flex';
-                                                (e.target as HTMLImageElement).style.alignItems = 'center';
-                                                (e.target as HTMLImageElement).style.justifyContent = 'center';
-                                                (e.target as HTMLImageElement).style.color = '#fff';
-                                                (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
-                                            }}
-                                        />
-                                    </div>,
-                                    <div className="histories-card-pane" key="current">
-                                        <img 
-                                            src={historiesImages[currentImgIndex]} 
-                                            alt={"Historia actual"}
-                                            onError={(e) => {
-                                                (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
-                                                (e.target as HTMLImageElement).style.display = 'flex';
-                                                (e.target as HTMLImageElement).style.alignItems = 'center';
-                                                (e.target as HTMLImageElement).style.justifyContent = 'center';
-                                                (e.target as HTMLImageElement).style.color = '#fff';
-                                                (e.target as HTMLImageElement).innerHTML = 'Imagen no disponible';
-                                            }}
-                                        />
-                                    </div>
+                                    renderContent(nextImgIndex, "next"),
+                                    renderContent(currentImgIndex, "current")
                                   ];
 
                             // Calcular las transformaciones basadas en la dirección de animación
@@ -220,7 +237,7 @@ const Histories = () => {
 
                 {/* Indicadores de barras */}
                 <div className="histories-bars">
-                    {historiesImages.map((_, i) => (
+                    {historiesContent.map((_, i) => (
                         <div 
                             key={i} 
                             className={`histories-bar ${i === currentIndex ? 'active' : ''}`} 
