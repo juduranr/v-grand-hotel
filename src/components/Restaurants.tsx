@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import './Restaurants.css';
 import galleryData from '../data/gallery.json';
+import ScrollRestaurant from './ScrollRestaurant';
 import { RESTAURANTS_IMAGES } from '../config/env';
 
 // Extender HTMLDivElement para incluir la propiedad flickity
@@ -135,43 +136,12 @@ const Restaurants: React.FC = () => {
 
       {/* Wrapper para las secciones que se superponen */}
       <div className="restaurants-sections-wrapper">
+        <ScrollRestaurant restaurantData={restaurantData} simpleCarouselRef1={simpleCarouselRef1} simpleCarouselRef2={simpleCarouselRef2} simpleCarouselRef3={simpleCarouselRef3} />
 
-              <section className="simple-carousels-section">
-          <div className="simple-carousels-container">
-            {/* Primer carousel - Tres Generaciones */}
-            <div className="simple-carousel-wrapper">
-              <div ref={simpleCarouselRef1} className="restaurants-gallery js-flickity">
-                {restaurantData[0].items.map((item, index) => (
-                  <div key={`simple1-${index}`} className="restaurants-gallery-cell">
-                    <img src={item.src} alt={item.alt} loading="lazy" />
-                  </div>
-                ))}
-              </div>
-            </div>
 
-            {/* Segundo carousel - V-Coffee */}
-            <div className="simple-carousel-wrapper">
-              <div ref={simpleCarouselRef2} className="restaurants-gallery js-flickity">
-                {restaurantData[1].items.map((item, index) => (
-                  <div key={`simple2-${index}`} className="restaurants-gallery-cell">
-                    <img src={item.src} alt={item.alt} loading="lazy" />
-                  </div>
-                ))}
-              </div>
-            </div>
 
-            {/* Tercer carousel - ROOFTOP */}
-            <div className="simple-carousel-wrapper">
-              <div ref={simpleCarouselRef3} className="restaurants-gallery js-flickity">
-                {restaurantData[2].items.map((item, index) => (
-                  <div key={`simple3-${index}`} className="restaurants-gallery-cell">
-                    <img src={item.src} alt={item.alt} loading="lazy" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+
+
         {/* Primera sección - Restaurante Principal */}
         <section className="restaurants-section panel">
           <div className="restaurants-content">
