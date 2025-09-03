@@ -18,7 +18,7 @@ const ScrollRestaurant = ({restaurantData, simpleCarouselRef1, simpleCarouselRef
         // Configuración inicial de posiciones - Los tres carruseles apilados escalonadamente
         gsap.set(carousel1Ref.current, { 
             position: 'fixed',
-            top: 0,
+            top: '10vh',
             left: 0,
             width: '100%',
             height: '100vh', // Ocupa toda la altura de la pantalla
@@ -29,7 +29,7 @@ const ScrollRestaurant = ({restaurantData, simpleCarouselRef1, simpleCarouselRef
 
         gsap.set(carousel2Ref.current, { 
             position: 'fixed',
-            top: '-80px', // Apilado escalonadamente, mostrando parte del carrusel 1
+            top: 'calc(10vh - 80px)', // Apilado escalonadamente, mostrando parte del carrusel 1
             left: '20px', // Desplazado lateralmente para crear efecto de pila
             width: '100%',
             height: '100vh', // Ocupa toda la altura de la pantalla
@@ -40,7 +40,7 @@ const ScrollRestaurant = ({restaurantData, simpleCarouselRef1, simpleCarouselRef
 
         gsap.set(carousel3Ref.current, { 
             position: 'fixed',
-            top: '-160px', // Más escalonado, mostrando parte de los dos carruseles anteriores
+            top: 'calc(10vh - 160px)', // Más escalonado, mostrando parte de los dos carruseles anteriores
             left: '40px', // Más desplazado lateralmente
             width: '100%',
             height: '100vh', // Ocupa toda la altura de la pantalla
