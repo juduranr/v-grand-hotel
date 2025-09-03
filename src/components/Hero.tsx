@@ -65,8 +65,7 @@ const Hero: React.FC = () => {
         trigger: heroRef.current,
         start: "top top",
         end: "bottom bottom",
-        scrub: true,
-        pin: false
+        scrub: true
       },
       y: "50vh",
       fontSize: "4rem",
@@ -78,8 +77,7 @@ const Hero: React.FC = () => {
         trigger: heroRef.current,
         start: "top top",
         end: "bottom bottom",
-        scrub: true,
-        pin: false
+        scrub: true
       },
       y: "-150vh",
       height: "150vh",
@@ -90,15 +88,10 @@ const Hero: React.FC = () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
-
-  // La animación del texto cambiante ahora es puramente CSS, no se requiere intervalo en JS
-
-  // ScrollTrigger relacionado con detener/activar el cambio de título ya no es necesario
-
+  
   return (
     <section className="hero" ref={heroRef}>
       <div className="hero__background">
-        {/* Video ligero (WebM) - se carga primero */}
         <video 
           ref={videoRef}
           className={`hero__video ${showHighQuality ? 'hero__video--hidden' : ''}`}
@@ -111,8 +104,6 @@ const Hero: React.FC = () => {
         >
           <source src={lightVideoUrl} type="video/webm" />
         </video>
-
-        {/* Video de alta calidad (MP4) - se carga después */}
         <video 
           ref={highQualityVideoRef}
           className={`hero__video ${!showHighQuality ? 'hero__video--hidden' : ''}`}
@@ -124,8 +115,6 @@ const Hero: React.FC = () => {
         >
           <source src={highQualityVideoUrl} type="video/mp4" />
         </video>
-        
-        {/* Botón media luna con flecha */}
         <div className="hero__scroll-button">
           <div className="hero__scroll-pulse"></div>
           <button className="hero__scroll-btn" aria-label="Desplazarse hacia abajo" onClick={handleScrollDown}>
@@ -157,10 +146,7 @@ const Hero: React.FC = () => {
           <span>MEDELLÍN</span>
         </span>
       </h2>
-
-      {/* Concave shadow element */}
       <div className="hero__shadow" ref={shadowRef}></div>
-
       <div className="hero__description" ref={descriptionRef}>
         <div className="hero__description-content">
           <p className="hero__description-text">

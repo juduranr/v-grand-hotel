@@ -54,7 +54,6 @@ const PromosSheet: React.FC = () => {
 
   return (
     <>
-      {/* Botón flotante integrado */}
       <button
         className={`floating-button ${isOpen ? 'floating-button--open' : ''} ${isButtonHidden ? 'floating-button--hidden' : ''}`}
         onClick={handleToggle}
@@ -63,76 +62,54 @@ const PromosSheet: React.FC = () => {
       >
         <span className="floating-button__text">PROMOS</span>
       </button>
-      
-      {/* Overlay de fondo */}
-      <div 
+      <div
         className={`promos-sheet-overlay ${isOpen ? 'promos-sheet-overlay--visible' : ''}`}
         onClick={handleOverlayClick}
       />
-      
-      {/* PromosSheet */}
       <aside className={`promos-sheet ${isOpen ? 'promos-sheet--open' : ''}`}>
         <div className="promos-sheet__header">
           <h2 className="promos-sheet__title">PROMOS</h2>
-          <button 
+          <button
             className="promos-sheet__close-btn"
             onClick={handleClose}
             aria-label="Cerrar promociones"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path 
-                d="M18 6L6 18M6 6L18 18" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
+              <path
+                d="M18 6L6 18M6 6L18 18"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
                 strokeLinejoin="round"
               />
             </svg>
           </button>
         </div>
-        
         <div className="promos-sheet__content">
           <div className="promos-sheet__promo">
-            <h3 className="promos-sheet__promo-title">Paquete Romántico</h3>
+            <h3 className="promos-sheet__promo-title">ESCAPADA WELLNESS</h3>
             <p className="promos-sheet__promo-description">
-              Disfruta de una experiencia romántica inolvidable con cena privada, 
-              spa para dos y suite de lujo con vista panorámica.
+              Incluye  acceso al spa, bebida detox de bienvenida y desayuno saludable. Ideal para quienes buscan desconexión y autocuidado.
             </p>
             <button className="promos-sheet__promo-button">
               Ver detalles
               <ArrowRight size={16} />
             </button>
           </div>
-
           <div className="promos-sheet__promo">
-            <h3 className="promos-sheet__promo-title">Escapada de Fin de Semana</h3>
+            <h3 className="promos-sheet__promo-title">plan aniversario o parejas</h3>
             <p className="promos-sheet__promo-description">
-              Perfecta para desconectar del estrés diario. Incluye alojamiento, 
-              desayuno gourmet y acceso completo a nuestras instalaciones.
+              Decoración especial de la suite, botella de vino, amenities románticos y desayuno en la habitación.
             </p>
             <button className="promos-sheet__promo-button">
               Ver detalles
               <ArrowRight size={16} />
             </button>
           </div>
-
           <div className="promos-sheet__promo">
-            <h3 className="promos-sheet__promo-title">Spa & Wellness</h3>
+            <h3 className="promos-sheet__promo-title">viaje corporativo</h3>
             <p className="promos-sheet__promo-description">
-              Renueva tu energía con tratamientos de spa premium, masajes 
-              terapéuticos y acceso a nuestro centro de bienestar.
-            </p>
-            <button className="promos-sheet__promo-button">
-              Ver detalles
-              <ArrowRight size={16} />
-            </button>
-          </div>
-
-          <div className="promos-sheet__promo">
-            <h3 className="promos-sheet__promo-title">Experiencia Gastronómica</h3>
-            <p className="promos-sheet__promo-description">
-              Degusta la mejor cocina local e internacional con nuestro 
-              chef ejecutivo en un ambiente exclusivo y elegante.
+              Tarifas especiales para estancias largas o múltiples reservas, accesso a coworking, gimnasio y beneficios personalizados.
             </p>
             <button className="promos-sheet__promo-button">
               Ver detalles

@@ -246,8 +246,7 @@ const Discover: React.FC = () => {
         trigger: ".discover__background_title",
         start: "top bottom-=10%",
         end: "center bottom-=30%",
-        scrub: 1,
-        //markers: true
+        scrub: 1
       }
     });
   }, []);

@@ -1,14 +1,18 @@
 import React from 'react';
 import { ArrowRight } from "@icon-park/react";
-import footerLogo from '../assets/images/v-logo-complete.svg';
+import vLogo from '../assets/images/v-logo-complete.svg';
+import raddisonLogo from '../assets/images/raddison.svg';
 import fbIcon from '../assets/images/fb.svg';
 import igIcon from '../assets/images/ig.svg';
 import xIcon from '../assets/images/x.svg';
 import inIcon from '../assets/images/in.svg';
+import ytIcon from '../assets/images/yt.svg';
+import tiktokIcon from '../assets/images/tt.svg';
 import logo1 from '../assets/images/logo-1.svg';
 import logo2 from '../assets/images/logo-2.svg';
 import logo3 from '../assets/images/logo-3.svg';
 import logo4 from '../assets/images/logo-4.svg';
+import logo5 from '../assets/images/logo-5.svg';
 import './Footer.css';
 
 const Footer: React.FC = () => {
@@ -18,12 +22,19 @@ const Footer: React.FC = () => {
     <footer className="footer">
       <div className="footer__container">
         <div className="footer__main">
-          <div className="footer__column footer__logo-column">
-            <img 
-              src={footerLogo.src} 
-              alt="V Grand Hotel" 
-              className="footer__logo"
+          <div className="footer__logo-column">
+            <img
+              src={vLogo.src}
+              alt="V Grand Hotel"
+              className="footer__v-logo"
             />
+            <hr />
+            <img
+              src={raddisonLogo.src}
+              alt="Raddison"
+              className="footer__raddison-logo"
+            />
+            <hr />
             <div className="footer__social">
               <div className="footer__social-links">
                 <a href="#" className="footer__social-link" aria-label="Facebook">
@@ -37,6 +48,12 @@ const Footer: React.FC = () => {
                 </a>
                 <a href="#" className="footer__social-link" aria-label="LinkedIn">
                   <img src={inIcon.src} alt="LinkedIn" className="footer__social-icon" />
+                </a>
+                <a href="#" className="footer__social-link" aria-label="YouTube">
+                  <img src={ytIcon.src} alt="YouTube" className="footer__social-icon" />
+                </a>
+                <a href="#" className="footer__social-link" aria-label="TikTok">
+                  <img src={tiktokIcon.src} alt="TikTok" className="footer__social-icon" />
                 </a>
               </div>
             </div>
@@ -60,13 +77,13 @@ const Footer: React.FC = () => {
             <h3 className="footer__title">Contacto</h3>
             <div className="footer__contact">
               <div className="footer__contact-item">
-                <span>+1 (555) 123-4567</span>
+                <a href="tel:+573144583693">+57 314 4583693</a>
               </div>
               <div className="footer__contact-item">
-                <span>+1 (555) 123-4567</span>
+                <a href="tel:018009122083">01-800-912-2083</a>
               </div>
               <div className="footer__contact-item">
-                <span>info@vgrandhotel.com</span>
+                <a href='mailto:reservas@v-grandhotels.com'>reservas@v-grandhotels.com</a>
               </div>
             </div>
           </div>
@@ -75,14 +92,16 @@ const Footer: React.FC = () => {
           <div className="footer__column">
             <h3 className="footer__title">Dirección</h3>
             <div className="footer__address">
-              <p className="footer__address-text">123 Luxury Avenue, Downtown District, City, State 12345</p>
-              <button 
+              <p className="footer__address-text">Cra. 43 #14 81, El Poblado, Medellín, Antioquia</p>
+              <a
+                href="https://maps.app.goo.gl/G5nsfJZGiMNkAebj9"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="footer__directions-button"
-                onClick={() => window.open('https://maps.google.com/?q=123+Luxury+Avenue+Downtown+District+City+State+12345', '_blank')}
               >
                 Cómo llegar
-                <ArrowRight theme="outline" size={18} className="footer__contact-icon" />
-              </button>
+                <svg width="1em" height="1em" viewBox="0 0 48 48" fill="none"><path d="M41.9999 24H5.99994" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path><path d="M30 12L42 24L30 36" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </a>
             </div>
           </div>
 
@@ -96,17 +115,30 @@ const Footer: React.FC = () => {
               <li><a href="#" className="footer__link">Accesibilidad</a></li>
               <li><a href="#" className="footer__link">Términos de Reserva</a></li>
             </ul>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer__work-button"
+            >
+              Trabaja con nosotros
+              <svg width="1em" height="1em" viewBox="0 0 48 48" fill="none"><path d="M41.9999 24H5.99994" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path><path d="M30 12L42 24L30 36" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </a>
           </div>
         </div>
 
         {/* Bottom section */}
         <div className="footer__bottom">
+          <hr />
           <div className="footer__bottom-content">
             <div className="footer__bottom-logos">
+              <img src={logo4.src} alt="Logo 4" className="footer__bottom-logo" />
+              <img src={logo5.src} alt="Logo 5" className="footer__bottom-logo" />
               <img src={logo1.src} alt="Logo 1" className="footer__bottom-logo" />
+              <hr />
+              <p className="footer__bottom-logo-text">Miembro de:</p>
               <img src={logo2.src} alt="Logo 2" className="footer__bottom-logo" />
               <img src={logo3.src} alt="Logo 3" className="footer__bottom-logo" />
-              <img src={logo4.src} alt="Logo 4" className="footer__bottom-logo" />
             </div>
             <p className="footer__copyright">
               © {currentYear} V Grand Hotel. Todos los derechos reservados.
