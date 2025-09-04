@@ -21,32 +21,32 @@ const ScrollRestaurant = ({restaurantData, simpleCarouselRef1, simpleCarouselRef
             top: '10vh',
             left: 0,
             width: '100%',
-            height: '100vh', // Ocupa toda la altura de la pantalla
-            scale: 1, // Tamaño completo
+            height: '100vh', 
+            scale: 1, 
             zIndex: 3,
-            opacity: 1 // Carrusel 1 siempre al 100%
+            opacity: 1 
         });
 
         gsap.set(carousel2Ref.current, { 
             position: 'fixed',
-            top: 'calc(10vh - 80px)', // Apilado escalonadamente, mostrando parte del carrusel 1
-            left: '20px', // Desplazado lateralmente para crear efecto de pila
+            top: 'calc(10vh - 80px)', 
+            left: '20px', 
             width: '100%',
-            height: '100vh', // Ocupa toda la altura de la pantalla
-            scale: 0.9, // Tamaño reducido inicialmente
+            height: '100vh', 
+            scale: 0.9, 
             zIndex: 2,
-            opacity: 0.8 // Carrusel 2 empieza al 80%
+            opacity: 0.8 
         });
 
         gsap.set(carousel3Ref.current, { 
             position: 'fixed',
-            top: 'calc(10vh - 160px)', // Más escalonado, mostrando parte de los dos carruseles anteriores
-            left: '40px', // Más desplazado lateralmente
+            top: 'calc(10vh - 160px)',
+            left: '40px', 
             width: '100%',
-            height: '100vh', // Ocupa toda la altura de la pantalla
-            scale: 0.8, // Tamaño más reducido inicialmente
+            height: '100vh', 
+            scale: 0.8, 
             zIndex: 1,
-            opacity: 0.6 // Carrusel 3 empieza al 60%
+            opacity: 0.6
         });
 
         // Timeline principal para la secuencia de desapilado
@@ -57,6 +57,7 @@ const ScrollRestaurant = ({restaurantData, simpleCarouselRef1, simpleCarouselRef
                 end: '+=400%',
                 scrub: 0.5,
                 pin: true,
+                invalidateOnRefresh: true,
                 anticipatePin: 1
             }
         });
@@ -70,7 +71,7 @@ const ScrollRestaurant = ({restaurantData, simpleCarouselRef1, simpleCarouselRef
             opacity: 1, // Carrusel 2 aumenta su opacidad a 100% cuando está al frente
             scale: 1, // Carrusel 2 aumenta su tamaño al 100% cuando está al frente
             ease: 'power1.out'
-        }, 0);
+        }, 0.2);
 
         // Segunda fase: El carrusel 2 se desliza hacia arriba, revelando el carrusel 3
         tl.to(carousel2Ref.current, {
@@ -85,9 +86,9 @@ const ScrollRestaurant = ({restaurantData, simpleCarouselRef1, simpleCarouselRef
 
         // Tercera fase: El carrusel 3 se desliza hacia arriba
         tl.to(carousel3Ref.current, {
-            top: '-100vh',
-            ease: 'power1.out'
-        }, 0.66);
+            top: '0vh',
+            ease: 'power3.out'
+        }, 0.4);
 
         // Cleanup function
         return () => {
@@ -96,8 +97,8 @@ const ScrollRestaurant = ({restaurantData, simpleCarouselRef1, simpleCarouselRef
     }, [restaurantData]);
 
     return (
-        <section ref={sectionRef} className="simple-carousels-section scroll-r-section" style={{ height: '100vh' }}>
-            <div className="simple-carousels-container scroll-r-container" style={{ height: '100vh' }}>
+        <section ref={sectionRef} className="simple-carousels-section scroll-r-section">
+            <div className="simple-carousels-container scroll-r-container">
                 {/* Primer carousel - Tres Generaciones */}
                 <div ref={carousel1Ref} className="simple-carousel-wrapper scroll-r-carousel-wrapper">
                     <div ref={simpleCarouselRef1} className="restaurants-gallery js-flickity scroll-r-restaurants-gallery">
