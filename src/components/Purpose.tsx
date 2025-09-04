@@ -339,9 +339,6 @@ const Purpose: React.FC = () => {
               Combinamos comodidad y sofisticación con servicios modernos de
               calidad y bienestar.
             </h3>
-            <div ref={pillarsDescriptionRef} className="purpose__content-description">
-              dolor sit amet consectetur. Hac eget interdum urna auctor. Enim consequat risus donec. Iaculis dignissim proin non arcu. Viverra adipiscing nec massa nunc tristique. Enim consequat risus sagittis donec. Iaculis dignissim proin non arcu.
-            </div>
           </div>
         </div>
       </div>
