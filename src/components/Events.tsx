@@ -2,18 +2,16 @@ import React, { useState, useEffect } from 'react'
 import './Events.css'
 import { EVENTS_IMAGES } from "../config/env";
 
-// Datos de imágenes para el carousel
 const eventsImages = [
     EVENTS_IMAGES.EVENT_1,
     EVENTS_IMAGES.EVENT_2,
     EVENTS_IMAGES.EVENT_3
 ];
 
-// Títulos para cada imagen
 const eventsTitles = [
     "Salón grand",
     "Salón v", 
-    "Terraza"
+    "Caracolí"
 ];
 
 const Events = () => {

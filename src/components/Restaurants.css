@@ -253,6 +253,12 @@ line-height: 150%;
   width: 100%;
 }
 
+/* Estilos para el carrusel personalizado */
+.scroll-r-restaurants-gallery .custom-carousel__container {
+  height: 60vh;
+}
+
+/* Mantener estilos de Flickity para compatibilidad */
 .restaurants-gallery {
   overflow: hidden;
   width: 100%;

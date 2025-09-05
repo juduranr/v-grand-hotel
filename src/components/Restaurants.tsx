@@ -15,9 +15,6 @@ const Restaurants: React.FC = () => {
   const galleryCarouselRef2 = useRef<HTMLDivElement>(null);
   const galleryCarouselRef3 = useRef<HTMLDivElement>(null);
 
-  const simpleCarouselRef1 = useRef<HTMLDivElement>(null);
-  const simpleCarouselRef2 = useRef<HTMLDivElement>(null);
-  const simpleCarouselRef3 = useRef<HTMLDivElement>(null);
 
   const carouselRef1 = useRef<HTMLDivElement>(null);
   const carouselRef2 = useRef<HTMLDivElement>(null);
@@ -64,9 +61,6 @@ const Restaurants: React.FC = () => {
     };
 
     const timer = setTimeout(() => {
-      initFlickity(simpleCarouselRef1, { autoPlay: 3000 });
-      initFlickity(simpleCarouselRef2, { autoPlay: 3500 });
-      initFlickity(simpleCarouselRef3, { autoPlay: 4000 });
       initFlickity(galleryCarouselRef1, { autoPlay: 4000 });
       initFlickity(galleryCarouselRef2, { autoPlay: 5000 });
       initFlickity(galleryCarouselRef3, { autoPlay: 6000 });
@@ -77,7 +71,7 @@ const Restaurants: React.FC = () => {
 
     return () => {
       clearTimeout(timer);
-      const refs = [simpleCarouselRef1, simpleCarouselRef2, simpleCarouselRef3, galleryCarouselRef1, galleryCarouselRef2, galleryCarouselRef3, carouselRef1, carouselRef2, carouselRef3];
+      const refs = [galleryCarouselRef1, galleryCarouselRef2, galleryCarouselRef3, carouselRef1, carouselRef2, carouselRef3];
       refs.forEach(ref => {
         if (ref.current && ref.current.flickity) {
           ref.current.flickity.destroy();
@@ -119,7 +113,7 @@ const Restaurants: React.FC = () => {
   return (
     <div className="restaurants-container">
       <div className="restaurants-sections-wrapper">
-        <ScrollRestaurant restaurantData={restaurantData} simpleCarouselRef1={simpleCarouselRef1} simpleCarouselRef2={simpleCarouselRef2} simpleCarouselRef3={simpleCarouselRef3} />
+        <ScrollRestaurant restaurantData={restaurantData} />
       </div>
     </div>
   );

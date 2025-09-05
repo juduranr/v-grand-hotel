@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import CustomCarousel from './CustomCarousel';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const ScrollRestaurant = ({restaurantData, simpleCarouselRef1, simpleCarouselRef2, simpleCarouselRef3}: {restaurantData: any, simpleCarouselRef1: any, simpleCarouselRef2: any, simpleCarouselRef3: any}) => {
+const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
 
     const sectionRef = useRef<HTMLElement>(null);
     const carousel1Ref = useRef<HTMLDivElement>(null);
@@ -56,9 +57,19 @@ const ScrollRestaurant = ({restaurantData, simpleCarouselRef1, simpleCarouselRef
             trigger: sectionRef.current,
             start: 'top top',
             end: '+=400%',
+            onEnter: () => {
+                // Mostrar inmediatamente el primer carousel cuando se entra a la sección
+                if (carousel1Ref.current) {
+                    gsap.set(carousel1Ref.current.querySelectorAll('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container'), {
+                        opacity: 1,
+                        visibility: 'visible'
+                    });
+                }
+            },
             onUpdate: (self) => {
                 const progress = self.progress;
                 
+                // Ocultar todos los títulos inicialmente
                 gsap.set('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container', {
                     opacity: 0,
                     visibility: 'hidden'
@@ -66,7 +77,8 @@ const ScrollRestaurant = ({restaurantData, simpleCarouselRef1, simpleCarouselRef
 
                 if (progress < 0.01) {
                     return;
-                } else if (progress < 0.2) {
+                } else if (progress < 0.1) {
+                    // Mostrar el primer carousel cuando el ScrollTrigger se active
                     if (carousel1Ref.current) {
                         gsap.set(carousel1Ref.current.querySelectorAll('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container'), {
                             opacity: 1,
@@ -111,22 +123,22 @@ const ScrollRestaurant = ({restaurantData, simpleCarouselRef1, simpleCarouselRef
             opacity: 1,
             scale: 1,
             ease: 'power1.out'
-        }, 0.2);
+        }, 0.4);
 
         tl.to(carousel2Ref.current, {
             top: '-100vh',
             ease: 'power1.out'
-        }, 0.5)
+        }, 0.7)
         .to(carousel3Ref.current, {
             opacity: 1,
             scale: 1,
             ease: 'power1.out'
-        }, 0.5);
+        }, 0.7);
         
         tl.to(carousel3Ref.current, {
             top: '0vh',
             ease: 'power3.out'
-        }, 0.6);
+        }, 0.8);
 
         return () => {
             ScrollTrigger.getAll().forEach(trigger => trigger.kill());
@@ -151,13 +163,11 @@ const ScrollRestaurant = ({restaurantData, simpleCarouselRef1, simpleCarouselRef
                             </svg>
                         </div>
                         <div className="restaurants-carousel-container">
-                            <div ref={simpleCarouselRef1} className="restaurants-gallery js-flickity scroll-r-restaurants-gallery">
-                                {restaurantData[0].items.map((item: any, index: any) => (
-                                    <div key={`simple1-${index}`} className="restaurants-gallery-cell scroll-r-gallery-cell">
-                                        <img src={item.src} alt={item.alt} loading="lazy" />
-                                    </div>
-                                ))}
-                            </div>
+                            <CustomCarousel 
+                                images={restaurantData[0].items}
+                                className="scroll-r-restaurants-gallery"
+                                showIndicators={false}
+                            />
                         </div>
                         <div className='restaurants-description-container'>
                             <p className="restaurants-description">{restaurantData[0].description}</p>
@@ -182,13 +192,11 @@ const ScrollRestaurant = ({restaurantData, simpleCarouselRef1, simpleCarouselRef
                             </svg>
                         </div>
                         <div className="restaurants-carousel-container">
-                            <div ref={simpleCarouselRef2} className="restaurants-gallery js-flickity scroll-r-restaurants-gallery">
-                                {restaurantData[1].items.map((item: any, index: any) => (
-                                    <div key={`simple2-${index}`} className="restaurants-gallery-cell scroll-r-gallery-cell">
-                                        <img src={item.src} alt={item.alt} loading="lazy" />
-                                    </div>
-                                ))}
-                            </div>
+                            <CustomCarousel 
+                                images={restaurantData[1].items}
+                                className="scroll-r-restaurants-gallery"
+                                showIndicators={false}
+                            />
                         </div>
                         <div className='restaurants-description-container'>
                             <p className="restaurants-description">{restaurantData[1].description}</p>
@@ -213,13 +221,11 @@ const ScrollRestaurant = ({restaurantData, simpleCarouselRef1, simpleCarouselRef
                             </svg>
                         </div>
                         <div className="restaurants-carousel-container">
-                            <div ref={simpleCarouselRef3} className="restaurants-gallery js-flickity scroll-r-restaurants-gallery">
-                                {restaurantData[2].items.map((item: any, index: any) => (
-                                    <div key={`simple3-${index}`} className="restaurants-gallery-cell scroll-r-gallery-cell">
-                                        <img src={item.src} alt={item.alt} loading="lazy" />
-                                    </div>
-                                ))}
-                            </div>
+                            <CustomCarousel 
+                                images={restaurantData[2].items}
+                                className="scroll-r-restaurants-gallery"
+                                showIndicators={false}
+                            />
                         </div>
                         <div className='restaurants-description-container'>
                             <p className="restaurants-description">{restaurantData[2].description}</p>

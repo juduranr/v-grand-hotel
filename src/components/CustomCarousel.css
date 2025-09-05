@@ -1,0 +1,375 @@
+/* Carousel personalizado */
+.custom-carousel {
+    margin-top: 2rem;
+}
+
+.custom-carousel__container {
+    position: relative;
+    overflow: visible;
+    height: 70vh;
+    width: 100%;
+    cursor: default;
+}
+
+.custom-carousel__track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.custom-carousel__stage {
+    position: absolute;
+    inset: 0;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.5s ease-in-out, opacity 0.3s ease-in-out;
+    cursor: pointer;
+    z-index: 1;
+    will-change: transform;
+}
+
+.custom-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    transition: transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+/* Layout vertical en mobile */
+@media (max-width: 768px) {
+    .custom-card-inner {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+.custom-card-inner.no-transition {
+    transition: none !important;
+}
+
+.custom-card-pane {
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.custom-card-pane--prev {
+    width: 200px;
+    height: 100%;
+    opacity: 1;
+    z-index: 1;
+}
+
+.custom-card-pane--current {
+    flex: 1;
+    height: 100%;
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+}
+
+.custom-card-pane--next {
+    width: 200px;
+    height: 100%;
+    opacity: 1;
+    z-index: 1;
+}
+
+/* Layout vertical en mobile */
+@media (max-width: 768px) {
+    .custom-card-pane--prev {
+        width: 100%;
+        height: 100px;
+        order: 1;
+    }
+
+    .custom-card-pane--current {
+        width: 100%;
+        height: 250px;
+        order: 2;
+        flex: none;
+    }
+
+    .custom-card-pane--next {
+        width: 100%;
+        height: 100px;
+        order: 3;
+    }
+}
+
+.custom-card-inner-main {
+    position: relative;
+    width: 200%;
+    height: 100%;
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transform: translateX(0%);
+}
+
+.custom-card-inner-main.no-transition {
+    transition: none !important;
+}
+
+.custom-card-pane-inner {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Layout vertical en mobile */
+@media (max-width: 768px) {
+    .custom-card-pane-inner {
+        width: 100%;
+        height: 50%;
+    }
+}
+
+
+.custom-carousel__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.custom-carousel__image:hover {
+    transform: none;
+}
+
+.custom-card-pane img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.custom-card-inner-main.slide-right {
+    transform: translateX(-50%);
+}
+
+/* Layout vertical en mobile */
+@media (max-width: 768px) {
+    .custom-card-inner-main {
+        width: 100%;
+        height: 200%;
+        flex-direction: column;
+        transform: translateY(0%);
+    }
+
+    .custom-card-inner-main.slide-right {
+        transform: translateY(-50%);
+    }
+}
+
+.custom-card-inner-side {
+    position: relative;
+    width: 200%;
+    height: 100%;
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transform: translateX(0%);
+}
+
+.custom-card-inner-side.no-transition {
+    transition: none !important;
+}
+
+.custom-card-inner-side.slide-right {
+    transform: translateX(-50%);
+}
+
+/* Layout vertical en mobile */
+@media (max-width: 768px) {
+    .custom-card-inner-side {
+        width: 100%;
+        height: 200%;
+        flex-direction: column;
+        transform: translateY(0%);
+    }
+
+    .custom-card-inner-side.slide-right {
+        transform: translateY(-50%);
+    }
+}
+
+.custom-card:not([style*="zIndex: 10"]) {
+    z-index: 1;
+}
+
+/* Áreas clickeables para navegación */
+.custom-carousel__click-areas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    pointer-events: none;
+}
+
+.custom-carousel__click-area {
+    flex: 1;
+    height: 100%;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: inherit;
+}
+
+.custom-carousel__click-area--left {
+    cursor: inherit;
+}
+
+.custom-carousel__click-area--left:hover {
+    cursor: inherit;
+}
+
+.custom-carousel__click-area--right {
+    cursor: inherit;
+}
+
+.custom-carousel__click-area--right:hover {
+    cursor: inherit;
+}
+
+
+/* Overlay con título en esquina inferior izquierda */
+.custom-carousel__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    padding: 2rem;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.custom-carousel__overlay-title h3 {
+    color: #fff;
+    font-size: 80px;
+    font-weight: 400;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Indicadores en la parte inferior alineados a la izquierda */
+.custom-carousel__indicators {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding-left: 0;
+}
+
+.custom-carousel__indicator {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #000000 !important;
+    background: transparent !important;
+    border: 2px solid transparent !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Estilos específicos para los indicadores del carrusel */
+.custom-carousel__indicator--custom {
+    background-color: transparent !important;
+    color: #000000 !important;
+    border: 2px solid transparent !important;
+}
+
+.custom-carousel__indicator--custom:hover {
+    border: 2px solid #979A83 !important;
+    background: rgba(151, 154, 131, 0.1) !important;
+    transform: none !important;
+}
+
+.custom-carousel__indicator--custom.active {
+    background: #979A83 !important;
+    color: white !important;
+    transform: scale(1.1) !important;
+    border-color: #979A83 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .custom-carousel__container {
+        height: 60vh;
+        width: 100%;
+    }
+    
+    .custom-carousel__overlay {
+        padding: 1.5rem;
+    }
+    
+    .custom-carousel__overlay-title h3 {
+        font-size: 1.3rem;
+    }
+    
+    .custom-carousel__indicators {
+        justify-content: center;
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .custom-carousel__container {
+        height: 60vh;
+        width: 100%;
+    }
+    
+    .custom-card-pane--prev,
+    .custom-card-pane--next {
+        height: 80px;
+    }
+    
+    .custom-card-pane--current {
+        height: 200px;
+    }
+    
+    .custom-carousel__overlay {
+        padding: 1rem;
+    }
+    
+    .custom-carousel__overlay-title h3 {
+        font-size: 1.1rem;
+    }
+    
+    .custom-carousel__indicators {
+        gap: 0.3rem;
+    }
+    
+    .custom-carousel__indicator {
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+        min-height: 28px !important;
+        font-size: 12px !important;
+    }
+}

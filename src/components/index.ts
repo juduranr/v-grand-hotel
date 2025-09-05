@@ -1,3 +1,4 @@
+export { default as CustomCarousel } from './CustomCarousel';
 export { default as Discover } from './Discover';
 export { default as Events } from './Events';
 export { default as Experiences } from './Experiences';
