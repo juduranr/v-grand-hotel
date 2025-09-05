@@ -1,6 +1,7 @@
 .hero {
   position: relative;
   height: 200vh;
+  overflow: visible;
 }
 
 .hero__background {
@@ -24,17 +25,12 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: opacity 0.5s ease-in-out;
 }
 
-.hero__video--hidden {
-  opacity: 0;
-  pointer-events: none;
-}
 
 .hero__title-wrapper {
   position: absolute !important;
-  top: 50% !important;
+  top: 50vh !important;
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
   z-index: 15;
@@ -45,8 +41,17 @@
   box-sizing: border-box;
 }
 
+/* Cuando el título está siendo animado */
+.hero__title-wrapper.animating {
+  position: fixed !important;
+  z-index: 100;
+  top: 50vh !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
 .hero__title-content {
-  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-size: 96px; /* Tamaño inicial */
   font-family: 'BeaufortforLOL', serif;
   font-weight: 400;
   text-align: center;
@@ -56,8 +61,12 @@
   display: flex;
   align-items: baseline;
   justify-content: center;
-  min-height: clamp(2.5rem, 8vw, 6rem);
+  min-height: 96px;
   white-space: nowrap;
+  position: relative;
+  z-index: 100;
+  background-color: rgba(255, 0, 0, 0.3); /* Debug: posición inicial - rojo */
+  border: 2px solid red;
 }
 
 .hero__title--fade {
@@ -120,7 +129,7 @@
 }
 
 .hero__description-content{
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
   display: flex;
@@ -247,7 +256,8 @@
   }
   
   .hero__title-content {
-    font-size: clamp(2rem, 6vw, 4rem);
+    font-size: 64px; /* Tamaño inicial en móvil */
+    min-height: 64px;
   }
   
   .hero__description-content {
@@ -267,7 +277,8 @@
   }
   
   .hero__title-content {
-    font-size: clamp(1.5rem, 8vw, 2.5rem);
+    font-size: 48px; /* Tamaño inicial en móvil pequeño */
+    min-height: 48px;
   }
   
   .hero__description-content {
@@ -278,4 +289,34 @@
   .hero__description-text {
     font-size: 16px;
   }
+}
+
+/* Estilos para la animación del título */
+.title__last__position {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  background-color: rgba(0, 255, 0, 0.3); /* Debug: posición final - verde */
+  border: 2px solid green;
+}
+
+.hero__description-content img {
+  width: 37px;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  position: relative;
+  z-index: 5;
+}
+
+.scrollItem {
+  position: relative;
+}
+
+.scrollPositionTwo {
+  position: relative;
 }

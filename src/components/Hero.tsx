@@ -2,50 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import { IMAGES_BASE_URL } from '../config/env';
 import vHotelLogo from "../assets/images/v-hotel.svg";
 import './Hero.css';
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+gsap.registerPlugin(ScrollTrigger, SplitText, MotionPathPlugin);
 
 const Hero: React.FC = () => {
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [showHighQuality, setShowHighQuality] = useState(false);
-
   const secondWords = ["WELCOME", "GRAND", "MEDELLÍN"];
 
-  // URLs de los videos
-  const lightVideoUrl = `${IMAGES_BASE_URL}hero/Video-Header_WebM.webm`;
-  const highQualityVideoUrl = `${IMAGES_BASE_URL}hero/Video-Header_HQ.mp4`;
-
-  // Efecto para cargar el video de alta calidad después del ligero
-  useEffect(() => {
-    const lightVideo = document.querySelector('.hero__video--light') as HTMLVideoElement;
-    const highQualityVideo = document.querySelector('.hero__video--high-quality') as HTMLVideoElement;
-    
-    if (videoLoaded && highQualityVideo) {
-      // Precargar el video de alta calidad
-      highQualityVideo.load();
-      
-      // Cuando el video de alta calidad esté listo, mostrarlo
-      const handleHighQualityCanPlay = () => {
-        setShowHighQuality(true);
-        if (lightVideo && highQualityVideo) {
-          // Sincronizar el tiempo de reproducción
-          highQualityVideo.currentTime = lightVideo.currentTime;
-          highQualityVideo.play();
-        }
-      };
-
-      highQualityVideo.addEventListener('canplaythrough', handleHighQualityCanPlay);
-      
-      return () => {
-        if (highQualityVideo) {
-          highQualityVideo.removeEventListener('canplaythrough', handleHighQualityCanPlay);
-        }
-      };
-    }
-  }, [videoLoaded]);
+  const videoUrl = `${IMAGES_BASE_URL}hero/Video-Header_WebM.webm`;
 
   const handleScrollDown = () => {
     const descriptionElement = document.querySelector('.hero__description');
@@ -68,14 +35,12 @@ const Hero: React.FC = () => {
       repeat: -1
     });
 
-    // Set initial positions - only first word visible
     splits.forEach((split, i) => {
       if (i) {
         gsap.set(split.chars, { yPercent: 100 });
       }
     });
 
-    // Create the animation sequence
     splits.forEach((split, i) => {
       const next = splits[i + 1];
       
@@ -90,7 +55,6 @@ const Hero: React.FC = () => {
         "+=" + pause
       );
       
-      // Animate next word in (if exists)
       if (next) {
         tl.to(
           next.chars,
@@ -104,7 +68,6 @@ const Hero: React.FC = () => {
       }
     });
     
-    // Finally, animate the first word back in to complete the cycle
     tl.fromTo(
       firstSplit.chars,
       {
@@ -119,8 +82,6 @@ const Hero: React.FC = () => {
       "<"
     );
 
-    // ScrollTrigger animations - Solo overlay/sombra
-
     gsap.to(".hero__shadow", {
       scrollTrigger: {
         trigger: ".hero__description",
@@ -132,6 +93,54 @@ const Hero: React.FC = () => {
       height: "100vh"
     });
 
+    const scrollItem = document.querySelector('.scrollItem');
+    const scrollPositionTwo = document.querySelector('.scrollPositionTwo');
+    
+    if (scrollItem && scrollPositionTwo) {
+      const scrollItemRect = scrollItem.getBoundingClientRect();
+      const scrollPositionTwoRect = scrollPositionTwo.getBoundingClientRect();
+      
+      // Calcular la diferencia en el eje Y considerando el cambio de font-size
+      // Determinar el tamaño final basado en el tamaño de pantalla
+      let finalFontSize = 64;
+      let initialFontSize = 96;
+      
+      if (window.innerWidth <= 480) {
+        finalFontSize = 32;
+        initialFontSize = 48;
+      } else if (window.innerWidth <= 768) {
+        finalFontSize = 48;
+        initialFontSize = 64;
+      }
+      
+      const scaleFactor = finalFontSize / initialFontSize;
+      const finalHeight = scrollItemRect.height * scaleFactor;
+      
+      // El título debe terminar 16px antes del bottom del elemento final
+      const deltaY = (scrollPositionTwoRect.bottom - finalHeight - 16) - scrollItemRect.top;
+      
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: ".hero__description",
+          start: "top-=50% center",
+          end: "top top",
+          scrub: 1,
+          markers: true,
+          onStart: () => {
+            scrollItem.parentElement?.classList.add('animating');
+          },
+          onComplete: () => {
+            scrollItem.parentElement?.classList.remove('animating');
+          }
+        },
+      }).to(scrollItem, {
+        y: deltaY,
+        fontSize: `${finalFontSize}px`,
+        duration: 1,
+        ease: "power2.inOut"
+      });
+    }
+
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
@@ -141,39 +150,15 @@ const Hero: React.FC = () => {
     <section className="hero">
       <div className="hero__background">
         <video 
-          className={`hero__video hero__video--light ${showHighQuality ? 'hero__video--hidden' : ''}`}
+          className="hero__video"
           autoPlay
           muted
           loop
           playsInline
-          onLoadedData={() => setVideoLoaded(true)}
-          onError={(e) => console.error('Error loading light video:', e)}
+          onError={(e) => console.error('Error loading video:', e)}
         >
-          <source src={lightVideoUrl} type="video/webm" />
+          <source src={videoUrl} type="video/webm" />
         </video>
-        <video 
-          className={`hero__video hero__video--high-quality ${!showHighQuality ? 'hero__video--hidden' : ''}`}
-          autoPlay
-          muted
-          loop
-          playsInline
-          onError={(e) => console.error('Error loading high quality video:', e)}
-        >
-          <source src={highQualityVideoUrl} type="video/mp4" />
-        </video>
-        
-        <div className="hero__title-wrapper">
-          <div className="hero__title-content">
-            <div className="hero__title-fixed">
-              FEEL&nbsp;
-            </div>
-            <div className="hero__words-container">
-              <div className="hero__word">WELCOME</div>
-              <div className="hero__word">GRAND</div>
-              <div className="hero__word">MEDELLÍN</div>
-            </div>
-          </div>
-        </div>
         
         <div className="hero__scroll-button">
           <div className="hero__scroll-pulse"></div>
@@ -197,10 +182,27 @@ const Hero: React.FC = () => {
           </button>
         </div>
       </div>
+      
+      <div className="hero__title-wrapper">
+        <div className="hero__title-content scrollItem">
+          <div className="hero__title-fixed">
+            FEEL&nbsp;
+          </div>
+          <div className="hero__words-container">
+            <div className="hero__word">WELCOME</div>
+            <div className="hero__word">GRAND</div>
+            <div className="hero__word">MEDELLÍN</div>
+          </div>
+        </div>
+      </div>
+      
       <div className="hero__shadow"></div>
       <div className="hero__description">
         <div className="hero__description-content">
+        <div className="title__last__position scrollPositionTwo">
+        </div>
           <img src={vHotelLogo.src} alt="V Grand" />
+          
           <p className="hero__description-text">
             Descubre un oasis de bienestar donde cada detalle está diseñado para que te sientas renovado, relajado y completamente cuidado. Tu bienestar es nuestra prioridad.
           </p>
