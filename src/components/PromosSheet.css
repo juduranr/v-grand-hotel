@@ -170,15 +170,23 @@
   text-transform: uppercase;
   line-height: 1;
   transform: rotate(180deg);
+  margin-right: 24px;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .promos-sheet {
-    width: 90%;
-    max-width: 400px;
-    right: -90%;
+    width: 320px;
+    right: -320px;
     padding: 20px;
+    background: #fff;
+    z-index: 10000;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .promos-sheet--open {
+    right: 0;
   }
 
   .promos-sheet__header {
@@ -211,10 +219,8 @@
   }
 
   .floating-button {
-    width: 60px;
-    height: 40px;
     right: -30px;
-    padding: 16px 12px;
+    padding: 32px 24px;
   }
 
   .floating-button:hover {
@@ -222,7 +228,7 @@
   }
 
   .floating-button--hidden {
-    transform: translateY(-50%) translateX(60px);
+    transform: translateY(-50%) translateX(120px);
   }
 
   .floating-button:active {
@@ -234,8 +240,6 @@
   }
 
   .floating-button--mobile {
-    min-width: 60px;
-    min-height: 40px;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
@@ -252,17 +256,22 @@
 
 @media (max-width: 480px) {
   .promos-sheet {
-    width: 95%;
-    max-width: 350px;
-    right: -95%;
+    width: 280px;
+    right: -280px;
     padding: 16px;
+    background: #fff;
+    z-index: 10000;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .promos-sheet--open {
+    right: 0;
   }
 
   .floating-button {
-    width: 50px;
-    height: 36px;
     right: -25px;
-    padding: 12px 10px;
+    padding: 32px 24px;
   }
 
   .floating-button:hover {
@@ -270,7 +279,7 @@
   }
 
   .floating-button--hidden {
-    transform: translateY(-50%) translateX(50px);
+    transform: translateY(-50%) translateX(100px);
   }
 
   .floating-button:active {
@@ -294,8 +303,7 @@
   }
 
   .floating-button--mobile {
-    min-width: 50px;
-    min-height: 36px;
+    /* Mantiene el mismo tamaño que en pantallas grandes */
   }
 
   .floating-button--mobile:active {

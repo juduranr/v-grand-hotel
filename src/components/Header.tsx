@@ -46,11 +46,13 @@ const Header: React.FC = () => {
 
           {/* Center - Logo */}
           <div className={`header__center ${isMenuOpen ? 'header__center--hidden' : ''}`}>
-            <img 
-              src={headerLogo.src} 
-              alt="V Grand Hotel" 
-              className="header__logo"
-            />
+            <a href="/" className="header__logo-link">
+              <img 
+                src={headerLogo.src} 
+                alt="V Grand Hotel" 
+                className="header__logo"
+              />
+            </a>
           </div>
 
           {/* Right side - Reserve button */}
@@ -61,6 +63,13 @@ const Header: React.FC = () => {
           </div>
         </div>
       </header>
+      
+      {/* Botón flotante de reservar para móviles */}
+      <div className="header__floating-reserve">
+        <button className="header__floating-reserve-button">
+          Reservar
+        </button>
+      </div>
       
       <Menu isOpen={isMenuOpen} onClose={toggleMenu} />
     </>

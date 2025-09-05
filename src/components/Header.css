@@ -133,6 +133,12 @@
   align-items: center;
 }
 
+.header__logo-link {
+  display: inline-block;
+  text-decoration: none;
+  line-height: 0;
+}
+
 .header__logo {
   height: 32px;
   width: auto;
@@ -177,6 +183,35 @@
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
+/* Botón flotante de reservar */
+.header__floating-reserve {
+  display: none;
+}
+
+.header__floating-reserve-button {
+  color: #000;
+  font-family: Avenir;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: white;
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 40px;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__floating-reserve-button:hover {
+  background: #f3f4f6;
+  transform: scale(1.05);
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .header__container {
@@ -189,6 +224,31 @@
   
   .header__logo {
     height: 32px;
+  }
+  
+  .header__right {
+    display: none;
+  }
+  
+  .header__center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    flex: none;
+  }
+  
+  .header__left {
+    flex: none;
+  }
+  
+  .header__floating-reserve {
+    display: block;
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
   }
 }
 

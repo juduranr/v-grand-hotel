@@ -305,9 +305,11 @@ const Discover: React.FC = () => {
             aria-modal="true"
             aria-label="Imagen ampliada"
           >
-            <button className="discover__lightbox_close" onClick={handleCloseLightbox} aria-label="Cerrar imagen">✕</button>
             {lightboxSrc && (
-              <img ref={lightboxImageRef} className="discover__lightbox_image" src={lightboxSrc} alt="Imagen ampliada" />
+              <div className="discover__lightbox_image_container">
+                <img ref={lightboxImageRef} className="discover__lightbox_image" src={lightboxSrc} alt="Imagen ampliada" />
+                <button className="discover__lightbox_close" onClick={handleCloseLightbox} aria-label="Cerrar imagen">✕</button>
+              </div>
             )}
           </div>
         )}

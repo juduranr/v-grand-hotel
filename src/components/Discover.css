@@ -155,6 +155,11 @@
   padding: 24px;
 }
 
+.discover__lightbox_image_container {
+  position: relative;
+  display: inline-block;
+}
+
 .discover__lightbox_image {
   max-width: 95vw;
   max-height: 85vh;
@@ -164,23 +169,24 @@
 
 .discover__lightbox_close {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 20px;
+  right: 20px;
   width: 40px;
   height: 40px;
   border: none;
-  background: rgba(255,255,255,0.1);
+  background: transparent;
   color: #fff;
   font-size: 20px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out;
+  z-index: 1001;
 }
 
 .discover__lightbox_close:hover {
-  background: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.7);
 }
 
 @media (max-width: 768px) {
