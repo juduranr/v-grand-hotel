@@ -280,7 +280,6 @@ const Discover: React.FC = () => {
             className="discover__image"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
-            onClick={() => handleOpenLightbox(DISCOVER_IMAGES.HERO)}
             onError={(e) => {
               (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
               (e.target as HTMLImageElement).style.display = 'flex';

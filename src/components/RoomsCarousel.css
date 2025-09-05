@@ -350,21 +350,28 @@ padding-bottom: 56px;
   }
   
   .rooms-carousel__carousel-track {
-    height: 500px;
+    height: 810px;
   }
   
   .rooms-carousel__room-card {
     flex-direction: column;
+    height: 810px;
   }
   
   .rooms-carousel__room-image-container {
     width: 100%;
-    height: 200px;
+    height: 360px;
+    order: 2;
   }
   
   .rooms-carousel__room-content {
     width: 100%;
+    height: 450px;
     padding: 1.5rem;
+    order: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   
   .rooms-carousel__controls {
@@ -382,6 +389,16 @@ padding-bottom: 56px;
     width: 40px;
     height: 40px;
     font-size: 1.2rem;
+  }
+  
+  /* Ocultar el grid de habitaciones en pantallas pequeñas */
+  .rooms-carousel__all-rooms {
+    display: none;
+  }
+  
+  .rooms-carousel__all-rooms-grid-button {
+    margin-top: 40px;
+    padding-bottom: 60px;
   }
 }
 
@@ -494,12 +511,45 @@ gap: 8px;
 }
 
 @media (max-width: 480px) {
+  .rooms-carousel__presentation-title {
+    font-size: 1.5rem;
+  }
+  
+  .rooms-carousel__carousel-title h2 {
+    font-size: 1.5rem;
+  }
+  
   .rooms-carousel__room-details {
     grid-template-columns: 1fr;
   }
   
   .rooms-carousel__carousel-track {
+    height: 810px;
+  }
+  
+  .rooms-carousel__room-card {
+    height: 810px;
+  }
+  
+  .rooms-carousel__room-image-container {
+    height: 360px;
+  }
+  
+  .rooms-carousel__room-content {
     height: 450px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .rooms-carousel__room-title {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+  
+  .rooms-carousel__room-capacity {
+    margin-bottom: 20px;
   }
   
   .rooms-carousel__all-rooms-grid {
@@ -509,5 +559,17 @@ gap: 8px;
   .rooms-carousel__room-card-grid {
     flex: 1 1 100%;
     min-width: 100%;
+  }
+  
+  .rooms-carousel__all-rooms-grid-button {
+    margin-top: 30px;
+    padding-bottom: 40px;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .rooms-carousel__all-rooms-grid-button p {
+    font-size: 1rem;
   }
 }

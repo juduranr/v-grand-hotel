@@ -265,6 +265,15 @@
   .purpose__description {
     margin-top: 1rem;
   }
+  
+  /* Ajustar ancho de logos en pantallas pequeñas */
+  .purpose__logo-container .purpose__logo-item img {
+    width: 240px;
+  }
+  
+  .purpose__logo-container .purpose__logo-line img {
+    width: 250px;
+  }
 }
 
 @media (max-width: 480px) {

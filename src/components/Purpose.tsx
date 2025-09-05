@@ -247,7 +247,7 @@ const Purpose: React.FC = () => {
         <div className="purpose__logo-container">
           <div className="purpose__logo-item">
             <img src={vHotelLogo.src} alt="V Grand" />
-            <h3 className="purpose__logo-title">Más de 25 marcas que confían en la historia de V Grand.</h3>
+            <h3 className="purpose__logo-title">Más de 30 mil personas al año hacen parte de la historia de V Grand.</h3>
           </div>
           <div className="purpose__logo-line">
             <hr />
