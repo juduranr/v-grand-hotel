@@ -31,7 +31,6 @@
     gap: clamp(0.5rem, 2vw, 1rem);
     margin-bottom: 2rem;
     width: 100%;
-    flex-wrap: wrap;
 }
 
 .histories-title-container hr {
@@ -50,19 +49,17 @@
 .histories-title {
     font-size: clamp(1.5rem, 4vw, 2.5rem);
     font-weight: 400;
-    margin: 0;
+    margin: 0 auto;
     line-height: 1.2;
     text-align: center;
     color: #fff;
     text-transform: uppercase;
-    min-width: 0;
-    flex: 1;
-    padding: 0 1rem;
+    width: 950px;
 }
 
 .histories-carousel {
     width: 100%;
-    height: 80vh;
+    height: calc(100vh - 200px);
     position: relative;
     margin: 0;
     overflow: hidden;
@@ -225,6 +222,7 @@
     .histories-title {
         font-size: clamp(1.2rem, 5vw, 2rem);
         padding: 0 0.5rem;
+        max-width: 200px;
     }
     
     .histories-title-container {
@@ -232,13 +230,16 @@
         margin-bottom: 1.5rem;
     }
     
+    .histories-title-container hr {
+        display: none;
+    }
+    
     .histories-title-container .v-hotel-logo {
-        width: 24px;
-        height: 24px;
+        display: none;
     }
     
     .histories-carousel {
-        height: 350px;
+        height: calc(100vh - 150px);
         margin-top: 40px;
     }
     
@@ -278,7 +279,7 @@
     }
     
     .histories-carousel {
-        height: 300px;
+        height: calc(100vh - 120px);
         margin-top: 20px;
     }
     
