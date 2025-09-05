@@ -61,17 +61,20 @@
 
 .btn-stay {
 	display: flex;
-	height: 56px;
-	padding: 17px 56px;
-	justify-content: center;
-	align-items: center;
-	gap: 10px;
-	background: #5E6754;
-	color: #ffffff;
-	text-decoration: none;
-	border-radius: 6px;
-	width: fit-content;
-	margin: 0 auto;
+height: 56px;
+padding: 17px 56px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+color: #FFF;
+font-size: 16px;
+font-style: italic;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.64px;
+background: #5E6754;
+text-decoration: none;
+text-transform: uppercase;
 }
 
 .btn-stay:hover { filter: brightness(1.05); }

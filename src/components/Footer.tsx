@@ -100,7 +100,7 @@ const Footer: React.FC = () => {
                 className="footer__directions-button"
               >
                 Cómo llegar
-                <svg width="1em" height="1em" viewBox="0 0 48 48" fill="none"><path d="M41.9999 24H5.99994" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path><path d="M30 12L42 24L30 36" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <svg width="1em" height="1em" viewBox="0 0 48 48" fill="none"><path d="M41.9999 24H5.99994" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path><path d="M30 12L42 24L30 36" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path></svg>
               </a>
             </div>
           </div>
@@ -122,7 +122,7 @@ const Footer: React.FC = () => {
               className="footer__work-button"
             >
               Trabaja con nosotros
-              <svg width="1em" height="1em" viewBox="0 0 48 48" fill="none"><path d="M41.9999 24H5.99994" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path><path d="M30 12L42 24L30 36" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <svg width="1em" height="1em" viewBox="0 0 48 48" fill="none"><path d="M41.9999 24H5.99994" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path><path d="M30 12L42 24L30 36" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path></svg>
             </a>
           </div>
         </div>

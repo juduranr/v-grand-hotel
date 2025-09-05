@@ -87,8 +87,8 @@ const Purpose: React.FC = () => {
         scrollTrigger: {
           trigger: element,
           scrub: 0,
-          start: "top 80%",
-          end: "bottom 20%"
+          start: "top-=10% bottom",
+          end: "bottom center+=20%"
         }
       });
     };

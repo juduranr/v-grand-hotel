@@ -1,20 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
 import { IMAGES_BASE_URL } from '../config/env';
+import vHotelLogo from "../assets/images/v-hotel.svg";
 import './Hero.css';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const Hero: React.FC = () => {
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const heroRef = useRef<HTMLElement>(null);
-  const shadowRef = useRef<HTMLDivElement>(null);
-  const descriptionRef = useRef<HTMLDivElement>(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [showHighQuality, setShowHighQuality] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const highQualityVideoRef = useRef<HTMLVideoElement>(null);
 
   const secondWords = ["WELCOME", "GRAND", "MEDELLÍN"];
 
@@ -24,33 +20,37 @@ const Hero: React.FC = () => {
 
   // Efecto para cargar el video de alta calidad después del ligero
   useEffect(() => {
-    if (videoLoaded && highQualityVideoRef.current) {
+    const lightVideo = document.querySelector('.hero__video--light') as HTMLVideoElement;
+    const highQualityVideo = document.querySelector('.hero__video--high-quality') as HTMLVideoElement;
+    
+    if (videoLoaded && highQualityVideo) {
       // Precargar el video de alta calidad
-      highQualityVideoRef.current.load();
+      highQualityVideo.load();
       
       // Cuando el video de alta calidad esté listo, mostrarlo
       const handleHighQualityCanPlay = () => {
         setShowHighQuality(true);
-        if (videoRef.current && highQualityVideoRef.current) {
+        if (lightVideo && highQualityVideo) {
           // Sincronizar el tiempo de reproducción
-          highQualityVideoRef.current.currentTime = videoRef.current.currentTime;
-          highQualityVideoRef.current.play();
+          highQualityVideo.currentTime = lightVideo.currentTime;
+          highQualityVideo.play();
         }
       };
 
-      highQualityVideoRef.current.addEventListener('canplaythrough', handleHighQualityCanPlay);
+      highQualityVideo.addEventListener('canplaythrough', handleHighQualityCanPlay);
       
       return () => {
-        if (highQualityVideoRef.current) {
-          highQualityVideoRef.current.removeEventListener('canplaythrough', handleHighQualityCanPlay);
+        if (highQualityVideo) {
+          highQualityVideo.removeEventListener('canplaythrough', handleHighQualityCanPlay);
         }
       };
     }
   }, [videoLoaded]);
 
   const handleScrollDown = () => {
-    if (descriptionRef.current) {
-      descriptionRef.current.scrollIntoView({
+    const descriptionElement = document.querySelector('.hero__description');
+    if (descriptionElement) {
+      descriptionElement.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
@@ -58,30 +58,78 @@ const Hero: React.FC = () => {
   };
 
   useEffect(() => {
-    if (!titleRef.current || !heroRef.current || !shadowRef.current) return;
 
-    gsap.to(titleRef.current, {
-      scrollTrigger: {
-        trigger: heroRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: true
-      },
-      y: "50vh",
-      fontSize: "4rem",
-      ease: "none"
+    const words = gsap.utils.toArray(".hero__word");
+    const splits = words.map((word) => new SplitText(word as HTMLElement, { type: "chars" }));
+    const firstSplit = splits[0];
+    const duration = 0.8;
+    const pause = 2;
+    const tl = gsap.timeline({
+      repeat: -1
     });
 
-    gsap.to(shadowRef.current, {
+    // Set initial positions - only first word visible
+    splits.forEach((split, i) => {
+      if (i) {
+        gsap.set(split.chars, { yPercent: 100 });
+      }
+    });
+
+    // Create the animation sequence
+    splits.forEach((split, i) => {
+      const next = splits[i + 1];
+      
+      // Animate current word out
+      tl.to(
+        split.chars,
+        {
+          yPercent: -100,
+          duration: duration,
+          ease: "power1.inOut"
+        },
+        "+=" + pause
+      );
+      
+      // Animate next word in (if exists)
+      if (next) {
+        tl.to(
+          next.chars,
+          {
+            duration: duration,
+            yPercent: 0,
+            ease: "power1.inOut"
+          },
+          "<"
+        );
+      }
+    });
+    
+    // Finally, animate the first word back in to complete the cycle
+    tl.fromTo(
+      firstSplit.chars,
+      {
+        yPercent: 100
+      },
+      {
+        duration: duration,
+        yPercent: 0,
+        ease: "power1.inOut",
+        immediateRender: false
+      },
+      "<"
+    );
+
+    // ScrollTrigger animations - Solo overlay/sombra
+
+    gsap.to(".hero__shadow", {
       scrollTrigger: {
-        trigger: heroRef.current,
-        start: "top top",
-        end: "bottom bottom",
+        trigger: ".hero__description",
+        start: "top bottom",
+        end: "top top",
         scrub: true
       },
-      y: "-150vh",
-      height: "150vh",
-      ease: "none"
+      y: "-100vh",
+      height: "100vh"
     });
 
     return () => {
@@ -90,11 +138,10 @@ const Hero: React.FC = () => {
   }, []);
   
   return (
-    <section className="hero" ref={heroRef}>
+    <section className="hero">
       <div className="hero__background">
         <video 
-          ref={videoRef}
-          className={`hero__video ${showHighQuality ? 'hero__video--hidden' : ''}`}
+          className={`hero__video hero__video--light ${showHighQuality ? 'hero__video--hidden' : ''}`}
           autoPlay
           muted
           loop
@@ -105,8 +152,7 @@ const Hero: React.FC = () => {
           <source src={lightVideoUrl} type="video/webm" />
         </video>
         <video 
-          ref={highQualityVideoRef}
-          className={`hero__video ${!showHighQuality ? 'hero__video--hidden' : ''}`}
+          className={`hero__video hero__video--high-quality ${!showHighQuality ? 'hero__video--hidden' : ''}`}
           autoPlay
           muted
           loop
@@ -115,6 +161,20 @@ const Hero: React.FC = () => {
         >
           <source src={highQualityVideoUrl} type="video/mp4" />
         </video>
+        
+        <div className="hero__title-wrapper">
+          <div className="hero__title-content">
+            <div className="hero__title-fixed">
+              FEEL&nbsp;
+            </div>
+            <div className="hero__words-container">
+              <div className="hero__word">WELCOME</div>
+              <div className="hero__word">GRAND</div>
+              <div className="hero__word">MEDELLÍN</div>
+            </div>
+          </div>
+        </div>
+        
         <div className="hero__scroll-button">
           <div className="hero__scroll-pulse"></div>
           <button className="hero__scroll-btn" aria-label="Desplazarse hacia abajo" onClick={handleScrollDown}>
@@ -137,18 +197,10 @@ const Hero: React.FC = () => {
           </button>
         </div>
       </div>
-
-      <h2 className="hero__title" ref={titleRef}>
-        <span className="hero__title-fixed">FEEL</span>
-        <span className="hero__title-changing">
-          <span>WELCOME</span>
-          <span>GRAND</span>
-          <span>MEDELLÍN</span>
-        </span>
-      </h2>
-      <div className="hero__shadow" ref={shadowRef}></div>
-      <div className="hero__description" ref={descriptionRef}>
+      <div className="hero__shadow"></div>
+      <div className="hero__description">
         <div className="hero__description-content">
+          <img src={vHotelLogo.src} alt="V Grand" />
           <p className="hero__description-text">
             Descubre un oasis de bienestar donde cada detalle está diseñado para que te sientas renovado, relajado y completamente cuidado. Tu bienestar es nuestra prioridad.
           </p>

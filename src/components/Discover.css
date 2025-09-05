@@ -74,14 +74,17 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 60px;
+  bottom: clamp(20px, 8vh, 60px);
   z-index: 10;
   color: #ffffff;
   font-family: var(--font-primary);
-  font-size: clamp(2rem, 2.5rem, 3rem);
+  font-size: clamp(1.5rem, 4vw, 3rem);
   text-align: center;
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .discover__background_title h2 {
@@ -93,7 +96,6 @@
   line-height: 0.9;
 }
 
-/* Estilos para la animación de revelación de texto */
 .js_heading {
   position: relative;
   display: inline-block;
@@ -140,7 +142,6 @@
 
 
 
-/* Animación GSAP gestiona la entrada del título; se elimina la animación CSS previa */
 
 /* Lightbox */
 .discover__lightbox {
@@ -180,4 +181,24 @@
 
 .discover__lightbox_close:hover {
   background: rgba(255,255,255,0.2);
+}
+
+@media (max-width: 768px) {
+  .discover__background_title {
+    padding: 0 16px;
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    bottom: clamp(16px, 6vh, 40px);
+  }
+  
+  .discover__background_title h2 {
+    line-height: 1.1;
+  }
+}
+
+@media (max-width: 480px) {
+  .discover__background_title {
+    padding: 0 12px;
+    font-size: clamp(1rem, 6vw, 1.5rem);
+    bottom: clamp(12px, 5vh, 30px);
+  }
 }

@@ -106,58 +106,6 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
     // Registrar el plugin ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
-    // Función para crear efecto parallax
-    const createParallaxEffect = () => {
-      // Seleccionar todos los elementos con data-parallax
-      const parallaxElements = document.querySelectorAll('[data-parallax]');
-      
-      parallaxElements.forEach((element, index) => {
-        // Crear timeline para cada elemento
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: element.closest('section'),
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1,
-            onUpdate: (self) => {
-              // Efecto parallax basado en la posición del scroll
-              const progress = self.progress;
-              const yOffset = (progress - 0.5) * 100;
-              
-              gsap.to(element, {
-                y: yOffset,
-                duration: 0.1,
-                ease: 'none'
-              });
-            }
-          }
-        });
-      });
-
-      // Efecto de fade in para los elementos cuando entran en viewport
-      gsap.utils.toArray('[data-parallax]').forEach((element, index) => {
-        const el = element as Element;
-        gsap.fromTo(el, 
-          {
-            y: 50
-          },
-          {
-            y: 0,
-            duration: 1,
-            delay: index * 0.1,
-            scrollTrigger: {
-              trigger: el.closest('section'),
-              start: 'top 80%',
-              end: 'bottom 20%',
-              toggleActions: 'play none none reverse'
-            }
-          }
-        );
-      });
-    };
-
-    // Inicializar efectos
-    createParallaxEffect();
 
     // Agregar event listener para scroll con throttling
     let ticking = false;
@@ -188,7 +136,7 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
-          <h1 className="hero-title" data-parallax>Habitaciones</h1>
+          <h1 className="hero-title">Habitaciones</h1>
         </div>
       </section>
 
@@ -197,7 +145,7 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
         <section 
           key={room.title}
           className="room-section" 
-          style={{ backgroundImage: `url(/images/${room.banner})` }}
+          style={{ backgroundImage: `url(${room.banner.startsWith('http') ? room.banner : `/images/${room.banner}`})` }}
           role="link"
           tabIndex={0}
           onMouseEnter={() => setCursorVisible(true)}
@@ -216,7 +164,7 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
           <div className="room-overlay"></div>
           <div className="room-content">
             <div className="room-info">
-              <h2 className="room-title" data-parallax>{room.title}</h2>
+              <h2 className="room-title">{room.title}</h2>
             </div>
           </div>
           

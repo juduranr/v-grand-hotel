@@ -22,7 +22,7 @@ if (!room) {
 
 <Layout>
 	<div class="room-detail-page">
-		<div class="hero-section" style={`background-image: url('/images/${room.banner}')`}>
+		<div class="hero-section" style={`background-image: url('${room.banner.startsWith('http') ? room.banner : `/images/${room.banner}`}')`}>
 			<div class="room-overlay"></div>
 			<div class="hero-content">
 				<h1 class="hero-title">{room.title}</h1>
@@ -92,7 +92,7 @@ if (!room) {
 	}
 
 	.hero-title {
-		font-size: 12rem;
+		font-size: 15dvw;
 		font-weight: 400;
 		color: white;
 		text-align: center;
@@ -103,7 +103,7 @@ if (!room) {
 		position: relative;
 		z-index: 10;
 		opacity: 1 !important;
-		bottom: -20vh;
+		bottom: -30dvh;
 		text-transform: uppercase;
 	}
 
@@ -222,6 +222,7 @@ if (!room) {
 	@media (max-width: 768px) {
 		.hero-title {
 			font-size: 2.5rem;
+			bottom: -8vh; /* Ajuste proporcional para móviles - ocultar 30% */
 		}
 
 		.room-content {
@@ -240,6 +241,13 @@ if (!room) {
 
 		.hero-section {
 			background-attachment: scroll;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.hero-title {
+			font-size: 2rem;
+			bottom: -6vh; /* Ajuste proporcional para pantallas muy pequeñas - ocultar 30% */
 		}
 	}
 </style>

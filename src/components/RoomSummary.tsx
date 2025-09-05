@@ -31,18 +31,18 @@ const RoomSummary: React.FC<RoomSummaryProps> = ({ room }) => {
           {Array(room.beds)
             .fill(0)
             .map((_, i) => (
-              <DoubleBed strokeWidth={2} />
+              <DoubleBed strokeWidth={2} size={32} />
             ))}
           {Array(room.bathrooms)
             .fill(0)
             .map((_, i) => (
-              <Tub strokeWidth={2} />
+              <Tub strokeWidth={2} size={32} />
             ))}
           {room.terrace && (
-              <Sunbath strokeWidth={2} />
+              <Sunbath strokeWidth={2} size={32} />
           )}
           {room.breakfast && (
-              <KnifeFork strokeWidth={2} />
+              <KnifeFork strokeWidth={2} size={32} />
           )}
         </div>
       </div>

@@ -28,9 +28,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: clamp(0.5rem, 2vw, 1rem);
     margin-bottom: 2rem;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .histories-title-container hr {
@@ -47,14 +48,16 @@
 }
 
 .histories-title {
-    font-size: 2.5rem;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
     font-weight: 400;
     margin: 0;
     line-height: 1.2;
     text-align: center;
     color: #fff;
     text-transform: uppercase;
-    min-width: 500px;
+    min-width: 0;
+    flex: 1;
+    padding: 0 1rem;
 }
 
 .histories-carousel {
@@ -210,12 +213,28 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-    .histories-title {
-        font-size: 2rem;
+    .histories-container {
+        width: 100%;
     }
     
     .histories-header {
+        width: 95vw;
         padding: 60px 20px 0px 20px;
+    }
+    
+    .histories-title {
+        font-size: clamp(1.2rem, 5vw, 2rem);
+        padding: 0 0.5rem;
+    }
+    
+    .histories-title-container {
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .histories-title-container .v-hotel-logo {
+        width: 24px;
+        height: 24px;
     }
     
     .histories-carousel {
@@ -234,5 +253,54 @@
     
     .histories-right {
         right: calc(50% - 160px);
+    }
+}
+
+@media (max-width: 480px) {
+    .histories-header {
+        width: 100vw;
+        padding: 40px 1rem 0px 1rem;
+    }
+    
+    .histories-title {
+        font-size: clamp(1rem, 6vw, 1.5rem);
+        padding: 0 0.25rem;
+    }
+    
+    .histories-title-container {
+        gap: 0.25rem;
+        margin-bottom: 1rem;
+    }
+    
+    .histories-title-container .v-hotel-logo {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .histories-carousel {
+        height: 300px;
+        margin-top: 20px;
+    }
+    
+    .histories-card {
+        width: 280px;
+        height: 50vh;
+    }
+    
+    .histories-left {
+        left: calc(50% - 140px);
+    }
+    
+    .histories-right {
+        right: calc(50% - 140px);
+    }
+    
+    .histories-bars {
+        margin-top: 20px;
+        padding-bottom: 20px;
+    }
+    
+    .histories-bar {
+        width: 20px;
     }
 }

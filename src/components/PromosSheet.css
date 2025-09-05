@@ -175,20 +175,130 @@
 /* Responsive */
 @media (max-width: 768px) {
   .promos-sheet {
-    width: 100%;
-    right: -100%;
+    width: 90%;
+    max-width: 400px;
+    right: -90%;
+    padding: 20px;
+  }
+
+  .promos-sheet__header {
+    padding-bottom: 20px;
+  }
+
+  .promos-sheet__title {
+    font-size: 18px;
   }
 
   .promos-sheet__content {
-    padding: 1.5rem;
+    padding: 0;
+  }
+
+  .promos-sheet__promo {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+  }
+
+  .promos-sheet__promo-title {
+    font-size: 20px;
+  }
+
+  .promos-sheet__promo-description {
+    font-size: 16px;
+  }
+
+  .promos-sheet__promo-button {
+    font-size: 16px;
   }
 
   .floating-button {
-    width: 32px;
-    height: 12px;
+    width: 60px;
+    height: 40px;
+    right: -30px;
+    padding: 16px 12px;
+  }
+
+  .floating-button:hover {
+    transform: translateY(-50%) translateX(-30px);
+  }
+
+  .floating-button--hidden {
+    transform: translateY(-50%) translateX(60px);
+  }
+
+  .floating-button:active {
+    transform: translateY(-50%) translateX(-24px) scale(0.98);
   }
 
   .floating-button__text {
-    font-size: 20px;
+    font-size: 16px;
+  }
+
+  .floating-button--mobile {
+    min-width: 60px;
+    min-height: 40px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .floating-button--mobile:hover {
+    background: #f0f0f0;
+  }
+
+  .floating-button--mobile:active {
+    background: #e0e0e0;
+    transform: translateY(-50%) translateX(-24px) scale(0.95);
+  }
+}
+
+@media (max-width: 480px) {
+  .promos-sheet {
+    width: 95%;
+    max-width: 350px;
+    right: -95%;
+    padding: 16px;
+  }
+
+  .floating-button {
+    width: 50px;
+    height: 36px;
+    right: -25px;
+    padding: 12px 10px;
+  }
+
+  .floating-button:hover {
+    transform: translateY(-50%) translateX(-25px);
+  }
+
+  .floating-button--hidden {
+    transform: translateY(-50%) translateX(50px);
+  }
+
+  .floating-button:active {
+    transform: translateY(-50%) translateX(-20px) scale(0.98);
+  }
+
+  .floating-button__text {
+    font-size: 14px;
+  }
+
+  .promos-sheet__promo-title {
+    font-size: 18px;
+  }
+
+  .promos-sheet__promo-description {
+    font-size: 14px;
+  }
+
+  .promos-sheet__promo-button {
+    font-size: 14px;
+  }
+
+  .floating-button--mobile {
+    min-width: 50px;
+    min-height: 36px;
+  }
+
+  .floating-button--mobile:active {
+    transform: translateY(-50%) translateX(-20px) scale(0.95);
   }
 }

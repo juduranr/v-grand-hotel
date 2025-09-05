@@ -5,7 +5,6 @@ import "./Discover.css";
 import { DISCOVER_IMAGES } from "../config/env";
 import raddisonLogo from "../assets/images/raddison.svg";
 
-// Array con todas las imágenes de la galería
 const GALLERY_IMAGES = [
   DISCOVER_IMAGES.GALLERY_1,
   DISCOVER_IMAGES.GALLERY_2,
@@ -20,7 +19,6 @@ const GALLERY_IMAGES = [
   DISCOVER_IMAGES.GALLERY_11,
 ];
 
-// Registrar el plugin ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
 const Discover: React.FC = () => {
@@ -47,26 +45,22 @@ const Discover: React.FC = () => {
       const currentScrollY = window.scrollY;
       const scrollDelta = Math.abs(currentScrollY - lastScrollY);
 
-      if (scrollDelta > 5) { // Umbral mínimo para considerar que hay scroll
+      if (scrollDelta > 5) {
         if (!isScrolling) {
           setIsScrolling(true);
 
-          // Acelerar la animación GSAP sin reiniciar
           if (animationRef.current) {
-            animationRef.current.timeScale(3.75); // 30/8 = 3.75 veces más rápido
+            animationRef.current.timeScale(3.75);
           }
         }
 
-        // Limpiar timeout anterior
         if (scrollTimeoutRef.current) {
           clearTimeout(scrollTimeoutRef.current);
         }
 
-        // Resetear a velocidad lenta después de 500ms sin scroll
         scrollTimeoutRef.current = setTimeout(() => {
           setIsScrolling(false);
 
-          // Restaurar velocidad normal sin reiniciar
           if (animationRef.current) {
             animationRef.current.timeScale(1);
           }
@@ -97,17 +91,14 @@ const Discover: React.FC = () => {
   // Inicializar la animación GSAP
   useEffect(() => {
     if (trackRef.current) {
-      // Detener la animación CSS
       trackRef.current.style.animation = 'none';
 
-      // Crear animación GSAP infinita
       animationRef.current = gsap.to(trackRef.current, {
-        x: `-${300 * GALLERY_IMAGES.length}px`, // -300px * número de imágenes (solo la primera serie)
+        x: `-${300 * GALLERY_IMAGES.length}px`,
         duration: 30,
         ease: 'none',
         repeat: -1,
-        onRepeat: () => {
-          // Resetear posición para crear el efecto infinito
+          onRepeat: () => {
           gsap.set(trackRef.current, { x: 0 });
         }
       });
@@ -120,25 +111,21 @@ const Discover: React.FC = () => {
     };
   }, []);
 
-  // Efecto inicial para establecer el tamaño por defecto de la imagen
   useEffect(() => {
     if (imageRef.current) {
       gsap.set(imageRef.current, { scale: 1.1 });
     }
   }, []);
 
-  // Efecto para el zoom de la imagen
   useEffect(() => {
     if (imageRef.current) {
       if (isHovering) {
-        // Tamaño normal cuando el mouse está sobre la imagen
         zoomAnimationRef.current = gsap.to(imageRef.current, {
           scale: 1,
           duration: 0.6,
           ease: "power2.out"
         });
       } else {
-        // Imagen más grande por defecto cuando el mouse sale
         zoomAnimationRef.current = gsap.to(imageRef.current, {
           scale: 1.1,
           duration: 0.6,
@@ -154,16 +141,13 @@ const Discover: React.FC = () => {
     };
   }, [isHovering]);
 
-  // Abrir lightbox
   const handleOpenLightbox = (src: string) => {
     setLightboxSrc(src);
     setLightboxOpen(true);
     document.documentElement.style.overflow = 'hidden';
   };
 
-  // Cerrar lightbox
   const handleCloseLightbox = () => {
-    // Animación de salida antes de desmontar
     if (dialogRef.current) {
       const elements: Array<HTMLElement | null> = [dialogRef.current, lightboxImageRef.current];
       lightboxCloseAnimRef.current?.kill();
@@ -183,7 +167,6 @@ const Discover: React.FC = () => {
     }
   };
 
-  // Cerrar con Escape y click fuera
   useEffect(() => {
     if (!lightboxOpen) return;
 
@@ -207,16 +190,13 @@ const Discover: React.FC = () => {
     };
   }, [lightboxOpen]);
 
-  // Animación de entrada cuando el lightbox abre
   useEffect(() => {
     if (!lightboxOpen) return;
     const overlay = dialogRef.current;
     const lightboxImg = lightboxImageRef.current;
     if (!overlay) return;
-    // Estado inicial
     gsap.set(overlay, { autoAlpha: 0 });
     if (lightboxImg) gsap.set(lightboxImg, { scale: 0.95 });
-    // Animar
     lightboxOpenAnimRef.current?.kill();
     lightboxOpenAnimRef.current = gsap.timeline()
       .to(overlay, { autoAlpha: 1, duration: 0.25, ease: 'power2.out' }, 0)
@@ -226,17 +206,14 @@ const Discover: React.FC = () => {
     };
   }, [lightboxOpen]);
 
-    // Animación de revelación de texto usando clip-path
   useEffect(() => {
     if (!titleRef.current) return;
     
-    // Configurar estado inicial con clip-path
     gsap.set(titleRef.current, { 
       clipPath: "inset(0 100% 0 0)",
       y: 20
     });
     
-    // Animar con ScrollTrigger
     gsap.to(titleRef.current, {
       clipPath: "inset(0 0% 0 0)",
       y: 0,
@@ -259,7 +236,6 @@ const Discover: React.FC = () => {
             ref={trackRef}
             className="discover__infinity-gallery-track"
           >
-            {/* Primera serie de imágenes */}
             {GALLERY_IMAGES.map((imageSrc, index) => (
               <div key={`first-${index}`} className="discover__infinity-gallery-item">
                 <img
@@ -277,7 +253,6 @@ const Discover: React.FC = () => {
                 />
               </div>
             ))}
-            {/* Segunda serie de imágenes para el efecto infinito */}
             {GALLERY_IMAGES.map((imageSrc, index) => (
               <div key={`second-${index}`} className="discover__infinity-gallery-item">
                 <img

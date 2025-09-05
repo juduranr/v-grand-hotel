@@ -9,7 +9,14 @@ const RoomsCarousel: React.FC = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   // Mapping function to get image source based on banner filename
-  const getImageSource = (banner: string) => `/images/${banner}`;
+  const getImageSource = (banner: string) => {
+    // Si el banner ya es una URL completa, usarla directamente
+    if (banner.startsWith('http')) {
+      return banner;
+    }
+    // Si no, añadir el prefijo /images/
+    return `/images/${banner}`;
+  };
 
   const nextSlide = () => {
     if (isTransitioning) return;
@@ -84,6 +91,9 @@ const RoomsCarousel: React.FC = () => {
         </div>
         <div className="rooms-carousel__carousel-title">
           <h2>Nuestras suites y habitaciones te estan esperando</h2>
+        </div>
+        <div className="rooms-carousel__carousel-description">
+          <p>Descubre nuestros espacios diseñados para el descanso y la comodidad. Cada habitación combina elegancia contemporánea con funcionalidad, ofreciendo una experiencia única de hospedaje en el corazón de Medellín.</p>
         </div>
         <div className="rooms-carousel__carousel">
           <div className="rooms-carousel__controls">

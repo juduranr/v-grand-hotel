@@ -5,6 +5,7 @@ import './PromosSheet.css';
 const PromosSheet: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isButtonHidden, setIsButtonHidden] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const BUTTON_ANIMATION_MS = 600;
 
   const handleToggle = () => {
@@ -27,6 +28,19 @@ const PromosSheet: React.FC = () => {
       setIsButtonHidden(false);
     }, BUTTON_ANIMATION_MS);
   };
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
+  }, []);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -55,7 +69,7 @@ const PromosSheet: React.FC = () => {
   return (
     <>
       <button
-        className={`floating-button ${isOpen ? 'floating-button--open' : ''} ${isButtonHidden ? 'floating-button--hidden' : ''}`}
+        className={`floating-button ${isOpen ? 'floating-button--open' : ''} ${isButtonHidden ? 'floating-button--hidden' : ''} ${isMobile ? 'floating-button--mobile' : ''}`}
         onClick={handleToggle}
         aria-label={isOpen ? 'Cerrar promociones' : 'Abrir promociones'}
         disabled={false}
