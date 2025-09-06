@@ -57,18 +57,28 @@ const Header: React.FC = () => {
 
           {/* Right side - Reserve button */}
           <div className={`header__right ${isMenuOpen ? 'header__right--hidden' : ''}`}>
-            <button className="header__reserve-button">
+            <a 
+              href="https://www.choicehotels.com/es-xl/colombia/medellin/radisson-individuals-hotels/cb031" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="header__reserve-button"
+            >
               Reservar
-            </button>
+            </a>
           </div>
         </div>
       </header>
       
       {/* Botón flotante de reservar para móviles */}
       <div className="header__floating-reserve">
-        <button className="header__floating-reserve-button">
+        <a 
+          href="https://www.choicehotels.com/es-xl/colombia/medellin/radisson-individuals-hotels/cb031" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="header__floating-reserve-button"
+        >
           Reservar
-        </button>
+        </a>
       </div>
       
       <Menu isOpen={isMenuOpen} onClose={toggleMenu} />

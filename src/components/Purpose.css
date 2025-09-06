@@ -140,7 +140,6 @@
   max-width: 100%;
   position: relative;
   overflow: visible;
-  margin: 48px 0;
 }
 
 .purpose__gallery-wrapper {
@@ -148,8 +147,56 @@
   overflow: visible;
   margin: 0 auto;
   position: relative;
-  height: 1064px;
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  .purpose__gallery-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 0;
+    height: auto;
+  }
+  
+  /* Primer par de imágenes */
+  .purpose__gallery-item:nth-child(1) {
+    grid-row: 1;
+    grid-column: 1;
+  }
+  
+  .purpose__gallery-item:nth-child(2) {
+    grid-row: 1;
+    grid-column: 2;
+  }
+  
+  .purpose__gallery-title {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    position: static;
+    transform: none;
+    margin: 2rem 0;
+    text-align: center;
+    font-size: 48px;
+  }
+  
+  /* Segundo par de imágenes */
+  .purpose__gallery-item:nth-child(3) {
+    grid-row: 3;
+    grid-column: 1;
+  }
+  
+  .purpose__gallery-item:nth-child(4) {
+    grid-row: 3;
+    grid-column: 2;
+  }
+}
+
+.purpose__gallery-item {
+  will-change: transform;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease-out;
+  backface-visibility: hidden;
 }
 
 .purpose__gallery-item img {
@@ -160,17 +207,33 @@
   will-change: transform;
 }
 
+@media (max-width: 768px) {
+  .purpose__gallery-item {
+    width: 100%;
+  }
+  
+  .purpose__gallery-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .purpose__gallery-title {
+    font-size: 48px;
+  }
+}
+
 .purpose__gallery-title {
   font-family: var(--font-primary);
   font-weight: var(--font-weight-regular);
-  font-size: clamp(3rem, 6rem, 8rem);
+  font-size: 128px;
   color: #ffffff;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  z-index: 5;
+  z-index: 10;
   text-transform: uppercase;
   font-style: italic;
   width: 100%;
@@ -178,6 +241,8 @@
   padding: 0 2rem;
   line-height: 1.1;
   letter-spacing: 0.05em;
+  will-change: auto;
+  pointer-events: none;
 }
 
 .purpose__logo-container {
@@ -266,6 +331,20 @@
     margin-top: 1rem;
   }
   
+  /* Ajustar font-size de títulos en pantallas pequeñas */
+  .purpose__content-title, .pillars__content-title {
+    font-size: 32px;
+  }
+  
+  .purpose__logo-title {
+    font-size: 24px;
+  }
+  
+  /* Alinear título del pillar a la izquierda en pantallas pequeñas */
+  .pillars__content-title {
+    text-align: left;
+  }
+  
   /* Ajustar ancho de logos en pantallas pequeñas */
   .purpose__logo-container .purpose__logo-item img {
     width: 240px;
@@ -283,6 +362,10 @@
   
   .purpose__title {
     margin-bottom: 1rem;
+  }
+  
+  .purpose__gallery-title {
+    font-size: 32px;
   }
 }
 

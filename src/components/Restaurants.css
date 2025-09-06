@@ -45,13 +45,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .restaurants-gallery-item .restaurants-gallery-cell:hover {
   transform: scale(1.02);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .restaurants-gallery-item .restaurants-gallery-cell:hover img {
@@ -105,7 +103,7 @@
 .simple-carousels-section {
   width: 100%;
   padding: 40px 0;
-  background: #f8f9fa;
+  background: white;
   position: sticky;
   top: 0;
   overflow: hidden;
@@ -178,7 +176,7 @@
 }
 
 .restaurants-subtitle {
-  color: #717171;
+  color: #000;
 text-align: center;
 font-family: Avenir;
 font-size: 18px;
@@ -191,19 +189,19 @@ letter-spacing: 0.36px;
 .restaurants-title-container hr {
   width: 100%;
   height: 1px;
-  background-color: #333;
+  background-color: #000;
   border: none;
 }
 
 .restaurants-title-container .v-hotel-logo {
   width: 32px !important;
-  color: #333;
+  color: #000;
   transition: color 0.3s ease;
   flex-shrink: 0;
 }
 
 .restaurants-title {
-  color: #2E3C35;
+  color: #000;
 text-align: center;
 font-family: "Beaufort for LOL";
 font-size: 56px;
@@ -215,7 +213,6 @@ text-transform: uppercase;
 text-wrap: nowrap;
   position: relative;
   z-index: 10;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -229,7 +226,7 @@ text-wrap: nowrap;
 }
 
 .restaurants-description {
-  color: #2E3C35;
+  color: #000;
 font-family: Avenir;
 font-size: 20px;
 font-style: normal;
@@ -237,13 +234,12 @@ font-weight: 350;
 line-height: 150%;
   position: relative;
   z-index: 10;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   max-width: 400px;
 }
 
 .restaurants-description-button {
   font-size: 1.1rem;
-  color: #666;
+  color: #000;
   max-width: 600px;
   line-height: 1.6;
   font-family: 'Avenir', sans-serif;
@@ -275,7 +271,6 @@ line-height: 150%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .restaurants-gallery-cell img {
@@ -287,8 +282,7 @@ line-height: 150%;
 
 .restaurants-gallery-cell:hover {
   transform: scale(1.02);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .restaurants-gallery-cell:hover img {

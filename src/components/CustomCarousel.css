@@ -64,7 +64,6 @@
     position: relative;
     transition: all 0.3s ease;
     overflow: hidden;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .custom-card-pane--prev {
@@ -89,7 +88,6 @@
     z-index: 1;
 }
 
-/* Layout vertical en mobile */
 @media (max-width: 768px) {
     .custom-card-pane--prev {
         width: 100%;

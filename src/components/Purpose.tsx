@@ -5,18 +5,17 @@ import vHotelLogo from "../assets/images/v-hotel.svg";
 import grandHotelLogo from "../assets/images/grand-hotel.svg";
 import LogosCarousel from "./LogosCarousel";
 import "./Purpose.css";
-import { defaultPurposeConfig } from "./Purpose.config";
 import { PURPOSE_IMAGES } from "../config/env";
 
-// Registrar el plugin ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
 const Purpose: React.FC = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
-  const galleryImagesRef = useRef<(HTMLImageElement | null)[]>([]);
   const purposeDescriptionRef = useRef<HTMLDivElement>(null);
   const pillarsDescriptionRef = useRef<HTMLDivElement>(null);
+  const galleryTitleRef = useRef<HTMLDivElement>(null);
+  const galleryItemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [scrollProgress, setScrollProgress] = useState({
     title: 0,
     presentationDescription: 0,
@@ -25,27 +24,19 @@ const Purpose: React.FC = () => {
   });
 
   useEffect(() => {
-    // Configurar GSAP
-
-    // Función para crear el efecto de revelación de texto para títulos
     const createTitleReveal = (element: HTMLElement) => {
-      // Crear un wrapper para el texto
       const textContent = element.textContent || '';
       element.innerHTML = '';
       
-      // Agregar clase para flexbox
       element.classList.add('text-reveal-container');
       
-      // Dividir por palabras en lugar de caracteres
       const words = textContent.split(' ');
       const wordSpans: HTMLElement[] = [];
       
       words.forEach((word, wordIndex) => {
-        // Crear un span para cada palabra
         const wordSpan = document.createElement('span');
         wordSpan.className = 'text-word';
         
-        // Crear spans para cada carácter dentro de la palabra
         const chars = word.split('').map(char => {
           const charSpan = document.createElement('span');
           charSpan.textContent = char;
@@ -53,14 +44,11 @@ const Purpose: React.FC = () => {
           return charSpan;
         });
         
-        // Agregar los caracteres a la palabra
         chars.forEach(charSpan => wordSpan.appendChild(charSpan));
         wordSpans.push(wordSpan);
         
-        // Agregar la palabra al elemento
         element.appendChild(wordSpan);
         
-        // Agregar espacio entre palabras (excepto después de la última)
         if (wordIndex < words.length - 1) {
           const spaceSpan = document.createElement('span');
           spaceSpan.textContent = '\u00A0';
@@ -69,16 +57,13 @@ const Purpose: React.FC = () => {
         }
       });
       
-      // Animar todos los caracteres con ScrollTrigger
       const allChars = Array.from(element.querySelectorAll('.text-char-title'));
       
-      // Configurar la animación inicial - letras invisibles
       gsap.set(allChars, {
         opacity: 0,
         x: -20
       });
       
-      // Animar con ScrollTrigger - letras aparecen una por una
       gsap.to(allChars, {
         opacity: 1,
         x: 0,
@@ -93,25 +78,19 @@ const Purpose: React.FC = () => {
       });
     };
 
-    // Función para crear el efecto de escritura para descripciones
     const createDescriptionReveal = (element: HTMLElement) => {
-      // Crear un wrapper para el texto
       const textContent = element.textContent || '';
       element.innerHTML = '';
       
-      // Agregar clase para flexbox
       element.classList.add('text-reveal-container');
       
-      // Dividir por palabras en lugar de caracteres
       const words = textContent.split(' ');
       const wordSpans: HTMLElement[] = [];
       
       words.forEach((word, wordIndex) => {
-        // Crear un span para cada palabra
         const wordSpan = document.createElement('span');
         wordSpan.className = 'text-word';
         
-        // Crear spans para cada carácter dentro de la palabra
         const chars = word.split('').map(char => {
           const charSpan = document.createElement('span');
           charSpan.textContent = char;
@@ -119,14 +98,11 @@ const Purpose: React.FC = () => {
           return charSpan;
         });
         
-        // Agregar los caracteres a la palabra
         chars.forEach(charSpan => wordSpan.appendChild(charSpan));
         wordSpans.push(wordSpan);
         
-        // Agregar la palabra al elemento
         element.appendChild(wordSpan);
         
-        // Agregar espacio entre palabras (excepto después de la última)
         if (wordIndex < words.length - 1) {
           const spaceSpan = document.createElement('span');
           spaceSpan.textContent = '\u00A0';
@@ -135,15 +111,12 @@ const Purpose: React.FC = () => {
         }
       });
       
-      // Animar todos los caracteres con ScrollTrigger
       const allChars = Array.from(element.querySelectorAll('.text-char-description'));
       
-      // Configurar la animación inicial
       gsap.set(allChars, {
         opacity: 0
       });
       
-      // Animar con ScrollTrigger
       gsap.to(allChars, {
         opacity: 1,
         ease: "power2.out",
@@ -157,13 +130,11 @@ const Purpose: React.FC = () => {
       });
     };
 
-    // Aplicar la animación a los títulos
     const titleElements = document.querySelectorAll('.purpose__content-title');
     titleElements.forEach((title) => {
       createTitleReveal(title as HTMLElement);
     });
     
-    // Aplicar la animación a las descripciones
     if (purposeDescriptionRef.current) {
       createDescriptionReveal(purposeDescriptionRef.current);
     }
@@ -172,13 +143,64 @@ const Purpose: React.FC = () => {
       createDescriptionReveal(pillarsDescriptionRef.current);
     }
 
+    // Configurar movimiento escalonado de las imágenes de la galería
+    const setupGalleryScrollAnimation = () => {
+      const galleryItems = galleryItemRefs.current.filter(Boolean);
+      
+      if (galleryItems.length === 0) return;
+
+      galleryItems.forEach((item, index) => {
+        if (!item) return;
+
+        // Posición inicial escalonada - la primera imagen (índice 0) más arriba
+        const initialYOffset = -index * 80; // Cada imagen 80px más abajo que la anterior
+        
+        // Establecer posición inicial
+        gsap.set(item, {
+          y: initialYOffset,
+          transformOrigin: "center center"
+        });
+
+        // Crear ScrollTrigger para intercambio de posiciones durante el scroll
+        ScrollTrigger.create({
+          trigger: item,
+          start: "top 80%",
+          end: "bottom 20%",
+          scrub: 1,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            // Intercambio de posiciones: la imagen más a la izquierda termina arriba
+            // Calcular la posición objetivo basada en el progreso
+            const totalImages = galleryItems.length;
+            const reverseIndex = (totalImages - 1) - index; // Índice invertido
+            const targetYOffset = -reverseIndex * 80; // Posición objetivo (invertida)
+            
+            // Interpolación suave entre posición inicial y objetivo
+            // En el punto medio (progress = 0.5), todas las imágenes estarán en posición 0
+            const currentYOffset = initialYOffset + (targetYOffset - initialYOffset) * progress;
+            
+            // Ajustar para que en el punto medio todas estén en posición 0
+            const centerOffset = (initialYOffset + targetYOffset) / 2;
+            const adjustedYOffset = currentYOffset - centerOffset;
+            
+            gsap.set(item, {
+              y: adjustedYOffset,
+              transformOrigin: "center center"
+            });
+          }
+        });
+      });
+    };
+
+    // Ejecutar la configuración de la galería después de un pequeño delay
+    setTimeout(setupGalleryScrollAnimation, 100);
+
     const handleScroll = () => {
       if (!sectionRef.current) return;
 
       const purposeRect = sectionRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 
-      // Calcular progreso para el título
       const titleProgress = Math.max(0, Math.min(1, (windowHeight - purposeRect.top) / windowHeight));
 
       setScrollProgress(prev => ({
@@ -186,37 +208,10 @@ const Purpose: React.FC = () => {
         title: titleProgress
       }));
 
-      // Aplicar efecto parallax a las imágenes de la galería
-      galleryImagesRef.current.forEach((imgRef, index) => {
-        if (imgRef) {
-          const imgRect = imgRef.getBoundingClientRect();
-          const imgCenterY = imgRect.top + imgRect.height / 2;
-          const distanceFromCenter = windowHeight / 2 - imgCenterY;
-          
-          // Calcular la velocidad de parallax (diferente para cada imagen)
-          const parallaxSpeed = defaultPurposeConfig.parallax.baseSpeed + (index * defaultPurposeConfig.parallax.speedMultiplier);
-          let translateY = distanceFromCenter * parallaxSpeed;
-          
-          // Aplicar límites escalonados específicos para cada imagen
-          const imageLimits = [
-            defaultPurposeConfig.parallax.limits.image1,
-            defaultPurposeConfig.parallax.limits.image2,
-            defaultPurposeConfig.parallax.limits.image3,
-            defaultPurposeConfig.parallax.limits.image4
-          ];
-          
-          if (imageLimits[index]) {
-            translateY = Math.max(
-              imageLimits[index].upper, 
-              Math.min(imageLimits[index].lower, translateY)
-            );
-          }
-          
-          imgRef.style.transform = `translateY(${translateY}px)`;
-        }
-      });
+      if (galleryTitleRef.current) {
+        galleryTitleRef.current.style.transform = 'translate(-50%, -50%)';
+      }
 
-      // Aplicar animación al título
       if (titleRef.current) {
         const translateY = -50 + titleProgress * 50;
         const opacity = titleProgress;
@@ -230,16 +225,10 @@ const Purpose: React.FC = () => {
     handleScroll();
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      // Limpiar ScrollTriggers
+      window.removeEventListener("scroll", handleScroll);   
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
-
-  // Función para agregar referencia a las imágenes
-  const addImageRef = (el: HTMLImageElement | null, index: number) => {
-    galleryImagesRef.current[index] = el;
-  };
 
   return (
     <section ref={sectionRef} className="purpose">
@@ -268,9 +257,11 @@ const Purpose: React.FC = () => {
           </div>
           <div className="purpose__gallery">
             <div className="purpose__gallery-wrapper">
-              <div className="purpose__gallery-item">
+              <div 
+                ref={(el) => { galleryItemRefs.current[0] = el; }}
+                className="purpose__gallery-item"
+              >
                 <img 
-                  ref={(el) => addImageRef(el, 0)}
                   src={PURPOSE_IMAGES.GALLERY_2} 
                   alt="Purpose" 
                   onError={(e) => {
@@ -283,9 +274,11 @@ const Purpose: React.FC = () => {
                   }}
                 />
               </div>
-              <div className="purpose__gallery-item">
+              <div 
+                ref={(el) => { galleryItemRefs.current[1] = el; }}
+                className="purpose__gallery-item"
+              >
                 <img 
-                  ref={(el) => addImageRef(el, 1)}
                   src={PURPOSE_IMAGES.GALLERY_1} 
                   alt="Purpose" 
                   onError={(e) => {
@@ -298,9 +291,11 @@ const Purpose: React.FC = () => {
                   }}
                 />
               </div>
-              <div className="purpose__gallery-item">
+              <div 
+                ref={(el) => { galleryItemRefs.current[2] = el; }}
+                className="purpose__gallery-item"
+              >
                 <img 
-                  ref={(el) => addImageRef(el, 2)}
                   src={PURPOSE_IMAGES.GALLERY_2} 
                   alt="Purpose" 
                   onError={(e) => {
@@ -313,9 +308,11 @@ const Purpose: React.FC = () => {
                   }}
                 />
               </div>
-              <div className="purpose__gallery-item">
+              <div 
+                ref={(el) => { galleryItemRefs.current[3] = el; }}
+                className="purpose__gallery-item"
+              >
                 <img 
-                  ref={(el) => addImageRef(el, 3)}
                   src={PURPOSE_IMAGES.GALLERY_3} 
                   alt="Purpose" 
                   onError={(e) => {
@@ -329,7 +326,7 @@ const Purpose: React.FC = () => {
                 />
               </div>
             </div>
-            <div className="purpose__gallery-title">
+            <div ref={galleryTitleRef} className="purpose__gallery-title">
               El lugar donde bien se está
             </div>
           </div>

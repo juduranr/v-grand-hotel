@@ -171,9 +171,9 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
                         </div>
                         <div className='restaurants-description-container'>
                             <p className="restaurants-description">{restaurantData[0].description}</p>
-                            <button className="restaurants-description-button">
+                            {/* <button className="restaurants-description-button">
                                 Ver más
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 </div>
@@ -200,9 +200,9 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
                         </div>
                         <div className='restaurants-description-container'>
                             <p className="restaurants-description">{restaurantData[1].description}</p>
-                            <button className="restaurants-description-button">
+                            {/* <button className="restaurants-description-button">
                                 Ver más
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 </div>
@@ -229,9 +229,9 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
                         </div>
                         <div className='restaurants-description-container'>
                             <p className="restaurants-description">{restaurantData[2].description}</p>
-                            <button className="restaurants-description-button">
+                            {/* <button className="restaurants-description-button">
                                 Ver más
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 </div>

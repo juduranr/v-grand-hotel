@@ -125,7 +125,6 @@ const Hero: React.FC = () => {
           start: "top-=50% center",
           end: "top top",
           scrub: 1,
-          markers: true,
           onStart: () => {
             scrollItem.parentElement?.classList.add('animating');
           },
