@@ -92,13 +92,14 @@ const PromosSheet: React.FC = () => {
               <path
                 d="M18 6L6 18M6 6L18 18"
                 stroke="currentColor"
-                strokeWidth="2"
+                strokeWidth="1"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
             </svg>
           </button>
         </div>
+        <hr className="promos-sheet__divider" />
         <div className="promos-sheet__content">
           <div className="promos-sheet__promo">
             <h3 className="promos-sheet__promo-title">ESCAPADA WELLNESS</h3>

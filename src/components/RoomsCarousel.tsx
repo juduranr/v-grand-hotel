@@ -1,20 +1,16 @@
 import React, { useState } from "react";
 import "./RoomsCarousel.css";
 import roomsData from "../data/rooms.json";
-import { DoubleBed, Sofa, Tub, KnifeFork, Sunbath, ArrowRight } from "@icon-park/react";
-// Usamos imágenes desde public/images para rutas estáticas
+import { DoubleBed, Tub, KnifeFork, ArrowRight } from "@icon-park/react";
 
 const RoomsCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Mapping function to get image source based on banner filename
   const getImageSource = (banner: string) => {
-    // Si el banner ya es una URL completa, usarla directamente
     if (banner.startsWith('http')) {
       return banner;
     }
-    // Si no, añadir el prefijo /images/
     return `/images/${banner}`;
   };
 
@@ -25,7 +21,6 @@ const RoomsCarousel: React.FC = () => {
     const nextIndex = currentIndex + 1;
     setCurrentIndex(nextIndex);
     
-    // Si llegamos al elemento duplicado del primero, saltar al primero real sin transición
     if (nextIndex === roomsData.length) {
       setTimeout(() => {
         setIsTransitioning(false);
@@ -45,7 +40,6 @@ const RoomsCarousel: React.FC = () => {
     const prevIndex = currentIndex - 1;
     setCurrentIndex(prevIndex);
     
-    // Si llegamos al elemento duplicado del último, saltar al último real sin transición
     if (prevIndex === -1) {
       setTimeout(() => {
         setIsTransitioning(false);
@@ -64,7 +58,6 @@ const RoomsCarousel: React.FC = () => {
     setIsTransitioning(true);
     setCurrentIndex(index);
     
-    // Reset transition state after animation completes
     setTimeout(() => {
       setIsTransitioning(false);
     }, 500);
@@ -161,9 +154,11 @@ const RoomsCarousel: React.FC = () => {
                             </span>
                           ))}
                         {roomsData[roomsData.length - 1].terrace && (
-                          <span className="rooms-carousel__room-icon">
-                            <Sunbath fill="#ffffff" strokeWidth={2} size={32} />
-                          </span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                          <path d="M16 17.3334V25.3334M16 17.3334V4.00008M16 17.3334C16 15.6814 14.6567 14.0001 13 14.0001C11.3433 14.0001 10 15.6814 10 17.3334C10 15.6814 8.65667 14.0001 7 14.0001C5.34333 14.0001 4 15.6814 4 17.3334V15.9627C4 9.35608 9.37267 4.00008 16 4.00008M16 17.3334C16 15.6814 17.3433 14.0001 19 14.0001C20.6567 14.0001 22 15.6814 22 17.3334C22 15.6814 23.3433 14.0001 25 14.0001C26.6567 14.0001 28 15.6814 28 17.3334V15.9627C28 9.35608 22.6273 4.00008 16 4.00008M16 4.00008V2.66675M5.33333 26.6667H22.6667L26.6667 22.6667M10 26.6667V29.3334M21.3333 26.6667V29.3334" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M10.0006 17.3336C10.0006 17.3336 9.00065 13.6669 10.6673 10.0002C12.334 6.33358 16.0006 4.00024 16.0006 4.00024M16.0006 4.00024C16.0006 4.00024 19.0006 5.66691 20.6673 10.0002C22.334 14.3336 22.0006 17.3336 22.0006 17.3336M16.0006 4.00024V16.6669" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M25 14C23.3433 14 22 15.6813 22 17.3333C22 15.6813 20.6567 14 19 14C17.3433 14 16 15.6813 16 17.3333C16 15.6813 14.6567 14 13 14C11.3433 14 10 15.6813 10 17.3333C10 15.6813 8.65667 14 7 14M10.4887 5.33333C12.14 4.48133 14.0133 4 16 4C17.9867 4 19.86 4.48133 21.5107 5.33333" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                         )}
                         {roomsData[roomsData.length - 1].breakfast && (
                           <span className="rooms-carousel__room-icon">
@@ -244,9 +239,11 @@ const RoomsCarousel: React.FC = () => {
                               </span>
                             ))}
                           {room.terrace && (
-                            <span className="rooms-carousel__room-icon">
-                              <Sunbath fill="#ffffff" strokeWidth={2} size={32} />
-                            </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <path d="M16 17.3334V25.3334M16 17.3334V4.00008M16 17.3334C16 15.6814 14.6567 14.0001 13 14.0001C11.3433 14.0001 10 15.6814 10 17.3334C10 15.6814 8.65667 14.0001 7 14.0001C5.34333 14.0001 4 15.6814 4 17.3334V15.9627C4 9.35608 9.37267 4.00008 16 4.00008M16 17.3334C16 15.6814 17.3433 14.0001 19 14.0001C20.6567 14.0001 22 15.6814 22 17.3334C22 15.6814 23.3433 14.0001 25 14.0001C26.6567 14.0001 28 15.6814 28 17.3334V15.9627C28 9.35608 22.6273 4.00008 16 4.00008M16 4.00008V2.66675M5.33333 26.6667H22.6667L26.6667 22.6667M10 26.6667V29.3334M21.3333 26.6667V29.3334" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10.0006 17.3336C10.0006 17.3336 9.00065 13.6669 10.6673 10.0002C12.334 6.33358 16.0006 4.00024 16.0006 4.00024M16.0006 4.00024C16.0006 4.00024 19.0006 5.66691 20.6673 10.0002C22.334 14.3336 22.0006 17.3336 22.0006 17.3336M16.0006 4.00024V16.6669" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M25 14C23.3433 14 22 15.6813 22 17.3333C22 15.6813 20.6567 14 19 14C17.3433 14 16 15.6813 16 17.3333C16 15.6813 14.6567 14 13 14C11.3433 14 10 15.6813 10 17.3333C10 15.6813 8.65667 14 7 14M10.4887 5.33333C12.14 4.48133 14.0133 4 16 4C17.9867 4 19.86 4.48133 21.5107 5.33333" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
                           )}
                           {room.breakfast && (
                             <span className="rooms-carousel__room-icon">
@@ -345,9 +342,11 @@ const RoomsCarousel: React.FC = () => {
                             </span>
                           ))}
                         {roomsData[0].terrace && (
-                          <span className="rooms-carousel__room-icon">
-                            <Sunbath fill="#ffffff" strokeWidth={2} size={32} />
-                          </span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                          <path d="M16 17.3334V25.3334M16 17.3334V4.00008M16 17.3334C16 15.6814 14.6567 14.0001 13 14.0001C11.3433 14.0001 10 15.6814 10 17.3334C10 15.6814 8.65667 14.0001 7 14.0001C5.34333 14.0001 4 15.6814 4 17.3334V15.9627C4 9.35608 9.37267 4.00008 16 4.00008M16 17.3334C16 15.6814 17.3433 14.0001 19 14.0001C20.6567 14.0001 22 15.6814 22 17.3334C22 15.6814 23.3433 14.0001 25 14.0001C26.6567 14.0001 28 15.6814 28 17.3334V15.9627C28 9.35608 22.6273 4.00008 16 4.00008M16 4.00008V2.66675M5.33333 26.6667H22.6667L26.6667 22.6667M10 26.6667V29.3334M21.3333 26.6667V29.3334" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M10.0006 17.3336C10.0006 17.3336 9.00065 13.6669 10.6673 10.0002C12.334 6.33358 16.0006 4.00024 16.0006 4.00024M16.0006 4.00024C16.0006 4.00024 19.0006 5.66691 20.6673 10.0002C22.334 14.3336 22.0006 17.3336 22.0006 17.3336M16.0006 4.00024V16.6669" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M25 14C23.3433 14 22 15.6813 22 17.3333C22 15.6813 20.6567 14 19 14C17.3433 14 16 15.6813 16 17.3333C16 15.6813 14.6567 14 13 14C11.3433 14 10 15.6813 10 17.3333C10 15.6813 8.65667 14 7 14M10.4887 5.33333C12.14 4.48133 14.0133 4 16 4C17.9867 4 19.86 4.48133 21.5107 5.33333" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                         )}
                         {roomsData[0].breakfast && (
                           <span className="rooms-carousel__room-icon">
@@ -412,9 +411,11 @@ const RoomsCarousel: React.FC = () => {
                           </span>
                         ))}
                       {room.terrace && (
-                        <span className="rooms-carousel__room-icon-grid">
-                          <Sunbath fill="#ffffff" strokeWidth={2} size={32} />
-                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <path d="M16 17.3334V25.3334M16 17.3334V4.00008M16 17.3334C16 15.6814 14.6567 14.0001 13 14.0001C11.3433 14.0001 10 15.6814 10 17.3334C10 15.6814 8.65667 14.0001 7 14.0001C5.34333 14.0001 4 15.6814 4 17.3334V15.9627C4 9.35608 9.37267 4.00008 16 4.00008M16 17.3334C16 15.6814 17.3433 14.0001 19 14.0001C20.6567 14.0001 22 15.6814 22 17.3334C22 15.6814 23.3433 14.0001 25 14.0001C26.6567 14.0001 28 15.6814 28 17.3334V15.9627C28 9.35608 22.6273 4.00008 16 4.00008M16 4.00008V2.66675M5.33333 26.6667H22.6667L26.6667 22.6667M10 26.6667V29.3334M21.3333 26.6667V29.3334" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.0006 17.3336C10.0006 17.3336 9.00065 13.6669 10.6673 10.0002C12.334 6.33358 16.0006 4.00024 16.0006 4.00024M16.0006 4.00024C16.0006 4.00024 19.0006 5.66691 20.6673 10.0002C22.334 14.3336 22.0006 17.3336 22.0006 17.3336M16.0006 4.00024V16.6669" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M25 14C23.3433 14 22 15.6813 22 17.3333C22 15.6813 20.6567 14 19 14C17.3433 14 16 15.6813 16 17.3333C16 15.6813 14.6567 14 13 14C11.3433 14 10 15.6813 10 17.3333C10 15.6813 8.65667 14 7 14M10.4887 5.33333C12.14 4.48133 14.0133 4 16 4C17.9867 4 19.86 4.48133 21.5107 5.33333" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
                       )}
                       {room.breakfast && (
                         <span className="rooms-carousel__room-icon-grid">

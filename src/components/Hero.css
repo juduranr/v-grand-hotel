@@ -41,66 +41,41 @@
   box-sizing: border-box;
 }
 
-/* Cuando el título está siendo animado */
-.hero__title-wrapper.animating {
-  position: fixed !important;
-  z-index: 100;
-  top: 50vh !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-}
 
 .hero__title-content {
-  font-size: 96px; /* Tamaño inicial */
+  font-size: 96px;
   font-family: 'BeaufortforLOL', serif;
   font-weight: 400;
   text-align: center;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  color: #fff;
   opacity: 1;
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  min-height: 96px;
   white-space: nowrap;
   position: relative;
   z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 
-.hero__title--fade {
-  opacity: 0;
-  transition: opacity 0.4s ease-in-out;
-}
-
-.hero__title-fixed {
-  color: #fff;
+.hero__title-static {
   display: inline-block;
-  display: flex;
-  align-items: center;
 }
 
-.hero__words-container {
-  position: relative;
-  overflow: hidden;
-  margin: auto 0;
-  height: 1.2em;
-  display: flex;
-  align-items: center;
-  width: clamp(250px, 40vw, 500px);
-  min-width: clamp(250px, 40vw, 500px);
-}
-
-.hero__word {
+/* Path SVG que conecta el título con la descripción */
+.hero__connecting-path {
   position: absolute;
-  top: 0;
-  left: 0;
-  color: #fff;
-  height: 1.2em;
-  line-height: 1.2em;
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
+  top: 50vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: calc(40vh + 20vh);
+  z-index: 12;
+  pointer-events: none;
 }
+
 
 
 .hero__shadow {
@@ -109,21 +84,30 @@
   left: 0;
   width: 100%;
   height: 0;
-  background: linear-gradient(to top, #2E3C35 0%, #2E3C35 30%, transparent 100%);
+  background: linear-gradient(to top, #2E3C35 0%, #2E3C35 30%, #2E3C35 40%, #2E3C35 50%, transparent 100%);
   z-index: 10;
   pointer-events: none;
+  will-change: transform, height;
+}
+
+.hero__description-logo {
+  margin: 48px 0;
 }
 
 .hero__description {
   height: 100vh;
   background-color: #2E3C35;
-  position: relative;
+  position: absolute;
+  top: 100vh;
+  left: 0;
+  width: 100%;
   margin-top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 24px;
   font-style: normal;
+  z-index: 5;
 }
 
 .hero__description-content{
@@ -246,6 +230,40 @@
   }
 }
 
+/* Animación de palabras WELCOME, GRAND, MEDELLIN */
+.welcome-animation {
+  position: relative;
+  display: inline-block;
+  perspective: 400px;
+  visibility: hidden;
+  height: 1em;
+  width: 400px;
+  z-index: 20;
+  pointer-events: none;
+  vertical-align: top;
+}
+
+.welcome-word {
+  position: absolute;
+  display: inline-block;
+  left: 0;
+  top: 0;
+  font-weight: 400;
+  font-size: inherit;
+  color: #fff;
+  white-space: nowrap;
+  font-family: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  line-height: 1;
+}
+
+@media only screen and (max-width: 900px) {
+  .welcome-animation {
+    width: 267px;
+  }
+}
+
 /* Media queries para responsividad */
 @media (max-width: 768px) {
   .hero__title-wrapper {
@@ -254,8 +272,11 @@
   }
   
   .hero__title-content {
-    font-size: 64px; /* Tamaño inicial en móvil */
-    min-height: 64px;
+    font-size: 64px;
+  }
+  
+  .welcome-animation {
+    width: 267px;
   }
   
   .hero__description-content {
@@ -275,8 +296,11 @@
   }
   
   .hero__title-content {
-    font-size: 48px; /* Tamaño inicial en móvil pequeño */
-    min-height: 48px;
+    font-size: 48px;
+  }
+  
+  .welcome-animation {
+    width: 200px;
   }
   
   .hero__description-content {
@@ -287,32 +311,4 @@
   .hero__description-text {
     font-size: 16px;
   }
-}
-
-/* Estilos para la animación del título */
-.title__last__position {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.hero__description-content img {
-  width: 37px;
-  height: auto;
-  object-fit: cover;
-  object-position: center;
-  position: relative;
-  z-index: 5;
-}
-
-.scrollItem {
-  position: relative;
-}
-
-.scrollPositionTwo {
-  position: relative;
 }
