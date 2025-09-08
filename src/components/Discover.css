@@ -13,21 +13,20 @@
 .discover__infinity-gallery {
   position: relative;
   width: 100%;
-  height: 200px;
-  max-height: 200px;
+  height: 250px;
+  max-height: 250px;
   overflow: hidden;
 }
 
 .discover__infinity-gallery-track {
   display: flex;
-  width: calc(300px * 12);
+  width: calc(400px * 22);
   will-change: transform;
-  transform: translateX(0);
 }
 
 .discover__infinity-gallery-item {
-  height: 200px;
-  width: 300px;
+  height: 250px;
+  width: 400px;
   flex-shrink: 0;
 }
 
@@ -44,22 +43,26 @@
 }
 
 .discover__image {
-  position: relative;
-  height: 120vh;
+  position: absolute;
+  top: -15%;
+  left: 0;
+  height: 130vh;
   width: 100%;
   overflow: hidden;
   object-fit: cover;
-  object-position: center;
-  transform-origin: center center;
+  object-position: center top;
+  transform-origin: center top;
   will-change: transform;
-  transition: transform 0.6s ease-out;
   pointer-events: none;
+  /* Estado inicial para el efecto de parallax y zoom */
+  transform: scale(1.6) translateY(0);
 }
 
 .discover__radisson-logo {
   position: absolute;
   top: 40px;
   left: 50%;
+  transform: translateX(-50%);
   z-index: 15;
   width: 146px;
   height: auto;
@@ -86,6 +89,10 @@
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box;
+  /* Estado inicial para la animación */
+  opacity: 0;
+  transform: translateY(50px) scale(0.9);
+  will-change: opacity, transform;
 }
 
 .discover__background_title h2 {
@@ -95,6 +102,22 @@
   margin: 0;
   padding: 0;
   line-height: 0.9;
+}
+
+/* Estilos para el efecto de escritura */
+.typewriter-line {
+  display: inline-block;
+  position: relative;
+}
+
+.typewriter-char {
+  display: inline-block;
+  position: relative;
+  opacity: 0;
+  transform: translateX(-15px) scale(0.9);
+  will-change: opacity, transform, filter;
+  transition: none;
+  filter: blur(2px);
 }
 
 .js_heading {

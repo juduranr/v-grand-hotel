@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useState, useEffect, useRef } from "react";
 import "./Discover.css";
 import { DISCOVER_IMAGES } from "../config/env";
 import raddisonLogo from "../assets/images/raddison.svg";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const GALLERY_IMAGES = [
   DISCOVER_IMAGES.GALLERY_1,
@@ -19,127 +19,136 @@ const GALLERY_IMAGES = [
   DISCOVER_IMAGES.GALLERY_11,
 ];
 
-gsap.registerPlugin(ScrollTrigger);
-
 const Discover: React.FC = () => {
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
+  const galleryTrackRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const backgroundImageRef = useRef<HTMLImageElement>(null);
   const animationRef = useRef<gsap.core.Tween | null>(null);
-  const zoomAnimationRef = useRef<gsap.core.Tween | null>(null);
-  const dialogRef = useRef<HTMLDivElement | null>(null);
-  const lightboxImageRef = useRef<HTMLImageElement | null>(null);
-  const lightboxOpenAnimRef = useRef<gsap.core.Timeline | null>(null);
-  const lightboxCloseAnimRef = useRef<gsap.core.Timeline | null>(null);
-  const titleRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
-    let ticking = false;
+    // Registrar el plugin ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
 
-    const updateScrollSpeed = () => {
-      const currentScrollY = window.scrollY;
-      const scrollDelta = Math.abs(currentScrollY - lastScrollY);
-
-      if (scrollDelta > 5) {
-        if (!isScrolling) {
-          setIsScrolling(true);
-
-          if (animationRef.current) {
-            animationRef.current.timeScale(3.75);
-          }
-        }
-
-        if (scrollTimeoutRef.current) {
-          clearTimeout(scrollTimeoutRef.current);
-        }
-
-        scrollTimeoutRef.current = setTimeout(() => {
-          setIsScrolling(false);
-
-          if (animationRef.current) {
-            animationRef.current.timeScale(1);
-          }
-        }, 500);
-      }
-
-      lastScrollY = currentScrollY;
-      ticking = false;
-    };
-
-    const onScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(updateScrollSpeed);
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-    };
-  }, [isScrolling]);
-
-  // Inicializar la animación GSAP
-  useEffect(() => {
-    if (trackRef.current) {
-      trackRef.current.style.animation = 'none';
-
-      animationRef.current = gsap.to(trackRef.current, {
-        x: `-${300 * GALLERY_IMAGES.length}px`,
-        duration: 30,
-        ease: 'none',
+    if (galleryTrackRef.current) {
+      // Crear la animación del carousel
+      const t = gsap.to(galleryTrackRef.current, {
+        duration: 60,
+        ease: "none",
+        x: `-50%`,
         repeat: -1,
-          onRepeat: () => {
-          gsap.set(trackRef.current, { x: 0 });
+      });
+
+      animationRef.current = t;
+
+      // Crear ScrollTrigger para controlar la velocidad según el scroll
+      ScrollTrigger.create({
+        trigger: galleryTrackRef.current,
+        start: "top 80%",
+        end: "bottom top",
+        onUpdate(self) {
+          const velocity = self.getVelocity();
+          // Usar valor absoluto para que funcione en ambas direcciones
+          const absVelocity = Math.abs(velocity);
+          const timeScale = 3 + (absVelocity / 800);
+          gsap.timeline()
+            .to(t, { duration: 0.1, timeScale })
+            .to(t, { duration: 2, timeScale: 1 });
         }
       });
     }
 
+    // Animación del título con efecto de escritura progresivo
+    if (titleRef.current) {
+      const chars = titleRef.current.querySelectorAll('.typewriter-char');
+      
+      // Configurar estado inicial del título
+      gsap.set(titleRef.current, {
+        opacity: 1,
+        y: 0,
+        scale: 1
+      });
+
+      gsap.set(chars, {
+        opacity: 0,
+        x: -15,
+        scale: 0.9,
+        filter: "blur(2px)"
+      });
+
+      ScrollTrigger.create({
+        trigger: titleRef.current,
+        start: "top 90%",
+        end: "bottom 90%",
+        scrub: 1,
+        markers: true,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const totalChars = chars.length;
+          
+          // Calcular cuántas letras deben estar visibles según el progreso
+          const visibleChars = Math.floor(progress * totalChars);
+          
+          // Animar cada letra según su posición en el progreso
+          chars.forEach((char, index) => {
+            if (index <= visibleChars) {
+              // Calcular el progreso individual de cada letra
+              const charProgress = Math.min(1, (progress * totalChars - index) * 2);
+              
+              gsap.to(char, {
+                opacity: charProgress,
+                x: -15 * (1 - charProgress),
+                scale: 0.9 + (0.1 * charProgress),
+                filter: `blur(${2 * (1 - charProgress)}px)`,
+                duration: 0.1,
+                ease: "power2.out"
+              });
+            } else {
+              // Mantener letras no visibles en estado inicial
+              gsap.set(char, {
+                opacity: 0,
+                x: -15,
+                scale: 0.9,
+                filter: "blur(2px)"
+              });
+            }
+          });
+        }
+      });
+    }
+
+    // Animación de parallax y zoom out para la imagen de fondo
+    if (backgroundImageRef.current) {
+      ScrollTrigger.create({
+        trigger: backgroundImageRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          // Efecto de parallax más sutil para reducir espacio en blanco
+          const parallaxY = -progress * 80; // Movimiento hacia arriba más moderado
+          // Efecto de zoom out más conservador para mantener cobertura
+          const scale = 1.6 - (progress * 0.3); // Empieza en 1.6x y termina en 1.3x
+          
+          gsap.set(backgroundImageRef.current, {
+            y: parallaxY,
+            scale: scale,
+            transformOrigin: "center top"
+          });
+        }
+      });
+    }
+
+    // Cleanup
     return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       if (animationRef.current) {
         animationRef.current.kill();
       }
     };
   }, []);
-
-  useEffect(() => {
-    if (imageRef.current) {
-      gsap.set(imageRef.current, { scale: 1.1 });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (imageRef.current) {
-      if (isHovering) {
-        zoomAnimationRef.current = gsap.to(imageRef.current, {
-          scale: 1,
-          duration: 0.6,
-          ease: "power2.out"
-        });
-      } else {
-        zoomAnimationRef.current = gsap.to(imageRef.current, {
-          scale: 1.1,
-          duration: 0.6,
-          ease: "power2.out"
-        });
-      }
-    }
-
-    return () => {
-      if (zoomAnimationRef.current) {
-        zoomAnimationRef.current.kill();
-      }
-    };
-  }, [isHovering]);
 
   const handleOpenLightbox = (src: string) => {
     setLightboxSrc(src);
@@ -148,94 +157,28 @@ const Discover: React.FC = () => {
   };
 
   const handleCloseLightbox = () => {
-    if (dialogRef.current) {
-      const elements: Array<HTMLElement | null> = [dialogRef.current, lightboxImageRef.current];
-      lightboxCloseAnimRef.current?.kill();
-      lightboxCloseAnimRef.current = gsap.timeline({
-        onComplete: () => {
-          setLightboxOpen(false);
-          setLightboxSrc(null);
-          document.documentElement.style.overflow = '';
-        }
-      })
-        .to(elements[1], { scale: 0.95, duration: 0.2, ease: 'power2.inOut' }, 0)
-        .to(elements[0], { autoAlpha: 0, duration: 0.2, ease: 'power2.inOut' }, 0);
-    } else {
-      setLightboxOpen(false);
-      setLightboxSrc(null);
-      document.documentElement.style.overflow = '';
+    setLightboxOpen(false);
+    setLightboxSrc(null);
+    document.documentElement.style.overflow = '';
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      handleCloseLightbox();
     }
   };
 
-  useEffect(() => {
-    if (!lightboxOpen) return;
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        handleCloseLightbox();
-      }
-    };
-
-    const onClickOutside = (e: MouseEvent) => {
-      if (dialogRef.current && e.target === dialogRef.current) {
-        handleCloseLightbox();
-      }
-    };
-
-    window.addEventListener('keydown', onKeyDown);
-    window.addEventListener('click', onClickOutside);
-    return () => {
-      window.removeEventListener('keydown', onKeyDown);
-      window.removeEventListener('click', onClickOutside);
-    };
-  }, [lightboxOpen]);
-
-  useEffect(() => {
-    if (!lightboxOpen) return;
-    const overlay = dialogRef.current;
-    const lightboxImg = lightboxImageRef.current;
-    if (!overlay) return;
-    gsap.set(overlay, { autoAlpha: 0 });
-    if (lightboxImg) gsap.set(lightboxImg, { scale: 0.95 });
-    lightboxOpenAnimRef.current?.kill();
-    lightboxOpenAnimRef.current = gsap.timeline()
-      .to(overlay, { autoAlpha: 1, duration: 0.25, ease: 'power2.out' }, 0)
-      .to(lightboxImg, { scale: 1, duration: 0.25, ease: 'power2.out' }, 0);
-    return () => {
-      lightboxOpenAnimRef.current?.kill();
-    };
-  }, [lightboxOpen]);
-
-  useEffect(() => {
-    if (!titleRef.current) return;
-    
-    gsap.set(titleRef.current, { 
-      clipPath: "inset(0 100% 0 0)",
-      y: 20
-    });
-    
-    gsap.to(titleRef.current, {
-      clipPath: "inset(0 0% 0 0)",
-      y: 0,
-      ease: "power2.out",
-      duration: 1.2,
-      scrollTrigger: {
-        trigger: ".discover__background_title",
-        start: "top bottom-=10%",
-        end: "center bottom-=30%",
-        scrub: 1
-      }
-    });
-  }, []);
+  const handleClickOutside = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      handleCloseLightbox();
+    }
+  };
 
   return (
     <section className="discover">
       <div className="discover__container">
         <div className="discover__infinity-gallery">
-          <div
-            ref={trackRef}
-            className="discover__infinity-gallery-track"
-          >
+          <div ref={galleryTrackRef} className="discover__infinity-gallery-track">
             {GALLERY_IMAGES.map((imageSrc, index) => (
               <div key={`first-${index}`} className="discover__infinity-gallery-item">
                 <img
@@ -274,12 +217,10 @@ const Discover: React.FC = () => {
         </div>
         <div className="discover__background">
           <img
-            ref={imageRef}
+            ref={backgroundImageRef}
             src={`${DISCOVER_IMAGES.HERO}`}
             alt="V Grand Hotel Discover"
             className="discover__image"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
             onError={(e) => {
               (e.target as HTMLImageElement).style.backgroundColor = '#1a1a1a';
               (e.target as HTMLImageElement).style.display = 'flex';
@@ -293,20 +234,37 @@ const Discover: React.FC = () => {
             <img src={raddisonLogo.src} alt="Radisson Logo" />
           </div>
           <div ref={titleRef} className="discover__background_title">
-            <h2>Descubre lo que<br />tenemos para ti</h2>
+            <h2>
+              <span className="typewriter-line">
+                {Array.from("Descubre lo que").map((char, index) => (
+                  <span key={index} className="typewriter-char">
+                    {char === ' ' ? '\u00A0' : char}
+                  </span>
+                ))}
+              </span>
+              <br />
+              <span className="typewriter-line">
+                {Array.from("tenemos para ti").map((char, index) => (
+                  <span key={index} className="typewriter-char">
+                    {char === ' ' ? '\u00A0' : char}
+                  </span>
+                ))}
+              </span>
+            </h2>
           </div>
         </div>
         {lightboxOpen && (
           <div
-            ref={dialogRef}
             className="discover__lightbox"
             role="dialog"
             aria-modal="true"
             aria-label="Imagen ampliada"
+            onKeyDown={handleKeyDown}
+            onClick={handleClickOutside}
           >
             {lightboxSrc && (
               <div className="discover__lightbox_image_container">
-                <img ref={lightboxImageRef} className="discover__lightbox_image" src={lightboxSrc} alt="Imagen ampliada" />
+                <img className="discover__lightbox_image" src={lightboxSrc} alt="Imagen ampliada" />
                 <button className="discover__lightbox_close" onClick={handleCloseLightbox} aria-label="Cerrar imagen">✕</button>
               </div>
             )}
