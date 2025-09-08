@@ -100,8 +100,6 @@ const Events = () => {
                 Contáctanos
                 </a>
                 </div>
-
-                {/* Carousel de fotos */}
                 <div className='events-carousel'>
                     <div className='events-carousel__container'>
                         <div className='events-carousel__track'>
