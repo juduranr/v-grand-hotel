@@ -82,7 +82,6 @@ const Discover: React.FC = () => {
         start: "top 90%",
         end: "bottom 90%",
         scrub: 1,
-        markers: true,
         onUpdate: (self) => {
           const progress = self.progress;
           const totalChars = chars.length;
