@@ -10,9 +10,13 @@
     "terrace": false,
     "breakfast": true,
     "gallery": [
-      "infinity-gallery-1.webp",
-      "infinity-gallery-2.webp",
-      "infinity-gallery-3.webp"
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/grand-view-gallery-1.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/grand-view-gallery-2.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/grand-view-gallery-3.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/grand-view-gallery-4.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/grand-view-gallery-5.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/grand-view-gallery-6.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/grand-view-gallery-7.webp"
     ]
   },
   {
@@ -26,9 +30,13 @@
     "terrace": false,
     "breakfast": true,
     "gallery": [
-      "infinity-gallery-1.webp",
-      "infinity-gallery-2.webp",
-      "infinity-gallery-3.webp"
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/grand-suite-gallery-1.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/grand-suite-gallery-2.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/grand-suite-gallery-3.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/grand-suite-gallery-4.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/grand-suite-gallery-5.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/grand-suite-gallery-6.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/grand-suite-gallery-7.webp"
     ]
   },
   {
@@ -42,9 +50,13 @@
     "terrace": true,
     "breakfast": true,
     "gallery": [
-      "infinity-gallery-1.webp",
-      "infinity-gallery-2.webp",
-      "infinity-gallery-3.webp"
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/balcony-gallery-1.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/balcony-gallery-2.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/balcony-gallery-3.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/balcony-gallery-4.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/balcony-gallery-5.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/balcony-gallery-6.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/balcony-gallery-7.webp"
     ]
   },
   {
@@ -58,9 +70,13 @@
     "terrace": false,
     "breakfast": true,
     "gallery": [
-      "infinity-gallery-1.webp",
-      "infinity-gallery-2.webp",
-      "infinity-gallery-3.webp"
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/junior-suite-gallery-1.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/junior-suite-gallery-2.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/junior-suite-gallery-3.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/junior-suite-gallery-4.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/junior-suite-gallery-5.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/junior-suite-gallery-6.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/junior-suite-gallery-7.webp"
     ]
   },
   {
@@ -74,9 +90,12 @@
     "terrace": false,
     "breakfast": true,
     "gallery": [
-      "infinity-gallery-1.webp",
-      "infinity-gallery-2.webp",
-      "infinity-gallery-3.webp"
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/familiar-gallery-1.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/familiar-gallery-2.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/familiar-gallery-3.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/familiar-gallery-4.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/familiar-gallery-5.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/familiar-gallery-6.webp"
     ]
   },
   {
@@ -90,9 +109,13 @@
     "terrace": false,
     "breakfast": true,
     "gallery": [
-      "infinity-gallery-1.webp",
-      "infinity-gallery-2.webp",
-      "infinity-gallery-3.webp"
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/estudio-1-gallery-1.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/estudio-1-gallery-2.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/estudio-1-gallery-3.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/estudio-1-gallery-4.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/estudio-1-gallery-5.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/estudio-1-gallery-6.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/estudio-1-gallery-7.webp"
     ]
   },
   {
@@ -106,9 +129,13 @@
     "terrace": false,
     "breakfast": true,
     "gallery": [
-      "infinity-gallery-1.webp",
-      "infinity-gallery-2.webp",
-      "infinity-gallery-3.webp"
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/estudio-2-gallery-1.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/estudio-2-gallery-2.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/estudio-2-gallery-3.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/estudio-2-gallery-4.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/estudio-2-gallery-5.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/estudio-2-gallery-6.webp",
+      "https://yvivloqhhmvh4iw4.public.blob.vercel-storage.com/rooms/gallery/estudio-2-gallery-7.webp"
     ]
   }
 ]
