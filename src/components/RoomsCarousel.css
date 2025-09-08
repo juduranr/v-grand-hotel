@@ -99,14 +99,16 @@ max-width: 1100px;
   width: 100%;
   display: flex;
   flex-direction: row;
+  position: relative;
   height: 100%;
 }
 
 .rooms-carousel__room-image-container {
-  width: 50%;
   height: 100%;
   position: relative;
   overflow: hidden;
+  flex: 1 1 auto;
+  width: auto;
 }
 
 .rooms-carousel__room-image {
@@ -128,11 +130,32 @@ max-width: 1100px;
 }
 
 .rooms-carousel__room-content {
-  width: 50%;
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(150deg, #979A83 0%, #2E3C35 100%);
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: transparent;
+  aspect-ratio: 516 / 584;
+  z-index: 2;
+}
+
+.rooms-carousel__room-content::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: left center;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='509' height='584' viewBox='0 0 509 584' fill='none'><path d='M0 0H509C509 0 485.106 148.5 485.106 296C485.106 443.5 509 584 509 584H0V0Z' fill='url(%23paint0_linear_1804_36)'/><defs><linearGradient id='paint0_linear_1804_36' x1='254.5' y1='0' x2='876' y2='921.5' gradientUnits='userSpaceOnUse'><stop stop-color='%23979A83'/><stop offset='1' stop-color='%232E3C35'/></linearGradient></defs></svg>");
+}
+
+.rooms-carousel__room-content > * {
+  position: relative;
+  z-index: 1;
 }
 
 .rooms-carousel__room-subtitle {
@@ -335,6 +358,13 @@ padding-bottom: 56px;
   color: #ffffff;
 }
 
+/* Ajuste de posición del botón izquierdo para no solaparse con el panel de info (desktop) */
+@media (min-width: 769px) {
+  .rooms-carousel__nav-button--prev {
+    left: 430px;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .rooms-carousel {
@@ -356,12 +386,14 @@ padding-bottom: 56px;
   .rooms-carousel__room-card {
     flex-direction: column;
     height: 810px;
+    position: static;
   }
   
   .rooms-carousel__room-image-container {
     width: 100%;
     height: 360px;
     order: 2;
+    flex: 0 0 auto;
   }
   
   .rooms-carousel__room-content {
@@ -372,6 +404,10 @@ padding-bottom: 56px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    aspect-ratio: auto;
+    position: relative;
+    left: auto;
+    top: auto;
   }
   
   .rooms-carousel__controls {
