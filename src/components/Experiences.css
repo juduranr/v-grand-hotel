@@ -2,6 +2,9 @@
     width: 90vw;
     margin: 0 auto;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .experiences-content-container {
@@ -213,7 +216,8 @@
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
-    line-height: 24px; /* 133.333% */
+    line-height: 24px;
+    /* 133.333% */
     letter-spacing: -0.72px;
     color: #232D28;
     margin: 0 0 8px 0;
@@ -230,21 +234,21 @@
 
 .experiences-button {
     display: flex;
-padding: 17px 32px;
-justify-content: center;
-align-items: center;
-gap: 10px;
-color: #FFF;
-font-family: Avenir;
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-letter-spacing: -0.32px;
-border-radius: 40px;
-background: #2E3C35;
-margin: 0 auto;
-margin-bottom: 60px;
+    padding: 17px 32px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #FFF;
+    font-family: Avenir;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.32px;
+    border-radius: 40px;
+    background: #2E3C35;
+    margin: 0 auto;
+    margin-bottom: 60px;
 }
 
 .accordion-button:hover {
@@ -292,40 +296,40 @@ margin-bottom: 60px;
     .experiences-container {
         width: 95vw;
     }
-    
+
     .experiences-accordion-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-    
+
     .experiences-title {
         font-size: clamp(1.2rem, 5vw, 2rem);
         padding: 0 0.5rem;
         max-width: 200px;
     }
-    
+
     .experiences-title-container {
         gap: 0.5rem;
         margin-bottom: 1.5rem;
     }
-    
+
     .experiences-title-container hr {
         display: none;
     }
-    
+
     .experiences-title-container .v-hotel-logo {
         display: none;
     }
-    
+
     .experiences-content-container {
         padding: 0 1rem;
     }
-    
+
     .experiences-description {
         font-size: 1rem;
         margin-bottom: 2rem;
     }
-    
+
     .experiences-button {
         margin-bottom: 2rem;
         padding: 14px 24px;
@@ -338,38 +342,38 @@ margin-bottom: 60px;
         width: 100vw;
         padding: 0 1rem;
     }
-    
+
     .experiences-title {
         font-size: clamp(1rem, 6vw, 1.5rem);
         padding: 0 0.25rem;
     }
-    
+
     .experiences-title-container {
         gap: 0.25rem;
         margin-bottom: 1rem;
     }
-    
+
     .experiences-title-container .v-hotel-logo {
         width: 20px;
         height: 20px;
     }
-    
+
     .experiences-description {
         font-size: 0.9rem;
         margin-bottom: 1.5rem;
     }
-    
+
     .experiences-button {
         margin-bottom: 1.5rem;
         padding: 12px 20px;
         font-size: 13px;
     }
-    
+
     .accordion-header {
         padding: 1rem 0 24px 0;
         gap: 1rem;
     }
-    
+
     .accordion-title {
         font-size: 24px;
         line-height: 1.3;

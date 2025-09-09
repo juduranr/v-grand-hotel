@@ -257,6 +257,23 @@ line-height: 150%;
   height: 60vh;
 }
 
+/* Estilos para la imagen del rooftop */
+.restaurants-carousel-container img.scroll-r-restaurants-gallery {
+  height: 60vh !important;
+}
+
+@media (max-width: 768px) {
+  .restaurants-carousel-container img.scroll-r-restaurants-gallery {
+    height: 50vh !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .restaurants-carousel-container img.scroll-r-restaurants-gallery {
+    height: 45vh !important;
+  }
+}
+
 /* Estilos específicos para ScrollRestaurant */
 .scroll-r-section {
   display: flex;

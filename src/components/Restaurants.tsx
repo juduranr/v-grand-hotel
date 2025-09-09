@@ -101,7 +101,7 @@ const Restaurants: React.FC = () => {
     },
     {
       title: "ROOFTOP",
-      description: "Sabores que cuentan historias, una tradición que une generaciones. Cocina italiana de autor en un ambiente sofisticado.",
+      description: "Un espacio diseñado para disfrutar de los atardeceres más memorables, con una vista panorámica de la ciudad, cócteles de autor y una atmósfera sofisticada que combina música, gastronomía y elegancia.",
       items: [
         { src: RESTAURANTS_IMAGES.ROOFTOP_1, alt: "ROOFTOP - Imagen 1" },
         { src: RESTAURANTS_IMAGES.ROOFTOP_2, alt: "ROOFTOP - Imagen 2" },
