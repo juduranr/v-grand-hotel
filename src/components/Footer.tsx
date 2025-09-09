@@ -3,7 +3,7 @@ import vLogo from '../assets/images/v-logo-complete.svg';
 import raddisonLogo from '../assets/images/raddison.svg';
 import fbIcon from '../assets/images/fb.svg';
 import igIcon from '../assets/images/ig.svg';
-import xIcon from '../assets/images/x.svg';
+import waIcon from '../assets/images/wa.svg';
 import inIcon from '../assets/images/in.svg';
 import ytIcon from '../assets/images/yt.svg';
 import tiktokIcon from '../assets/images/tt.svg';
@@ -37,23 +37,23 @@ const Footer: React.FC = () => {
             </div>
             <div className="footer__social">
               <div className="footer__social-links">
-                <a href="#" className="footer__social-link" aria-label="Facebook">
-                  <img src={fbIcon.src} alt="Facebook" className="footer__social-icon" />
-                </a>
-                <a href="#" className="footer__social-link" aria-label="Instagram">
+                <a href="https://www.instagram.com/vgrandhotels/" className="footer__social-link" aria-label="Instagram">
                   <img src={igIcon.src} alt="Instagram" className="footer__social-icon" />
                 </a>
-                <a href="#" className="footer__social-link" aria-label="Twitter">
-                  <img src={xIcon.src} alt="Twitter" className="footer__social-icon" />
-                </a>
-                <a href="#" className="footer__social-link" aria-label="LinkedIn">
+                <a href="https://www.linkedin.com/company/v-grand-hotel-medellin/posts/?feedView=all" className="footer__social-link" aria-label="LinkedIn">
                   <img src={inIcon.src} alt="LinkedIn" className="footer__social-icon" />
                 </a>
-                <a href="#" className="footer__social-link" aria-label="YouTube">
-                  <img src={ytIcon.src} alt="YouTube" className="footer__social-icon" />
+                <a href="https://www.facebook.com/people/V-Grand-Hotel/61558598542512/" className="footer__social-link" aria-label="Facebook">
+                  <img src={fbIcon.src} alt="Facebook" className="footer__social-icon" />
                 </a>
-                <a href="#" className="footer__social-link" aria-label="TikTok">
+                <a href="https://wa.link/62airb" className="footer__social-link" aria-label="WhatsApp">
+                  <img src={waIcon.src} alt="WhatsApp" className="footer__social-icon" />
+                </a>
+                <a href="https://www.tiktok.com/@vgrandhotels" className="footer__social-link" aria-label="TikTok">
                   <img src={tiktokIcon.src} alt="TikTok" className="footer__social-icon" />
+                </a>
+                <a href="https://www.youtube.com/@VGrandHotels" className="footer__social-link" aria-label="YouTube">
+                  <img src={ytIcon.src} alt="YouTube" className="footer__social-icon" />
                 </a>
               </div>
             </div>
@@ -63,12 +63,12 @@ const Footer: React.FC = () => {
           <div className="footer__column">
             <h3 className="footer__title">Mapa de Sitio</h3>
             <ul className="footer__links">
-              <li><a href="#rooms" className="footer__link">Habitaciones</a></li>
-              <li><a href="#dining" className="footer__link">Restaurantes</a></li>
+              <li><a href="/rooms" className="footer__link">Habitaciones</a></li>
+              {/* <li><a href="#dining" className="footer__link">Restaurantes</a></li>
               <li><a href="#experiences" className="footer__link">Experiencias</a></li>
               <li><a href="#events" className="footer__link">Eventos</a></li>
               <li><a href="#gallery" className="footer__link">Galería</a></li>
-              <li><a href="#about" className="footer__link">Sobre Nosotros</a></li>
+              <li><a href="#about" className="footer__link">Sobre Nosotros</a></li> */}
             </ul>
           </div>
 

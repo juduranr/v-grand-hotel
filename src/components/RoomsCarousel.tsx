@@ -104,9 +104,9 @@ const RoomsCarousel: React.FC = () => {
                 </button>
               ))}
             </div>
-            <button className="rooms-carousel__carousel-button">
+            <a href="/rooms" className="rooms-carousel__carousel-button">
               Ver todas las habitaciones <ArrowRight size={24} />
-            </button>
+            </a>
           </div>
           <div className="rooms-carousel__carousel-container">
             <div className="rooms-carousel__room-card">
@@ -305,9 +305,9 @@ const RoomsCarousel: React.FC = () => {
         </div>
         <div className="rooms-carousel__all-rooms-grid-button">
           <p>Para más información de tarifas y disponibilidad, visita nuestra</p>
-          <button className="rooms-carousel__carousel-button">
+          <a href="https://www.choicehotels.com/es-xl/colombia/medellin/radisson-individuals-hotels/cb031" target="_blank" rel="noopener noreferrer" className="rooms-carousel__carousel-button">
             Página de reservas <ArrowRight size={24} />
-          </button>
+          </a>
         </div>
       </div>
     </section>

@@ -79,9 +79,9 @@ const Discover: React.FC = () => {
 
       ScrollTrigger.create({
         trigger: titleRef.current,
-        start: "top 90%",
-        end: "bottom 90%",
-        scrub: 1,
+        start: "top 85%",
+        end: "bottom 80%",
+        scrub: 0.5,
         onUpdate: (self) => {
           const progress = self.progress;
           const totalChars = chars.length;
@@ -91,20 +91,27 @@ const Discover: React.FC = () => {
           
           // Animar cada letra según su posición en el progreso
           chars.forEach((char, index) => {
-            if (index <= visibleChars) {
-              // Calcular el progreso individual de cada letra
-              const charProgress = Math.min(1, (progress * totalChars - index) * 2);
+            if (index < visibleChars) {
+              // Letra completamente visible
+              gsap.set(char, {
+                opacity: 1,
+                x: 0,
+                scale: 1,
+                filter: "blur(0px)"
+              });
+            } else if (index === visibleChars) {
+              // Letra actualmente siendo animada
+              const charProgress = (progress * totalChars) - index;
+              const clampedProgress = Math.min(1, Math.max(0, charProgress));
               
-              gsap.to(char, {
-                opacity: charProgress,
-                x: -15 * (1 - charProgress),
-                scale: 0.9 + (0.1 * charProgress),
-                filter: `blur(${2 * (1 - charProgress)}px)`,
-                duration: 0.1,
-                ease: "power2.out"
+              gsap.set(char, {
+                opacity: clampedProgress,
+                x: -15 * (1 - clampedProgress),
+                scale: 0.9 + (0.1 * clampedProgress),
+                filter: `blur(${2 * (1 - clampedProgress)}px)`
               });
             } else {
-              // Mantener letras no visibles en estado inicial
+              // Letras no visibles aún
               gsap.set(char, {
                 opacity: 0,
                 x: -15,

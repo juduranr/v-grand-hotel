@@ -126,7 +126,7 @@ const RoomSummary: React.FC = () => {
             </div>
           </div>
           <div className="summary-cta">
-            <a href="/rooms" className="btn-stay">Quedarme aquí</a>
+            <a href="https://www.choicehotels.com/es-xl/colombia/medellin/radisson-individuals-hotels/cb031" target="_blank" rel="noopener noreferrer" className="btn-stay">Quedarme aquí</a>
           </div>
         </div>
 
