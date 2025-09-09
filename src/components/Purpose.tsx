@@ -16,6 +16,7 @@ const Purpose: React.FC = () => {
   const pillarsDescriptionRef = useRef<HTMLDivElement>(null);
   const galleryTitleRef = useRef<HTMLDivElement>(null);
   const galleryItemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const mobileGalleryItemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [scrollProgress, setScrollProgress] = useState({
     title: 0,
     presentationDescription: 0,
@@ -164,8 +165,8 @@ const Purpose: React.FC = () => {
         // Crear ScrollTrigger para intercambio de posiciones durante el scroll
         ScrollTrigger.create({
           trigger: item,
-          start: "top 80%",
-          end: "bottom 20%",
+          start: "top 90%",
+          end: "bottom 10%",
           scrub: 1,
           onUpdate: (self) => {
             const progress = self.progress;
@@ -176,11 +177,11 @@ const Purpose: React.FC = () => {
             const targetYOffset = -reverseIndex * 80; // Posición objetivo (invertida)
             
             // Crear una curva de animación que pase por el punto de alineación
-            // En progress = 0.5, todas las imágenes estarán en y = 0
+            // En progress = 0.5, todas las imágenes estarán en y = 0 (alineadas)
             let currentYOffset;
             
             if (progress <= 0.5) {
-              // Primera mitad: mover hacia el centro (y = 0)
+              // Primera mitad: mover hacia el centro (y = 0) - ALINEACIÓN
               const firstHalfProgress = progress * 2; // 0 a 1
               currentYOffset = initialYOffset + (0 - initialYOffset) * firstHalfProgress;
             } else {
@@ -198,8 +199,71 @@ const Purpose: React.FC = () => {
       });
     };
 
+    // Configurar animación para la galería mobile
+    const setupMobileGalleryScrollAnimation = () => {
+      const mobileGalleryItems = mobileGalleryItemRefs.current.filter(Boolean);
+      
+      if (mobileGalleryItems.length === 0) return;
+
+      mobileGalleryItems.forEach((item, index) => {
+        if (!item) return;
+
+        // Determinar si es el primer par (índices 0,1) o segundo par (índices 2,3)
+        const isSecondPair = index >= 2;
+        const pairIndex = isSecondPair ? index - 2 : index;
+        
+        // Posición inicial escalonada con offset para el segundo par
+        const baseOffset = isSecondPair ? 100 : 0; // Offset adicional para el segundo par
+        const initialYOffset = baseOffset - pairIndex * 30; // Cada imagen 30px más abajo que la anterior
+        
+        // Establecer posición inicial
+        gsap.set(item, {
+          y: initialYOffset,
+          transformOrigin: "center center"
+        });
+
+        // Crear ScrollTrigger para intercambio de posiciones durante el scroll
+        ScrollTrigger.create({
+          trigger: item,
+          start: "top 80%",
+          end: "bottom 20%",
+          scrub: 1,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            
+            // Calcular la posición objetivo basada en el progreso
+            const totalImages = 2; // Solo 2 imágenes por par
+            const reverseIndex = (totalImages - 1) - pairIndex; // Índice invertido dentro del par
+            const targetYOffset = baseOffset - reverseIndex * 30; // Posición objetivo (invertida)
+            
+            // Crear una curva de animación que pase por el punto de alineación
+            // En progress = 0.5, todas las imágenes estarán en y = baseOffset
+            let currentYOffset;
+            
+            if (progress <= 0.5) {
+              // Primera mitad: mover hacia el centro (y = baseOffset)
+              const firstHalfProgress = progress * 2; // 0 a 1
+              currentYOffset = initialYOffset + (baseOffset - initialYOffset) * firstHalfProgress;
+            } else {
+              // Segunda mitad: mover desde el centro hacia la posición final
+              const secondHalfProgress = (progress - 0.5) * 2; // 0 a 1
+              currentYOffset = baseOffset + (targetYOffset - baseOffset) * secondHalfProgress;
+            }
+            
+            gsap.set(item, {
+              y: currentYOffset,
+              transformOrigin: "center center"
+            });
+          }
+        });
+      });
+    };
+
     // Ejecutar la configuración de la galería después de un pequeño delay
-    setTimeout(setupGalleryScrollAnimation, 100);
+    setTimeout(() => {
+      setupGalleryScrollAnimation();
+      setupMobileGalleryScrollAnimation();
+    }, 100);
 
     const handleScroll = () => {
       if (!sectionRef.current) return;
@@ -334,6 +398,39 @@ const Purpose: React.FC = () => {
             </div>
             <div ref={galleryTitleRef} className="purpose__gallery-title">
               El lugar donde bien se está
+            </div>
+          </div>
+          <div className="purpose__gallery__mobile">
+            <div className="purpose__gallery-wrapper__mobile">
+              <div 
+                ref={(el) => { mobileGalleryItemRefs.current[0] = el; }}
+                className="purpose__gallery-item__mobile"
+              >
+                <img src={PURPOSE_IMAGES.GALLERY_2} alt="Purpose" />
+              </div>
+              <div 
+                ref={(el) => { mobileGalleryItemRefs.current[1] = el; }}
+                className="purpose__gallery-item__mobile"
+              >
+                <img src={PURPOSE_IMAGES.GALLERY_1} alt="Purpose" />
+              </div>
+            </div>
+            <div className="purpose__gallery-title__mobile">
+              El lugar donde bien se está
+            </div>
+            <div className="purpose__gallery-wrapper__mobile">
+              <div 
+                ref={(el) => { mobileGalleryItemRefs.current[2] = el; }}
+                className="purpose__gallery-item__mobile"
+              >
+                <img src={PURPOSE_IMAGES.GALLERY_2} alt="Purpose" />
+              </div>
+              <div 
+                ref={(el) => { mobileGalleryItemRefs.current[3] = el; }}
+                className="purpose__gallery-item__mobile"
+              >
+                <img src={PURPOSE_IMAGES.GALLERY_3} alt="Purpose" />
+              </div>
             </div>
           </div>
           <div className="pillars__content">

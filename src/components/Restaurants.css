@@ -235,7 +235,6 @@ font-weight: 350;
 line-height: 150%;
   position: relative;
   z-index: 10;
-  max-width: 400px;
   text-align: center;
   margin: 0 auto;
 }
