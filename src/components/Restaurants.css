@@ -164,6 +164,7 @@
   align-items: center;
   position: relative;
   width: 100%;
+  text-align: center;
 }
 
 .restaurants-title-container {
@@ -220,7 +221,7 @@ text-wrap: nowrap;
 .restaurants-description-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   padding: 40px 40px 0 40px;
 }
@@ -235,6 +236,8 @@ line-height: 150%;
   position: relative;
   z-index: 10;
   max-width: 400px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .restaurants-description-button {
@@ -252,6 +255,133 @@ line-height: 150%;
 /* Estilos para el carrusel personalizado */
 .scroll-r-restaurants-gallery .custom-carousel__container {
   height: 60vh;
+}
+
+/* Estilos específicos para ScrollRestaurant */
+.scroll-r-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+.scroll-r-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.scroll-r-carousel-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .scroll-r-section {
+    min-height: 100vh;
+    padding: 0;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .scroll-r-container {
+    padding: 0 15px;
+    height: 100vh;
+    min-height: 100vh;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .scroll-r-carousel-wrapper {
+    padding: 0 10px;
+    position: relative;
+    z-index: 3;
+  }
+  
+  .scroll-r-restaurants-gallery .custom-carousel__container {
+    height: 50vh;
+  }
+  
+  .scroll-r-carousel-wrapper .restaurants-description-container {
+    padding: 20px 10px 0 10px;
+    justify-content: center;
+  }
+  
+  .scroll-r-carousel-wrapper .restaurants-description {
+    max-width: 95%;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .scroll-r-section {
+    min-height: 100vh;
+    padding: 0;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .scroll-r-container {
+    padding: 0 10px;
+    height: 100vh;
+    min-height: 100vh;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .scroll-r-carousel-wrapper {
+    padding: 0 5px;
+    position: relative;
+    z-index: 3;
+  }
+  
+  .scroll-r-restaurants-gallery .custom-carousel__container {
+    height: 45vh;
+  }
+  
+  .scroll-r-carousel-wrapper .restaurants-description-container {
+    padding: 15px 5px 0 5px;
+    justify-content: center;
+  }
+  
+  .scroll-r-carousel-wrapper .restaurants-description {
+    max-width: 98%;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 0.9rem;
+  }
+}
+
+/* Estilos para evitar solapamiento de secciones */
+.scroll-r-section + * {
+  position: relative;
+  z-index: 10;
+  margin-top: 0;
+}
+
+/* Asegurar que el contenido posterior no se superponga */
+.scroll-r-section::after {
+  content: '';
+  display: block;
+  height: 0;
+  clear: both;
 }
 
 /* Mantener estilos de Flickity para compatibilidad */
@@ -327,7 +457,14 @@ line-height: 150%;
   
   .restaurants-description {
     font-size: 1rem;
-    max-width: 600px;
+    max-width: 90%;
+    text-align: center;
+    margin: 0 auto;
+  }
+  
+  .restaurants-description-container {
+    padding: 20px 20px 0 20px;
+    justify-content: center;
   }
 
   /* Ajustes para el efecto apilado en tablet */
@@ -382,7 +519,14 @@ line-height: 150%;
   
   .restaurants-description {
     font-size: 0.95rem;
-    max-width: 500px;
+    max-width: 95%;
+    text-align: center;
+    margin: 0 auto;
+  }
+  
+  .restaurants-description-container {
+    padding: 15px 15px 0 15px;
+    justify-content: center;
   }
 
   /* Ajustes para el efecto apilado en móvil */

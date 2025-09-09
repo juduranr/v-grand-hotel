@@ -15,7 +15,16 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
     useEffect(() => {
         if (!sectionRef.current || !carousel1Ref.current || !carousel2Ref.current || !carousel3Ref.current) return;
 
-        gsap.set('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container', {
+        // Ocultar textos de todos los carruseles inicialmente
+        gsap.set(carousel1Ref.current.querySelectorAll('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container'), {
+            opacity: 0,
+            visibility: 'hidden'
+        });
+        gsap.set(carousel2Ref.current.querySelectorAll('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container'), {
+            opacity: 0,
+            visibility: 'hidden'
+        });
+        gsap.set(carousel3Ref.current.querySelectorAll('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container'), {
             opacity: 0,
             visibility: 'hidden'
         });
@@ -31,13 +40,16 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
             opacity: 1 
         });
 
+        // Detectar si es pantalla pequeña
+        const isMobileScreen = window.innerWidth <= 768;
+        
         gsap.set(carousel2Ref.current, { 
             position: 'fixed',
             top: 'calc(10vh - 80px)', 
-            left: '20px', 
+            left: isMobileScreen ? '0px' : '20px', 
             width: '100%',
             height: '100vh', 
-            scale: 0.9, 
+            scale: isMobileScreen ? 0.95 : 0.9, 
             zIndex: 2,
             opacity: 0.8 
         });
@@ -45,10 +57,10 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
         gsap.set(carousel3Ref.current, { 
             position: 'fixed',
             top: 'calc(10vh - 160px)',
-            left: '40px', 
+            left: isMobileScreen ? '0px' : '40px', 
             width: '100%',
             height: '100vh', 
-            scale: 0.8, 
+            scale: isMobileScreen ? 0.9 : 0.8, 
             zIndex: 1,
             opacity: 0.6
         });
@@ -57,91 +69,180 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
             trigger: sectionRef.current,
             start: 'top top',
             end: '+=400%',
+            markers: true,
             onEnter: () => {
-                // Mostrar inmediatamente el primer carousel cuando se entra a la sección
-                if (carousel1Ref.current) {
-                    gsap.set(carousel1Ref.current.querySelectorAll('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container'), {
-                        opacity: 1,
-                        visibility: 'visible'
-                    });
-                }
-            },
-            onUpdate: (self) => {
-                const progress = self.progress;
-                
-                // Ocultar todos los títulos inicialmente
-                gsap.set('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container', {
-                    opacity: 0,
-                    visibility: 'hidden'
-                });
-
-                if (progress < 0.01) {
-                    return;
-                } else if (progress < 0.1) {
-                    // Mostrar el primer carousel cuando el ScrollTrigger se active
-                    if (carousel1Ref.current) {
-                        gsap.set(carousel1Ref.current.querySelectorAll('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container'), {
-                            opacity: 1,
-                            visibility: 'visible'
-                        });
-                    }
-                } else if (progress < 0.5) {
-                    if (carousel2Ref.current) {
-                        gsap.set(carousel2Ref.current.querySelectorAll('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container'), {
-                            opacity: 1,
-                            visibility: 'visible'
-                        });
-                    }
-                } else {
-                    if (carousel3Ref.current) {
-                        gsap.set(carousel3Ref.current.querySelectorAll('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container'), {
-                            opacity: 1,
-                            visibility: 'visible'
-                        });
-                    }
-                }
+                console.log('🚀 ScrollTrigger activado - Iniciando animaciones');
             }
         });
 
+        // Configuración de pin adaptada para móviles
+        const isMobile = window.innerWidth <= 768;
+        
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: sectionRef.current,
                 start: 'top top',
-                end: '+=400%',
+                end: isMobile ? '+=400%' : '+=500%',
                 scrub: 0.5,
                 pin: true,
+                pinSpacing: true, // Mantener pinSpacing para evitar solapamiento
                 invalidateOnRefresh: true,
-                anticipatePin: 1
+                anticipatePin: isMobile ? 0.5 : 1,
+                markers: true
             }
         });
 
         tl.to(carousel1Ref.current, {
-            top: '-100vh',
-            ease: 'power1.out'
+            top: '50vh',
+            transform: 'translateY(-50%)',
+            zIndex: 10,
+            ease: 'power2.out'
         }, 0)
+        .to(carousel2Ref.current, {
+            opacity: 0,
+            scale: 0.8,
+            ease: 'power1.out'
+        }, 0.1)
+        .to(carousel3Ref.current, {
+            opacity: 0,
+            scale: 0.8,
+            ease: 'power1.out'
+        }, 0.1)
+        .to(carousel1Ref.current.querySelectorAll('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container'), {
+            opacity: 1,
+            visibility: 'visible',
+            ease: 'power1.out',
+            onStart: () => console.log('🟢 Primer carrusel: Textos aparecen')
+        }, 0.2)
+        .to(carousel1Ref.current, {
+            top: '50vh',
+            transform: 'translateY(-50%)',
+            duration: 0.4
+        }, 0.2)
+        .to(carousel1Ref.current.querySelectorAll('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container'), {
+            opacity: 0,
+            visibility: 'hidden',
+            ease: 'power1.out',
+            onStart: () => console.log('🔴 Primer carrusel: Textos desaparecen')
+        }, 0.6)
+        .to(carousel1Ref.current, {
+            top: '-100vh',
+            transform: 'translateY(0%)',
+            ease: 'power1.out'
+        }, 0.6)
         .to(carousel2Ref.current, {
             opacity: 1,
             scale: 1,
-            ease: 'power1.out'
-        }, 0.4);
-
-        tl.to(carousel2Ref.current, {
-            top: '-100vh',
+            zIndex: 10,
             ease: 'power1.out'
         }, 0.7)
         .to(carousel3Ref.current, {
-            opacity: 1,
-            scale: 1,
+            opacity: 0,
+            scale: 0.8,
             ease: 'power1.out'
         }, 0.7);
+
+        tl.to(carousel2Ref.current, {
+            top: '50vh',
+            transform: 'translateY(-50%)',
+            zIndex: 10,
+            ease: 'power2.out'
+        }, 0.8)
+        .to(carousel3Ref.current, {
+            opacity: 0,
+            scale: 0.8,
+            ease: 'power1.out'
+        }, 0.9)
+        .to(carousel2Ref.current.querySelectorAll('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container'), {
+            opacity: 1,
+            visibility: 'visible',
+            ease: 'power1.out',
+            onStart: () => console.log('🟢 Segundo carrusel: Textos aparecen')
+        }, 1.0)
+        .to(carousel2Ref.current, {
+            top: '50vh',
+            transform: 'translateY(-50%)',
+            duration: 0.4
+        }, 1.0)
+        .to(carousel2Ref.current.querySelectorAll('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container'), {
+            opacity: 0,
+            visibility: 'hidden',
+            ease: 'power1.out',
+            onStart: () => console.log('🔴 Segundo carrusel: Textos desaparecen')
+        }, 1.4)
+        .to(carousel2Ref.current, {
+            top: '-100vh',
+            transform: 'translateY(0%)',
+            ease: 'power1.out'
+        }, 1.4)
+        .to(carousel3Ref.current, {
+            opacity: 1,
+            scale: 1,
+            zIndex: 10,
+            ease: 'power1.out'
+        }, 1.5)
+        .to(carousel3Ref.current, {
+            opacity: 0,
+            scale: 0.8,
+            ease: 'power1.out'
+        }, 1.5);
         
         tl.to(carousel3Ref.current, {
+            opacity: 1,
+            scale: 1,
+            zIndex: 10,
+            ease: 'power1.out'
+        }, 1.6)
+        .to(carousel3Ref.current, {
+            top: '50vh',
+            transform: 'translateY(-50%)',
+            zIndex: 10,
+            ease: 'power2.out'
+        }, 1.6)
+        .to(carousel3Ref.current.querySelectorAll('.restaurants-subtitle, .restaurants-title-container, .restaurants-description-container'), {
+            opacity: 1,
+            visibility: 'visible',
+            ease: 'power1.out',
+            onStart: () => console.log('🟢 Tercer carrusel (v-coffee): Textos aparecen')
+        }, 1.8)
+        .to(carousel3Ref.current, {
+            top: '50vh',
+            transform: 'translateY(-50%)',
+            duration: 0.4
+        }, 1.8)
+        .to(carousel3Ref.current, {
             top: '0vh',
+            transform: 'translateY(0%)',
             ease: 'power3.out'
-        }, 0.8);
+        }, 2.2);
+
+        // Listener para redimensionamiento de ventana
+        const handleResize = () => {
+            const isMobile = window.innerWidth <= 768;
+            
+            if (carousel2Ref.current) {
+                gsap.set(carousel2Ref.current, {
+                    left: isMobile ? '0px' : '20px',
+                    scale: isMobile ? 0.95 : 0.9
+                });
+            }
+            
+            if (carousel3Ref.current) {
+                gsap.set(carousel3Ref.current, {
+                    left: isMobile ? '0px' : '40px',
+                    scale: isMobile ? 0.9 : 0.8
+                });
+            }
+            
+            // Refrescar ScrollTrigger para aplicar nuevos ajustes
+            ScrollTrigger.refresh();
+        };
+
+        window.addEventListener('resize', handleResize);
 
         return () => {
             ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+            window.removeEventListener('resize', handleResize);
         };
     }, [restaurantData]);
 
