@@ -1,5 +1,4 @@
 import React from 'react';
-import { ArrowRight } from "@icon-park/react";
 import vLogo from '../assets/images/v-logo-complete.svg';
 import raddisonLogo from '../assets/images/raddison.svg';
 import fbIcon from '../assets/images/fb.svg';
@@ -23,18 +22,19 @@ const Footer: React.FC = () => {
       <div className="footer__container">
         <div className="footer__main">
           <div className="footer__logo-column">
-            <img
-              src={vLogo.src}
-              alt="V Grand Hotel"
-              className="footer__v-logo"
-            />
-            <hr />
-            <img
-              src={raddisonLogo.src}
-              alt="Raddison"
-              className="footer__raddison-logo"
-            />
-            <hr />
+            <div className="footer__logos-container">
+              <img
+                src={vLogo.src}
+                alt="V Grand Hotel"
+                className="footer__v-logo"
+              />
+              <hr />
+              <img
+                src={raddisonLogo.src}
+                alt="Raddison"
+                className="footer__raddison-logo"
+              />
+            </div>
             <div className="footer__social">
               <div className="footer__social-links">
                 <a href="#" className="footer__social-link" aria-label="Facebook">
@@ -132,13 +132,19 @@ const Footer: React.FC = () => {
           <hr />
           <div className="footer__bottom-content">
             <div className="footer__bottom-logos">
-              <img src={logo4.src} alt="Logo 4" className="footer__bottom-logo" />
-              <img src={logo5.src} alt="Logo 5" className="footer__bottom-logo" />
-              <img src={logo1.src} alt="Logo 1" className="footer__bottom-logo" />
-              <hr />
-              <p className="footer__bottom-logo-text">Miembro de:</p>
-              <img src={logo2.src} alt="Logo 2" className="footer__bottom-logo" />
-              <img src={logo3.src} alt="Logo 3" className="footer__bottom-logo" />
+              <div className="footer__bottom-logos-group">
+                <img src={logo4.src} alt="Logo 4" className="footer__bottom-logo" />
+                <img src={logo5.src} alt="Logo 5" className="footer__bottom-logo" />
+                <img src={logo1.src} alt="Logo 1" className="footer__bottom-logo" />
+              </div>
+              <hr className="footer__bottom-separator" />
+              <div className="footer__bottom-member-group">
+                <p className="footer__bottom-logo-text">Miembro de:</p>
+                <div className="footer__bottom-member-logos">
+                  <img src={logo2.src} alt="Logo 2" className="footer__bottom-logo" />
+                  <img src={logo3.src} alt="Logo 3" className="footer__bottom-logo" />
+                </div>
+              </div>
             </div>
             <p className="footer__copyright">
               © {currentYear} V Grand Hotel. Todos los derechos reservados.
