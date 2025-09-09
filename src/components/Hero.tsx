@@ -10,7 +10,8 @@ import './Hero.css';
 gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
 
 const Hero: React.FC = () => {
-  const videoUrl = `${IMAGES_BASE_URL}hero/Video-Header_WebM.webm`;
+  const videoUrl = `${IMAGES_BASE_URL}hero/v-grand.webm`;
+  const thumbnailUrl = `${IMAGES_BASE_URL}hero/v-grand-thumbnail.avif`;
   const titleRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const shadowRef = useRef<HTMLDivElement>(null);
@@ -237,6 +238,7 @@ const Hero: React.FC = () => {
           muted
           loop
           playsInline
+          poster={thumbnailUrl}
           onError={(e) => console.error('Error loading video:', e)}
         >
           <source src={videoUrl} type="video/webm" />

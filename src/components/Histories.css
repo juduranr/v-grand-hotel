@@ -59,11 +59,15 @@
 
 .histories-carousel {
     width: 100%;
-    height: calc(100vh - 200px);
+    height: max(771px, calc(100vh - 200px));
     position: relative;
     margin: 0;
     overflow: hidden;
     z-index: 1;
+    /* Ancho efectivo del item principal para centrar flechas */
+    --card-w: min(90vw, 56.25vh, 432px);
+    /* Distancia del centro al item vecino (offset usado en TSX) */
+    --neighbor-offset: 432px;
 }
 
 .histories-track {
@@ -78,8 +82,11 @@
 
 .histories-card {
     position: absolute;
-    width: 432px;
-    height: 70vh;
+    height: 100%;
+    min-height: 771px;
+    aspect-ratio: 9 / 16;
+    width: auto;
+    max-width: 90vw;
     overflow: hidden;
     background: white;
     transition: transform 0.5s ease-in-out, opacity 0.3s ease-in-out;
@@ -157,13 +164,17 @@
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: 40px;
+    margin-top: 16px;
     padding-bottom: 40px;
+    width: min(90vw, 56.25vh, 432px);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .histories-bar {
-    width: 30px;
-    height: 1px;
+    flex: 1 1 0;
+    width: 100%;
+    height: 2px;
     background: rgba(151, 154, 131, 0.2);
     cursor: pointer;
     transition: background 0.3s ease;
@@ -176,7 +187,7 @@
 .histories-arrow {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate(-50%, -50%);
     background: transparent;
     color: white;
     width: 81px;
@@ -201,11 +212,11 @@
 .histories-arrow svg { width: 81px; height: 80px; display: block; }
 
 .histories-left {
-    left: calc(50% - 432px);
+    left: calc(50% - var(--neighbor-offset));
 }
 
 .histories-right {
-    right: calc(50% - 432px);
+    left: calc(50% + var(--neighbor-offset));
 }
 
 /* Responsive */
@@ -239,13 +250,18 @@
     }
     
     .histories-carousel {
-        height: calc(100vh - 150px);
+        height: max(771px, calc(100vh - 150px));
         margin-top: 40px;
+        --card-w: min(92vw, 56.25vh, 320px);
+        --neighbor-offset: 432px; /* Se mantiene por lógica del carrusel */
     }
     
     .histories-card {
-        width: 320px;
-        height: 60vh;
+        height: 100%;
+        min-height: 771px;
+        aspect-ratio: 9 / 16;
+        width: auto;
+        max-width: 92vw;
     }
     
     .histories-left {
@@ -254,6 +270,9 @@
     
     .histories-right {
         right: calc(50% - 160px);
+    }
+    .histories-bars {
+        width: min(92vw, 56.25vh, 320px);
     }
 }
 
@@ -279,13 +298,18 @@
     }
     
     .histories-carousel {
-        height: calc(100vh - 120px);
+        height: max(771px, calc(100vh - 120px));
         margin-top: 20px;
+        --card-w: min(94vw, 56.25vh, 280px);
+        --neighbor-offset: 432px; /* Se mantiene por lógica del carrusel */
     }
     
     .histories-card {
-        width: 280px;
-        height: 50vh;
+        height: 100%;
+        min-height: 771px;
+        aspect-ratio: 9 / 16;
+        width: auto;
+        max-width: 94vw;
     }
     
     .histories-left {
@@ -297,11 +321,10 @@
     }
     
     .histories-bars {
-        margin-top: 20px;
+        margin-top: 16px;
         padding-bottom: 20px;
     }
-    
-    .histories-bar {
-        width: 20px;
+    .histories-bars {
+        width: min(94vw, 56.25vh, 280px);
     }
 }
