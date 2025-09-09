@@ -169,22 +169,28 @@ const Purpose: React.FC = () => {
           scrub: 1,
           onUpdate: (self) => {
             const progress = self.progress;
-            // Intercambio de posiciones: la imagen más a la izquierda termina arriba
+            
             // Calcular la posición objetivo basada en el progreso
             const totalImages = galleryItems.length;
             const reverseIndex = (totalImages - 1) - index; // Índice invertido
             const targetYOffset = -reverseIndex * 80; // Posición objetivo (invertida)
             
-            // Interpolación suave entre posición inicial y objetivo
-            // En el punto medio (progress = 0.5), todas las imágenes estarán en posición 0
-            const currentYOffset = initialYOffset + (targetYOffset - initialYOffset) * progress;
+            // Crear una curva de animación que pase por el punto de alineación
+            // En progress = 0.5, todas las imágenes estarán en y = 0
+            let currentYOffset;
             
-            // Ajustar para que en el punto medio todas estén en posición 0
-            const centerOffset = (initialYOffset + targetYOffset) / 2;
-            const adjustedYOffset = currentYOffset - centerOffset;
+            if (progress <= 0.5) {
+              // Primera mitad: mover hacia el centro (y = 0)
+              const firstHalfProgress = progress * 2; // 0 a 1
+              currentYOffset = initialYOffset + (0 - initialYOffset) * firstHalfProgress;
+            } else {
+              // Segunda mitad: mover desde el centro hacia la posición final
+              const secondHalfProgress = (progress - 0.5) * 2; // 0 a 1
+              currentYOffset = 0 + (targetYOffset - 0) * secondHalfProgress;
+            }
             
             gsap.set(item, {
-              y: adjustedYOffset,
+              y: currentYOffset,
               transformOrigin: "center center"
             });
           }
