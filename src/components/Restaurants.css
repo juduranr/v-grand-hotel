@@ -270,6 +270,36 @@ line-height: 150%;
   overflow: hidden;
 }
 
+/* Ajustes específicos para pantallas grandes */
+@media (min-width: 769px) {
+  .scroll-r-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+  
+  .scroll-r-carousel-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Ajustes para pantallas muy grandes */
+@media (min-width: 1200px) {
+  .scroll-r-container {
+    max-width: 1400px;
+    padding: 0 60px;
+  }
+  
+  .scroll-r-carousel-wrapper {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
 .scroll-r-container {
   display: flex;
   align-items: center;

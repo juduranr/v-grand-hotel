@@ -46,10 +46,10 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
         gsap.set(carousel2Ref.current, { 
             position: 'fixed',
             top: 'calc(10vh - 80px)', 
-            left: isMobileScreen ? '0px' : '20px', 
+            left: '0px',
             width: '100%',
             height: '100vh', 
-            scale: isMobileScreen ? 0.95 : 0.9, 
+            scale: isMobileScreen ? 0.95 : 0.95, 
             zIndex: 2,
             opacity: 0.8 
         });
@@ -57,10 +57,10 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
         gsap.set(carousel3Ref.current, { 
             position: 'fixed',
             top: 'calc(10vh - 160px)',
-            left: isMobileScreen ? '0px' : '40px', 
+            left: '0px', 
             width: '100%',
             height: '100vh', 
-            scale: isMobileScreen ? 0.9 : 0.8, 
+            scale: isMobileScreen ? 0.9 : 0.9, 
             zIndex: 1,
             opacity: 0.6
         });
@@ -69,9 +69,8 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
             trigger: sectionRef.current,
             start: 'top top',
             end: '+=400%',
-            markers: true,
             onEnter: () => {
-                console.log('🚀 ScrollTrigger activado - Iniciando animaciones');
+                // ScrollTrigger activado
             }
         });
 
@@ -88,7 +87,6 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
                 pinSpacing: true, // Mantener pinSpacing para evitar solapamiento
                 invalidateOnRefresh: true,
                 anticipatePin: isMobile ? 0.5 : 1,
-                markers: true
             }
         });
 
@@ -112,7 +110,6 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
             opacity: 1,
             visibility: 'visible',
             ease: 'power1.out',
-            onStart: () => console.log('🟢 Primer carrusel: Textos aparecen')
         }, 0.2)
         .to(carousel1Ref.current, {
             top: '50vh',
@@ -123,7 +120,6 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
             opacity: 0,
             visibility: 'hidden',
             ease: 'power1.out',
-            onStart: () => console.log('🔴 Primer carrusel: Textos desaparecen')
         }, 0.6)
         .to(carousel1Ref.current, {
             top: '-100vh',
@@ -157,7 +153,6 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
             opacity: 1,
             visibility: 'visible',
             ease: 'power1.out',
-            onStart: () => console.log('🟢 Segundo carrusel: Textos aparecen')
         }, 1.0)
         .to(carousel2Ref.current, {
             top: '50vh',
@@ -168,7 +163,6 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
             opacity: 0,
             visibility: 'hidden',
             ease: 'power1.out',
-            onStart: () => console.log('🔴 Segundo carrusel: Textos desaparecen')
         }, 1.4)
         .to(carousel2Ref.current, {
             top: '-100vh',
@@ -203,7 +197,6 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
             opacity: 1,
             visibility: 'visible',
             ease: 'power1.out',
-            onStart: () => console.log('🟢 Tercer carrusel (v-coffee): Textos aparecen')
         }, 1.8)
         .to(carousel3Ref.current, {
             top: '50vh',
@@ -222,15 +215,15 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
             
             if (carousel2Ref.current) {
                 gsap.set(carousel2Ref.current, {
-                    left: isMobile ? '0px' : '20px',
-                    scale: isMobile ? 0.95 : 0.9
+                    left: '0px',
+                    scale: isMobile ? 0.95 : 0.95
                 });
             }
             
             if (carousel3Ref.current) {
                 gsap.set(carousel3Ref.current, {
-                    left: isMobile ? '0px' : '40px',
-                    scale: isMobile ? 0.9 : 0.8
+                    left: '0px',
+                    scale: isMobile ? 0.9 : 0.9
                 });
             }
             
