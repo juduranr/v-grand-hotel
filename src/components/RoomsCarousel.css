@@ -78,7 +78,7 @@ max-width: 1100px;
 
 .rooms-carousel__carousel-track {
   display: flex;
-  height: 500px;
+  height: 100%;
 }
 
 .rooms-carousel__carousel-track.transitioning {
@@ -101,6 +101,7 @@ max-width: 1100px;
   flex-direction: row;
   position: relative;
   height: 100%;
+  min-height: 500px;
 }
 
 .rooms-carousel__room-image-container {
@@ -109,6 +110,12 @@ max-width: 1100px;
   overflow: hidden;
   flex: 1 1 auto;
   width: auto;
+}
+
+.rooms-carousel__carousel-image-item {
+  min-width: 100%;
+  height: 100%;
+  display: flex;
 }
 
 .rooms-carousel__room-image {
@@ -358,10 +365,29 @@ padding-bottom: 56px;
   color: #ffffff;
 }
 
-/* Ajuste de posición del botón izquierdo para no solaparse con el panel de info (desktop) */
+/* Ajustes de escritorio */
 @media (min-width: 769px) {
+  /* Altura fija del carrusel en desktop */
+  .rooms-carousel__carousel-container {
+    height: 584px;
+  }
+  .rooms-carousel__room-card {
+    height: 584px;
+    min-height: 584px;
+  }
+  .rooms-carousel__room-image-container {
+    height: 584px;
+  }
+
+  /* Reducir ancho del panel de información */
+  .rooms-carousel__room-content {
+    height: 100%;
+    aspect-ratio: 516 / 584;
+  }
+
+  /* Reposicionar el botón previo acorde al nuevo ancho del panel */
   .rooms-carousel__nav-button--prev {
-    left: 430px;
+    left: 500px;
   }
 }
 
@@ -380,7 +406,7 @@ padding-bottom: 56px;
   }
   
   .rooms-carousel__carousel-track {
-    height: 810px;
+    height: 100%;
   }
   
   .rooms-carousel__room-card {
@@ -444,24 +470,22 @@ padding-bottom: 56px;
 }
 
 .rooms-carousel__all-rooms-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 2rem;
+  row-gap: 2rem;
 }
 
 .rooms-carousel__room-card-grid {
   position: relative;
+  padding-right: 2rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Línea separadora vertical en el lado derecho */
-.rooms-carousel__room-card-grid:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: -1rem;
-  width: 1px;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.2);
+/* Quitar separador a la última columna de cada fila (4 columnas máx) */
+.rooms-carousel__room-card-grid:nth-child(4n) {
+  border-right: none;
+  padding-right: 0;
 }
 
 .rooms-carousel__room-content-grid {
@@ -560,7 +584,7 @@ gap: 8px;
   }
   
   .rooms-carousel__carousel-track {
-    height: 810px;
+    height: 100%;
   }
   
   .rooms-carousel__room-card {
@@ -609,3 +633,4 @@ gap: 8px;
     font-size: 1rem;
   }
 }
+
