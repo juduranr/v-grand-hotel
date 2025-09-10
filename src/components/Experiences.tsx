@@ -44,8 +44,11 @@ const experiencesData: ExperienceItem[] = [
         image: EXPERIENCES_IMAGES.ACCORDEON_3,
         hoverImage: EXPERIENCES_IMAGES.ACCORDEON_1,
         activities: [
-            "Tour a Guatapé"
-        ]
+        ],
+        activitiesDescription: {
+            title: "Tour a Guatapé",
+            description: "En este tour te acercarás a las maravillas de la naturaleza de la región, en la Laguna de Guatapé y la Piedra del Peñol, una inmensa formación en roca. Tambien conocerás el pueblito de Guatapé, muy costumbrista y lleno de detalles artesanales y gastronómicos para disfrutar."
+        }
     }
 ];
 
