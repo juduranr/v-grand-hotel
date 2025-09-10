@@ -314,6 +314,11 @@ line-height: 150%;
     max-width: 100%;
     margin: 0 auto;
   }
+  
+  /* Overlay "Próximamente" responsive para pantallas grandes */
+  .restaurants-coming-soon-text {
+    font-size: clamp(3rem, 6vw, 56px);
+  }
 }
 
 .scroll-r-container {
@@ -430,6 +435,31 @@ line-height: 150%;
   clear: both;
 }
 
+/* Overlay para "Próximamente" */
+.restaurants-coming-soon-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.60);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.restaurants-coming-soon-text {
+  color: #FFF;
+  text-align: center;
+  font-size: clamp(2rem, 8vw, 56px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%;
+  letter-spacing: 1.12px;
+  text-transform: uppercase;
+}
+
 /* Mantener estilos de Flickity para compatibilidad */
 .restaurants-gallery {
   overflow: hidden;
@@ -523,6 +553,10 @@ line-height: 150%;
     height: 60vh;
   }
   
+  /* Overlay "Próximamente" responsive para tablet */
+  .restaurants-coming-soon-text {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+  }
 
   
   .simple-carousel-wrapper:nth-child(2) {
@@ -585,6 +619,10 @@ line-height: 150%;
     height: 55vh;
   }
   
+  /* Overlay "Próximamente" responsive para móvil */
+  .restaurants-coming-soon-text {
+    font-size: clamp(1.2rem, 5vw, 1.8rem);
+  }
 
   
   .simple-carousel-wrapper:nth-child(2) {

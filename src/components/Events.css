@@ -90,6 +90,12 @@
     text-decoration: none;
 }
 
+@media (min-width: 1400px) {
+    .events-carousel__overlay-title h3 {
+        font-size: clamp(3rem, 6vw, 80px);
+    }
+}
+
 @media (max-width: 1200px) {
     .events-title {
         min-width: 300px;
@@ -98,6 +104,10 @@
     
     .events-content-container {
         padding: 0 1.5rem;
+    }
+    
+    .events-carousel__overlay-title h3 {
+        font-size: clamp(2.5rem, 7vw, 4rem);
     }
 }
 
@@ -109,7 +119,6 @@
     .events-title {
         font-size: clamp(1.2rem, 5vw, 2rem);
         padding: 0 0.5rem;
-        max-width: 200px;
     }
     
     .events-title-container {
@@ -133,14 +142,14 @@
         font-size: 1rem;
         margin-bottom: 2rem;
         padding: 0 1rem;
+        width: 100%;
+        max-width: none;
     }
     
     .events-button {
         padding: 14px 28px;
         font-size: 14px;
         margin-bottom: 40px;
-        width: 100%;
-        max-width: none;
     }
     
     .events-carousel__container {
@@ -152,7 +161,7 @@
     }
     
     .events-carousel__overlay-title h3 {
-        font-size: 1.3rem;
+        font-size: clamp(1.5rem, 6vw, 2.5rem);
     }
     
     .events-carousel__indicators {
@@ -189,6 +198,8 @@
     .events-description {
         font-size: 0.95rem;
         padding: 0 0.5rem;
+        width: 100%;
+        max-width: none;
     }
     
     .events-content-container {
@@ -204,7 +215,7 @@
     }
     
     .events-carousel__overlay-title h3 {
-        font-size: 1.1rem;
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
     }
     
     .events-carousel__indicators {
@@ -329,7 +340,7 @@
 
 .events-carousel__overlay-title h3 {
     color: #fff;
-    font-size: 80px;
+    font-size: clamp(2rem, 8vw, 80px);
     font-weight: 400;
     margin: 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);

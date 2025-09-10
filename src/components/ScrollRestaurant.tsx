@@ -324,32 +324,8 @@ const ScrollRestaurant = ({restaurantData}: {restaurantData: any}) => {
                                     objectFit: 'cover'
                                 }}
                             />
-                            <div 
-                                style={{
-                                    position: 'absolute',
-                                    top: 0,
-                                    left: 0,
-                                    right: 0,
-                                    bottom: 0,
-                                    background: 'rgba(0, 0, 0, 0.60)',
-                                    backdropFilter: 'blur(12px)',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center'
-                                }}
-                            >
-                                <span 
-                                    style={{
-                                        color: '#FFF',
-                                        textAlign: 'center',
-                                        fontSize: '56px',
-                                        fontStyle: 'normal',
-                                        fontWeight: 400,
-                                        lineHeight: '120%',
-                                        letterSpacing: '1.12px',
-                                        textTransform: 'uppercase'
-                                    }}
-                                >
+                            <div className="restaurants-coming-soon-overlay">
+                                <span className="restaurants-coming-soon-text">
                                     Próximamente
                                 </span>
                             </div>

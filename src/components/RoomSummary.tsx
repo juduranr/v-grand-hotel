@@ -124,6 +124,16 @@ const RoomSummary: React.FC = () => {
                 <KnifeFork strokeWidth={2} size={32} />
               )}
             </div>
+            <div className="rs-services-texts">
+              <span>
+                {room.beds} cama{room.beds > 1 ? 's' : ''}
+              </span>
+              <span>
+                {room.bathrooms} baño{room.bathrooms > 1 ? 's' : ''}
+              </span>
+              {room.terrace && <span>terraza</span>}
+              {room.breakfast && <span>desayuno incluido</span>}
+            </div>
           </div>
           <div className="rs-summary-cta">
             <a href="https://www.choicehotels.com/es-xl/colombia/medellin/radisson-individuals-hotels/cb031" target="_blank" rel="noopener noreferrer" className="rs-btn-stay">Quedarme aquí</a>
