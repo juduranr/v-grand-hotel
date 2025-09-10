@@ -53,7 +53,7 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
     
     // Actualizar todos los dots en todas las secciones
     sections.forEach((section, sectionIndex) => {
-      const dots = section.querySelectorAll('.dot');
+      const dots = section.querySelectorAll('.rp-dot');
       
       dots.forEach((dot, dotIndex) => {
         // Remover clase active de todos los dots
@@ -89,11 +89,11 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
         const dots = targetSection.querySelectorAll('.dot');
         
         // Remover active de todos los dots
-        document.querySelectorAll('.dot').forEach(dot => dot.classList.remove('active'));
+        document.querySelectorAll('.rp-dot').forEach(dot => dot.classList.remove('active'));
         
         // Activar el dot correspondiente
         if (sectionIndex > 0) {
-          const activeDot = targetSection.querySelector(`.dot[data-section="room-${sectionIndex - 1}"]`);
+          const activeDot = targetSection.querySelector(`.rp-dot[data-section="room-${sectionIndex - 1}"]`);
           if (activeDot) {
             activeDot.classList.add('active');
           }
@@ -132,11 +132,11 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
   }, [roomsData]);
 
   return (
-    <div className="rooms-page" ref={containerRef}>
+    <div className="rp-rooms-page" ref={containerRef}>
       {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-content">
-          <h1 className="hero-title">Habitaciones</h1>
+      <section className="rp-hero-section">
+        <div className="rp-hero-content">
+          <h1 className="rp-hero-title">Habitaciones</h1>
         </div>
       </section>
 
@@ -144,7 +144,7 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
       {roomsData.map((room, index) => (
         <section 
           key={room.title}
-          className="room-section" 
+          className="rp-room-section" 
           style={{ backgroundImage: `url(${room.banner.startsWith('http') ? room.banner : `/images/${room.banner}`})` }}
           role="link"
           tabIndex={0}
@@ -161,19 +161,19 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
             }
           }}
         >
-          <div className="room-overlay"></div>
-          <div className="room-content">
-            <div className="room-info">
-              <h2 className="room-title">{room.title}</h2>
+          <div className="rp-room-overlay"></div>
+          <div className="rp-room-content">
+            <div className="rp-room-info">
+              <h2 className="rp-room-title">{room.title}</h2>
             </div>
           </div>
           
                      {/* Navigation Dots para esta habitación */}
-           <div className="navigation-dots">
+           <div className="rp-navigation-dots">
              {roomsData.map((roomItem, roomIndex) => (
                <div 
                  key={roomItem.title}
-                 className={`dot ${roomIndex === index ? 'active' : ''}`}
+                 className={`rp-dot ${roomIndex === index ? 'active' : ''}`}
                  data-section={`room-${roomIndex}`}
                  onClick={(e) => { e.stopPropagation(); scrollToSection(roomIndex + 1); }}
                >
@@ -186,23 +186,23 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
 
       {/* Cursor personalizado circular con texto rotando */}
       <div
-        className={`custom-cursor ${cursorVisible ? 'visible' : ''}`}
+        className={`rp-custom-cursor ${cursorVisible ? 'visible' : ''}`}
         style={{ left: cursorPosition.x, top: cursorPosition.y }}
         aria-hidden="true"
       >
-        <svg className="cursor-svg" viewBox="0 0 200 200">
+        <svg className="rp-cursor-svg" viewBox="0 0 200 200">
           <defs>
             <path id="circlePath" d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
           </defs>
-          <g className="rotate">
-            <text className="cursor-text">
+          <g className="rp-rotate">
+            <text className="rp-cursor-text">
               <textPath href="#circlePath" startOffset="0%" method="align" spacing="auto">
                 Visitar habitación · Visitar habitación · Visitar habitación
               </textPath>
             </text>
           </g>
           {/* Chevron centrado */}
-          <g className="chevron">
+          <g className="rp-chevron">
             <path d="M95 87 L110 100 L95 113" fill="none" stroke="white" strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter" strokeMiterlimit="2" />
           </g>
         </svg>

@@ -87,26 +87,26 @@ const RoomSummary: React.FC = () => {
   const bannerUrl = room.banner ? getAssetUrl(room.banner) : '';
 
   return (
-    <div className="room-detail-page">
-      <div className="hero-section" style={{ backgroundImage: `url('${bannerUrl}')` }}>
-        <div className="room-overlay"></div>
-        <div className="hero-content">
-          <h1 className="hero-title">{room.title}</h1>
+    <div className="rs-room-detail-page">
+      <div className="rs-hero-section" style={{ backgroundImage: `url('${bannerUrl}')` }}>
+        <div className="rs-room-overlay"></div>
+        <div className="rs-hero-content">
+          <h1 className="rs-hero-title">{room.title}</h1>
         </div>
       </div>
 
-      <div className="room-content">
-        <div className="room-summary">
-          <p className="summary-subtitle">
+      <div className="rs-room-content">
+        <div className="rs-room-summary">
+          <p className="rs-summary-subtitle">
             Área {room.area}m² y capacidad para {room.capacity} persona{room.capacity > 1 ? 's' : ''}
           </p>
-          <h2 className="summary-title">{room.title.toUpperCase()}</h2>
-          <p className="summary-description">
+          <h2 className="rs-summary-title">{room.title.toUpperCase()}</h2>
+          <p className="rs-summary-description">
             {room.description || 'Descubre el lujo y la comodidad en esta hermosa habitación.'}
           </p>
-          <div className="services">
-            <p className="services-title">Servicios incluídos:</p>
-            <div className="services-icons">
+          <div className="rs-services">
+            <p className="rs-services-title">Servicios incluídos:</p>
+            <div className="rs-services-icons">
               {Array(room.beds)
                 .fill(0)
                 .map((_, i) => (
@@ -125,15 +125,15 @@ const RoomSummary: React.FC = () => {
               )}
             </div>
           </div>
-          <div className="summary-cta">
-            <a href="https://www.choicehotels.com/es-xl/colombia/medellin/radisson-individuals-hotels/cb031" target="_blank" rel="noopener noreferrer" className="btn-stay">Quedarme aquí</a>
+          <div className="rs-summary-cta">
+            <a href="https://www.choicehotels.com/es-xl/colombia/medellin/radisson-individuals-hotels/cb031" target="_blank" rel="noopener noreferrer" className="rs-btn-stay">Quedarme aquí</a>
           </div>
         </div>
 
-        <div className="gallery-section">
-          <div className="gallery-grid">
+        <div className="rs-gallery-section">
+          <div className="rs-gallery-grid">
             {galleryItems.map((it, idx) => (
-              <div key={`img-${idx}`} className={`grid-item span-${it.span}`}>
+              <div key={`img-${idx}`} className={`rs-grid-item rs-span-${it.span}`}>
                 {it.image && (
                   <img
                     src={getAssetUrl(it.image)}
@@ -147,11 +147,11 @@ const RoomSummary: React.FC = () => {
           </div>
         </div>
         {lightboxOpen && (
-          <div className="room-lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada" onClick={(e) => { if (e.target === e.currentTarget) handleCloseLightbox(); }}>
+          <div className="rs-room-lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada" onClick={(e) => { if (e.target === e.currentTarget) handleCloseLightbox(); }}>
             {lightboxSrc && (
-              <div className="room-lightbox_image_container">
-                <img className="room-lightbox_image" src={lightboxSrc} alt="Imagen ampliada" />
-                <button className="room-lightbox_close" onClick={handleCloseLightbox} aria-label="Cerrar imagen">✕</button>
+              <div className="rs-room-lightbox_image_container">
+                <img className="rs-room-lightbox_image" src={lightboxSrc} alt="Imagen ampliada" />
+                <button className="rs-room-lightbox_close" onClick={handleCloseLightbox} aria-label="Cerrar imagen">✕</button>
               </div>
             )}
           </div>

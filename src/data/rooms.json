@@ -1,6 +1,6 @@
 [
   {
-    "title": "Grand view",
+    "title": "Grand View",
     "capacity": 2,
     "area": 40,
     "description": "Ubicada en los pisos altos del hotel, esta suite ofrece una vista panorámica de Medellín que transforma cada momento en una experiencia. Cuenta con cama King size  y detalles que acompañan tus rituales de bienestar: leer, meditar o simplemente contemplar.",
@@ -20,7 +20,7 @@
     ]
   },
   {
-    "title": "grand suite",
+    "title": "Grand Suite",
     "capacity": 4,
     "area": 42,
     "description": " Más de 35 mts2 te dan todo el espacio y comodidad para  compartir las vacaciones familiares.  Cuenta con 1 cama king, 1 sofacama doble, una tina y  una mesa de trabajo y muebles adicionales.",
@@ -60,7 +60,7 @@
     ]
   },
   {
-    "title": "Junior suite",
+    "title": "Junior Suite",
     "capacity": 2,
     "area": 36,
     "description": "Una suite pensada para quienes disfrutan del equilibrio entre trabajo y descanso. Con cama King, espacio de trabajo, poltronas auxiliares y una iluminación envolvente, esta habitación invita a inspirarte y desconectar a tu ritmo.",
@@ -80,7 +80,7 @@
     ]
   },
   {
-    "title": "Estudio familiar",
+    "title": "Estudio Familiar",
     "capacity": 3,
     "area": 30,
     "description": "Esta habitación está diseñada para familias que requieran espacio para sus niños pequeños en la misma habitación. Te ofrece 30 mts2, una mesa de trabajo, un sofacama doble y una cama king.",
@@ -99,7 +99,7 @@
     ]
   },
   {
-    "title": "Estudio 1 cama king",
+    "title": "Estudio 1",
     "capacity": 2,
     "area": 28,
     "description": "Una opción perfecta para viajeros solos o en pareja. Este estudio cuenta con una cama King size, mesa auxiliar de trabajo y una ambientación cálida ideal para quienes desean descansar o trabajar en un entorno elegante, cómodo y silencioso.",
@@ -119,7 +119,7 @@
     ]
   },
   {
-    "title": "Estudio 2 camas dobles",
+    "title": "Estudio 2",
     "capacity": 4,
     "area": 30,
     "description": "Diseñado para compartir sin perder privacidad ni confort. Disfruta de dos camas dobles, una mesa auxiliar de trabajo y una atmósfera sofisticada que equilibra productividad y relajación.",
