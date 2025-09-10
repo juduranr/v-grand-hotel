@@ -1,0 +1,28 @@
+[
+  {
+    "title": "Tres Generaciones",
+    "description": "Una experiencia culinaria excepcional con ingredientes frescos y técnicas modernas.",
+    "banner": "tres-generaciones.avif",
+    "gallery": [
+      "tres-generaciones-gallery-1.webp",
+      "tres-generaciones-gallery-2.webp",
+      "tres-generaciones-gallery-3.webp"
+    ],
+    "cuisine": "Internacional",
+    "hours": "7:00 AM - 11:00 PM",
+    "location": "Planta Principal"
+  },
+  {
+    "title": "V-Coffee",
+    "description": "Un ambiente sofisticado para disfrutar de cócteles artesanales y aperitivos gourmet.",
+    "banner": "v-coffee.avif",
+    "gallery": [
+      "v-coffee-gallery-1.webp",
+      "v-coffee-gallery-2.webp",
+      "v-coffee-gallery-3.webp"
+    ],
+    "cuisine": "Cócteles y Tapas",
+    "hours": "5:00 PM - 2:00 AM",
+    "location": "Rooftop"
+  }
+]

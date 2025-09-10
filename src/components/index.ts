@@ -11,6 +11,7 @@ export { default as Menu } from './Menu';
 export { default as Purpose } from './Purpose';
 export { default as Restaurants } from './Restaurants';
 export { default as RoomsCarousel } from './RoomsCarousel';
+export { default as RestaurantsPage } from './RestaurantsPage';
 export { default as RoomsPage } from './RoomsPage';
 export { default as PromosSheet } from './PromosSheet';
 export { default as RoomSummary } from './RoomSummary';

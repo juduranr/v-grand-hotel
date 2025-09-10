@@ -1,0 +1,9 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { RestaurantsPage } from '../../components';
+import restaurantsData from '../../data/restaurants.json';
+---
+
+<Layout>
+	<RestaurantsPage client:load restaurantsData={restaurantsData} />
+</Layout>

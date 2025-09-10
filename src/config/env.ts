@@ -31,7 +31,7 @@ export const DISCOVER_IMAGES = {
 export const EXPERIENCES_IMAGES = {
   ACCORDEON_1: `${IMAGES_BASE_URL}experiencies/accordeon-1.webp`,
   ACCORDEON_2: `${IMAGES_BASE_URL}experiencies/accordeon-2.webp`,
-  ACCORDEON_3: `${IMAGES_BASE_URL}experiencies/accordeon-3.webp`
+  ACCORDEON_3: `${IMAGES_BASE_URL}experiencies/accordeon-3.avif`
 };
 
 // URLs específicas para las imágenes de events

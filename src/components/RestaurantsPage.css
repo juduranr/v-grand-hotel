@@ -1,0 +1,259 @@
+.rp-rooms-page {
+	height: 100vh;
+	overflow-y: auto;
+	scroll-snap-type: y mandatory;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+.rp-rooms-page::-webkit-scrollbar {
+	display: none;
+}
+
+.rp-hero-section,
+.rp-room-section {
+	height: 100vh;
+	width: 100%;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+	scroll-snap-align: start;
+	overflow: hidden;
+}
+
+.rp-hero-section {
+	background-image: url('/images/hero.webp');
+	justify-content: center;
+	align-items: flex-end;
+	padding-bottom: 20px;
+}
+
+.rp-hero-content {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	z-index: 2;
+	display: flex;
+	justify-content: center;
+	transform: translateY(10%);
+}
+
+.rp-hero-title {
+	font-size: 15dvw;
+    font-weight: 400;
+    color: white;
+    text-align: center;
+    margin: 0;
+    font-family: 'BeaufortforLOL', sans-serif;
+    position: relative;
+    z-index: 10;
+    line-height: 0.6;
+    display: inline-block;
+    text-transform: uppercase;
+    opacity: 0.5;
+}
+
+.rp-room-section {
+	position: relative;
+	cursor: none;
+}
+
+.rp-room-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.4);
+	z-index: 1;
+	pointer-events: none;
+}
+
+.rp-room-info {
+	flex: 1;
+	color: white;
+	z-index: 2;
+    position: relative;
+}
+
+.rp-room-title {
+	color: #FFF;
+	text-transform: uppercase;
+	font-family: "Beaufort for LOL";
+	font-size: clamp(2rem, 6rem, 8rem);
+	font-style: normal;
+	font-weight: 400;
+	line-height: 110%;
+	position: relative;
+    left: 48px;
+    bottom: 48px;
+}
+
+.rp-room-index {
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-end;
+	height: 100%;
+	padding-bottom: 4rem;
+}
+
+.rp-index-number {
+	font-size: 8rem;
+	font-weight: 200;
+	color: rgba(255, 255, 255, 0.8);
+	line-height: 1;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+	background: rgba(0, 0, 0, 0.2);
+	padding: 1rem 2rem;
+	border-radius: 50%;
+	min-width: 120px;
+	min-height: 120px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.rp-hero-title {
+		bottom: -10%;
+		line-height: 0.4;
+	}
+
+	.rp-room-index {
+		position: absolute;
+		top: 2rem;
+		right: 2rem;
+		padding-bottom: 0;
+	}
+
+	.rp-index-number {
+		font-size: clamp(2rem, 6vw, 4rem);
+		min-width: 80px;
+		min-height: 80px;
+		padding: 0.5rem 1rem;
+	}
+
+	.rp-hero-section,
+	.rp-room-section {
+		background-attachment: scroll;
+	}
+}
+
+@media (max-width: 480px) {
+	.rp-hero-title {
+		bottom: -10%;
+		line-height: 0.4;
+	}
+	
+	.rp-index-number {
+		font-size: clamp(1.5rem, 5vw, 3rem);
+		min-width: 60px;
+		min-height: 60px;
+		padding: 0.5rem;
+	}
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	overflow-x: hidden;
+	width: 100%;
+}
+
+.rp-navigation-dots {
+	position: fixed;
+	right: 4rem;
+	bottom: 4rem;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	z-index: 10;
+	pointer-events: none;
+}
+
+.rp-dot {
+	color: #888888;
+	font-size: 20px;
+	font-weight: 400;
+	cursor: pointer;
+	transition: color 0.3s ease;
+	white-space: nowrap;
+	text-align: right;
+	pointer-events: auto;
+}
+
+.rp-custom-cursor {
+	position: fixed;
+	left: 0;
+	top: 0;
+	transform: translate(-50%, -50%);
+	z-index: 1000;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+
+.rp-custom-cursor.visible {
+	opacity: 1;
+}
+
+.rp-cursor-svg {
+	width: 120px;
+	height: 120px;
+}
+
+.rp-cursor-text {
+	fill: white;
+	font-size: 14px;
+	font-weight: 500;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	font-family: 'BeaufortforLOL', sans-serif;
+}
+
+.rp-rotate {
+	animation: rotate 6s linear infinite;
+	transform-origin: 100px 100px; /* centro del viewBox 200x200 */
+	transform-box: view-box;
+}
+
+.rp-chevron path {
+	filter: drop-shadow(0 1px 1px rgba(0,0,0,0.5));
+}
+
+@keyframes rotate {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+.rp-dot:hover {
+	color: white;
+}
+
+.rp-dot.active {
+	color: white;
+	font-weight: 600;
+}
+
+@media (max-width: 768px) {
+	.rp-navigation-dots {
+		right: 2rem;
+		bottom: 2rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.rp-navigation-dots {
+		right: 1rem;
+		bottom: 1rem;
+	}
+}

@@ -116,7 +116,7 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose }) => {
 
   const menuItems = [
     { id: 'rooms', label: 'Habitaciones', href: '/rooms', background: MENU_IMAGES.ROOMS },
-    { id: 'gastro', label: 'Gastronomía', href: '/gastro', background: MENU_IMAGES.GASTRO },
+    { id: 'gastro', label: 'Gastronomía', href: '/restaurants', background: MENU_IMAGES.GASTRO },
     // { id: 'behind-us', label: 'Nuestra historia', href: '/behind-us', background: MENU_IMAGES.BEHIND_US },
     // { id: 'services-experiences', label: 'Experiencias', href: '/experiences', background: MENU_IMAGES.EXPERIENCES },
     { id: 'events', label: 'Eventos', href: '/events', background: MENU_IMAGES.EVENTS },
