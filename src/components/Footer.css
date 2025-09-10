@@ -2,6 +2,7 @@
   background: #E9EAE4;
   padding: 120px 0 40px;
   position: relative;
+  z-index: 10;
 }
 
 .footer__container {

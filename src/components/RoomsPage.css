@@ -4,6 +4,7 @@
 	scroll-snap-type: y mandatory;
 	scrollbar-width: none;
 	-ms-overflow-style: none;
+	position: relative;
 }
 
 .rp-rooms-page::-webkit-scrollbar {

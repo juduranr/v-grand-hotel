@@ -16,7 +16,7 @@ import '../styles/global.css';
 	<body>
 		<DevLinkProvider client:load>
 			<Header client:load />
-			<main>
+			<main style="position: relative; z-index: 1;">
 				<slot />
 			</main>
 			<Footer client:load />
