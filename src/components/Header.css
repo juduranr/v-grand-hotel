@@ -57,6 +57,19 @@
   box-shadow: none !important;
 }
 
+/* Forzar color blanco en el botón de menú cuando esté abierto */
+.header--menu-open .header__burger-line {
+  background-color: white !important;
+}
+
+.header--menu-open .header__menu-text {
+  color: white !important;
+}
+
+.header--menu-open .header__menu-text:hover {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
 .header__center,
 .header__right {
   transition: all 0.3s ease;

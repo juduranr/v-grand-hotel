@@ -76,3 +76,12 @@ export const RESTAURANTS_IMAGES = {
   ROOFTOP_2: `${IMAGES_BASE_URL}restaurants/rooftop-2.webp`,
   ROOFTOP_3: `${IMAGES_BASE_URL}restaurants/rooftop-3.webp`
 };
+
+// URLs específicas para las imágenes del menú
+export const MENU_IMAGES = {
+  ROOMS: `${IMAGES_BASE_URL}menu/rooms.avif`,
+  GASTRO: `${IMAGES_BASE_URL}menu/gastro.avif`,
+  BEHIND_US: `${IMAGES_BASE_URL}menu/behind-us.avif`,
+  EXPERIENCES: `${IMAGES_BASE_URL}menu/experiences.avif`,
+  EVENTS: `${IMAGES_BASE_URL}menu/events.avif`
+};
