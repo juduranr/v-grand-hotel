@@ -41,7 +41,7 @@ const Header: React.FC = () => {
               <span className="header__burger-line"></span>
               <span className="header__burger-line"></span>
             </button>
-            <span className="header__menu-text">Menu</span>
+            <span className="header__menu-text">Menú</span>
           </div>
 
           {/* Center - Logo */}
