@@ -170,7 +170,7 @@ html, body {
 }
 
 .rp-navigation-dots {
-	position: absolute;
+	position: fixed;
 	right: 4rem;
 	bottom: 4rem;
 	display: flex;

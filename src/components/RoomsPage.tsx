@@ -32,6 +32,11 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
   // Función para actualizar indicadores de navegación
   const updateNavigationDots = () => {
     const sections = document.querySelectorAll('section');
+    const dots = document.querySelectorAll('.rp-dot');
+    const dotsContainer = document.querySelector('.rp-navigation-dots');
+    
+    // Debug: verificar que tenemos dots
+    console.log('Dots encontrados:', dots.length);
     
     // Encontrar qué sección está más visible en el viewport
     let currentSection = 0;
@@ -45,32 +50,45 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
       const visibleTop = Math.max(0, Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0));
       const visibility = visibleTop / Math.min(rect.height, viewportHeight);
       
+      console.log(`Sección ${index}: visibility = ${visibility.toFixed(2)}`);
+      
       if (visibility > maxVisibility) {
         maxVisibility = visibility;
         currentSection = index;
       }
     });
     
-    // Actualizar todos los dots en todas las secciones
-    sections.forEach((section, sectionIndex) => {
-      const dots = section.querySelectorAll('.rp-dot');
-      
-      dots.forEach((dot, dotIndex) => {
-        // Remover clase active de todos los dots
-        dot.classList.remove('active');
-        
-        // Si estamos en una sección de habitación (no hero) y es la sección actual
-        if (sectionIndex > 0 && sectionIndex === currentSection) {
-          // Activar el dot que corresponde a esta habitación
-          if (dotIndex === sectionIndex - 1) {
-            dot.classList.add('active');
-          }
-        }
-      });
+    // Mostrar u ocultar los dots según la sección actual
+    if (dotsContainer) {
+      const container = dotsContainer as HTMLElement;
+      if (currentSection === 0) {
+        // Ocultar dots en la sección hero
+        container.style.display = 'none';
+      } else {
+        // Mostrar dots en las secciones de habitaciones
+        container.style.display = 'flex';
+      }
+    }
+    
+    // Remover clase active de todos los dots primero
+    dots.forEach(dot => {
+      dot.classList.remove('active');
     });
     
+    // Activar el dot correspondiente a la sección actual
+    if (currentSection > 0) {
+      // Si estamos en una sección de habitación (no hero)
+      const roomIndex = currentSection - 1;
+      const activeDot = document.querySelector(`.rp-dot[data-section="room-${roomIndex}"]`);
+      console.log(`Buscando dot con data-section="room-${roomIndex}"`, activeDot);
+      if (activeDot) {
+        activeDot.classList.add('active');
+        console.log('Dot activado:', activeDot.textContent);
+      }
+    }
+    
     // Debug: mostrar qué sección está activa
-    console.log('Sección activa:', currentSection);
+    console.log('Sección activa:', currentSection, 'Habitación:', currentSection > 0 ? currentSection - 1 : 'Hero', 'Max visibility:', maxVisibility.toFixed(2));
   };
 
   // Función para navegar a una sección específica
@@ -84,21 +102,8 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
       
       // Actualizar el estado activo después de la navegación
       setTimeout(() => {
-        // Forzar la actualización del estado activo
-        const targetSection = sections[sectionIndex];
-        const dots = targetSection.querySelectorAll('.dot');
-        
-        // Remover active de todos los dots
-        document.querySelectorAll('.rp-dot').forEach(dot => dot.classList.remove('active'));
-        
-        // Activar el dot correspondiente
-        if (sectionIndex > 0) {
-          const activeDot = targetSection.querySelector(`.rp-dot[data-section="room-${sectionIndex - 1}"]`);
-          if (activeDot) {
-            activeDot.classList.add('active');
-          }
-        }
-      }, 300);
+        updateNavigationDots();
+      }, 500);
     }
   };
 
@@ -106,8 +111,7 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
     // Registrar el plugin ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
-
-    // Agregar event listener para scroll con throttling
+    // Agregar event listener para scroll con throttling en el contenedor
     let ticking = false;
     const handleScroll = () => {
       if (!ticking) {
@@ -119,15 +123,20 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
       }
     };
     
-    window.addEventListener('scroll', handleScroll);
-    
-    // Llamar una vez para establecer el estado inicial
-    updateNavigationDots();
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      
+      // Llamar una vez para establecer el estado inicial
+      updateNavigationDots();
+    }
 
     // Cleanup function
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-      window.removeEventListener('scroll', handleScroll);
+      if (container) {
+        container.removeEventListener('scroll', handleScroll);
+      }
     };
   }, [roomsData]);
 
@@ -167,22 +176,22 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
               <h2 className="rp-room-title">{room.title}</h2>
             </div>
           </div>
-          
-                     {/* Navigation Dots para esta habitación */}
-           <div className="rp-navigation-dots">
-             {roomsData.map((roomItem, roomIndex) => (
-               <div 
-                 key={roomItem.title}
-                 className={`rp-dot ${roomIndex === index ? 'active' : ''}`}
-                 data-section={`room-${roomIndex}`}
-                 onClick={(e) => { e.stopPropagation(); scrollToSection(roomIndex + 1); }}
-               >
-                 {roomItem.title}
-               </div>
-             ))}
-           </div>
         </section>
       ))}
+
+      {/* Navigation Dots - Un solo conjunto para todas las habitaciones */}
+      <div className="rp-navigation-dots">
+        {roomsData.map((roomItem, roomIndex) => (
+          <div 
+            key={roomItem.title}
+            className="rp-dot"
+            data-section={`room-${roomIndex}`}
+            onClick={(e) => { e.stopPropagation(); scrollToSection(roomIndex + 1); }}
+          >
+            {roomItem.title}
+          </div>
+        ))}
+      </div>
 
       {/* Cursor personalizado circular con texto rotando */}
       <div
