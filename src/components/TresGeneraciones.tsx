@@ -109,8 +109,14 @@ const TresGeneraciones: React.FC = () => {
                         <div className="tg-presentation__gallery-item tg-presentation__grid-1">
                             <img src={RESTAURANTS_IMAGES.TRES_GENERACIONES_2} alt="Tres Generaciones 1" />
                         </div>
-                        <div className="tg-presentation__gallery-item tg-presentation__grid-2">
+                        <div className="tg-presentation__gallery-item tg-presentation__grid-2 tg-presentation__gallery-item--hover">
                             <img src={RESTAURANTS_IMAGES.TRES_GENERACIONES_1} alt="Tres Generaciones 2" />
+                            <div className="tg-presentation__hover-overlay">
+                                <div className="tg-presentation__hover-content">
+                                    <p className="tg-presentation__hover-name">Ana Fourneaux, Primera mesera de Tres Generaciones</p>
+                                    <p className="tg-presentation__hover-date">24 de diciembre de 1948</p>
+                                </div>
+                            </div>
                         </div>
                         <div className="tg-presentation__gallery-item tg-presentation__grid-3">
                             <img src={RESTAURANTS_IMAGES.TRES_GENERACIONES_3} alt="Tres Generaciones 3" />

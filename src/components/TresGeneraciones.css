@@ -195,6 +195,47 @@
 .tg-presentation__grid-3 { grid-column: span 7; }
 .tg-presentation__grid-4 { grid-column: span 5; }
 
+/* ===== TG Presentation Gallery Hover Effect ===== */
+.tg-presentation__gallery-item--hover {
+    position: relative;
+    cursor: pointer;
+}
+
+.tg-presentation__gallery-item--hover .tg-presentation__hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #000 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+}
+
+.tg-presentation__gallery-item--hover:hover .tg-presentation__hover-overlay {
+    opacity: 1;
+}
+
+.tg-presentation__hover-content {
+    color: #FFF;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%;
+    letter-spacing: 0.4px;
+}
+
+.tg-presentation__hover-name {
+    margin: 0 0 8px 0;
+}
+
+.tg-presentation__hover-date {
+    margin: 0;
+}
+
 /* ===== TG Grid (second gallery) ===== */
 .tg-grid {
 	width: 90dvw;
