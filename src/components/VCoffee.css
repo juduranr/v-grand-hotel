@@ -1,0 +1,446 @@
+/* ===== V-Coffee Component Styles ===== */
+
+/* Forzar peso 400 en todas las tipografías dentro de V-Coffee */
+.vcoffee-detail {
+	font-weight: 400;
+}
+
+.vcoffee-detail strong, .vcoffee-detail b {
+	font-weight: 400;
+}
+
+/* ===== V-Coffee Hero ===== */
+.vcoffee-hero {
+	position: relative;
+	min-height: 100dvh;
+	background-size: cover;
+	background-position: center;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	padding-bottom: 20px;
+    overflow: hidden;
+}
+
+.vcoffee-hero__content {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	transform: translateY(10%);
+}
+
+.vcoffee-title {
+	font-size: 23dvw;
+	font-weight: 400;
+	color: white;
+	text-align: center;
+	margin: 0;
+	position: relative;
+	z-index: 10;
+	line-height: 0.6;
+	display: inline-block;
+	text-transform: uppercase;
+	opacity: 0.5;
+}
+
+/* ===== V-Coffee Content ===== */
+.vcoffee-content {
+	background: linear-gradient(175deg, #2E3C35 3.84%, #191F1C 66.79%);
+	min-height: 100vh;
+	padding: 80px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 180px;
+}
+
+.vcoffee-intro__container {
+	width: 90dvw;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 48px;
+	text-align: center;
+}
+
+.vcoffee-intro__logo {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.vcoffee-intro__text {
+	color: #FFF;
+	text-align: center;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 160%; /* 32px */
+	max-width: 800px;
+}
+
+.vcoffee-intro__text p {
+	margin: 0 0 24px 0;
+}
+
+.vcoffee-intro__text p:last-child {
+	margin-bottom: 0;
+}
+
+.vcoffee-intro__button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.vcoffee-btn {
+	display: flex;
+	width: 242px;
+	height: 56px;
+	padding: 22px 40px;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	color: #FFF;
+	text-align: center;
+	font-size: 18px;
+	font-style: italic;
+	font-weight: 400;
+	line-height: normal;
+	letter-spacing: -0.36px;
+    border: 1px solid #FFF;
+    font-family: BeaufortforLOL;
+}
+
+.vcoffee-intro__image-full {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.vcoffee-intro__image-full img {
+	width: 100%;
+	height: auto;
+	max-height: 600px;
+	object-fit: cover;
+}
+
+/* ===== V-Coffee Coworking Section ===== */
+.vcoffee-coworking {
+	background: linear-gradient(175deg, #2E3C35 3.84%, #191F1C 66.79%);
+	padding: 80px 0;
+}
+
+.vcoffee-coworking__container {
+	width: 90dvw;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 80px;
+}
+
+.vcoffee-coworking__grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 171px;
+	width: 100%;
+	align-items: start;
+}
+
+.vcoffee-coworking__left {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
+
+.vcoffee-coworking__left .vcoffee-coworking__title {
+	margin-bottom: 232px;
+}
+
+.vcoffee-coworking__left .vcoffee-coworking__image {
+	margin-bottom: 22px;
+}
+
+.vcoffee-coworking__right {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
+
+.vcoffee-coworking__right .vcoffee-coworking__image {
+	margin-bottom: 22px;
+}
+
+.vcoffee-coworking__title {
+	color: #FFF;
+	font-size: 48px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 120%; /* 57.6px */
+	text-transform: uppercase;
+	text-align: left;
+	margin: 0;
+}
+
+.vcoffee-coworking__image {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.vcoffee-coworking__image img {
+	width: 100%;
+	height: 774px;
+	object-fit: cover;
+}
+
+.vcoffee-coworking__text {
+	color: #FFF;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 140%;
+	max-width: 800px;
+	margin: 0;
+}
+
+/* ===== V-Coffee Moments Section ===== */
+.vcoffee-moments__container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 80px;
+	width: 90dvw;
+    margin: 0 auto;
+}
+
+.vcoffee-moments__title-container {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+    width: 100%;
+}
+
+.vcoffee-moments__title-container hr {
+	width: 100%;
+	height: 0.5px;
+	background-color: #FFF;
+	border: none;
+	margin: 0;
+}
+
+
+.vcoffee-moments__title {
+	color: #FFF;
+	font-size: 48px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 120%; /* 57.6px */
+	text-transform: uppercase;
+	text-align: center;
+	margin: 0;
+}
+
+.vcoffee-moments__content {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 40px;
+	width: 100%;
+}
+
+.vcoffee-moments__item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 24px;
+}
+
+.vcoffee-moments__image {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.vcoffee-moments__image img {
+	max-width: 440px;
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+	border: 10px solid rgba(255, 255, 255, 0.05);
+	border-radius: 50%;
+}
+
+.vcoffee-moments__text {
+	color: #FFF;
+	text-align: center;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 120%; /* 28.8px */
+	margin: 0;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+	.vcoffee-title {
+		bottom: -10%;
+		line-height: 0.4;
+	}
+	
+	.vcoffee-intro__text {
+		font-size: 18px;
+	}
+	
+	.vcoffee-intro__container {
+		gap: 32px;
+	}
+	
+	.vcoffee-coworking__title {
+		font-size: 36px;
+	}
+	
+	.vcoffee-coworking__container {
+		gap: 60px;
+	}
+	
+	.vcoffee-coworking__content {
+		gap: 60px;
+	}
+	
+	.vcoffee-coworking__text {
+		font-size: 16px;
+	}
+	
+	.vcoffee-coworking__grid {
+		grid-template-columns: 1fr;
+		gap: 80px;
+	}
+	
+	.vcoffee-coworking__title {
+		font-size: 36px;
+		text-align: center;
+	}
+	
+	.vcoffee-coworking__image img {
+		height: 500px;
+	}
+	
+	.vcoffee-coworking__left .vcoffee-coworking__title {
+		margin-bottom: 120px;
+	}
+	
+	.vcoffee-moments__title {
+		font-size: 36px;
+	}
+	
+	.vcoffee-moments__container {
+		gap: 60px;
+	}
+	
+	.vcoffee-moments__content {
+		grid-template-columns: 1fr;
+		gap: 40px;
+	}
+	
+	.vcoffee-moments__text {
+		font-size: 20px;
+	}
+	
+	.vcoffee-moments__image img {
+		max-width: 300px;
+		width: 100%;
+		aspect-ratio: 1 / 1;
+		border: 10px solid rgba(255, 255, 255, 0.05);
+		border-radius: 50%;
+	}
+}
+
+@media (max-width: 480px) {
+	.vcoffee-title {
+		bottom: -10%;
+		line-height: 0.4;
+	}
+	
+	.vcoffee-intro__text {
+		font-size: 16px;
+	}
+	
+	.vcoffee-intro__container {
+		gap: 24px;
+	}
+	
+	.vcoffee-btn {
+		width: 200px;
+		height: 48px;
+		padding: 16px 32px;
+		font-size: 14px;
+	}
+	
+	.vcoffee-coworking__title {
+		font-size: 28px;
+	}
+	
+	.vcoffee-coworking__container {
+		gap: 40px;
+	}
+	
+	.vcoffee-coworking__content {
+		gap: 40px;
+	}
+	
+	.vcoffee-coworking__text {
+		font-size: 16px;
+	}
+	
+	.vcoffee-coworking__grid {
+		gap: 60px;
+	}
+	
+	.vcoffee-coworking__title {
+		font-size: 28px;
+	}
+	
+	.vcoffee-coworking__text {
+		font-size: 14px;
+	}
+	
+	.vcoffee-coworking__image img {
+		height: 400px;
+	}
+	
+	.vcoffee-coworking__left .vcoffee-coworking__title {
+		margin-bottom: 80px;
+	}
+	
+	.vcoffee-moments__title {
+		font-size: 28px;
+	}
+	
+	.vcoffee-moments__container {
+		gap: 40px;
+	}
+	
+	.vcoffee-moments__content {
+		gap: 32px;
+	}
+	
+	.vcoffee-moments__text {
+		font-size: 18px;
+	}
+	
+	.vcoffee-moments__image img {
+		max-width: 250px;
+		width: 100%;
+		aspect-ratio: 1 / 1;
+		border: 10px solid rgba(255, 255, 255, 0.05);
+		border-radius: 50%;
+	}
+}
