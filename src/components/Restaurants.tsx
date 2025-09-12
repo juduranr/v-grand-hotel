@@ -85,9 +85,9 @@ const Restaurants: React.FC = () => {
       title: "Tres Generaciones",
       description: "Sabores que cuentan historias, una tradición que une generaciones. Cocina italiana de autor en un ambiente sofisticado.",
       items: [
-        { src: RESTAURANTS_IMAGES.TRES_GENERACIONES_1, alt: "Tres Generaciones - Imagen 1" },
-        { src: RESTAURANTS_IMAGES.TRES_GENERACIONES_2, alt: "Tres Generaciones - Imagen 2" },
-        { src: RESTAURANTS_IMAGES.TRES_GENERACIONES_3, alt: "Tres Generaciones - Imagen 3" }
+        { src: RESTAURANTS_IMAGES.TRES_GENERACIONES_SLIDER_1, alt: "Tres Generaciones - Imagen 1" },
+        { src: RESTAURANTS_IMAGES.TRES_GENERACIONES_SLIDER_2, alt: "Tres Generaciones - Imagen 2" },
+        { src: RESTAURANTS_IMAGES.TRES_GENERACIONES_SLIDER_3, alt: "Tres Generaciones - Imagen 3" }
       ]
     },
     {

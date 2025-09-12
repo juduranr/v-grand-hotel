@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { RESTAURANTS_IMAGES } from '../config/env';
 import './RestaurantsPage.css';
 
 interface Restaurant {
@@ -140,41 +141,58 @@ const RestaurantsPage: React.FC<RestaurantsPageProps> = ({ restaurantsData }) =>
   return (
     <div className="rp-rooms-page" ref={containerRef}>
       {/* Hero Section */}
-      <section className="rp-hero-section">
+      <section 
+        className="rp-hero-section"
+        style={{ backgroundImage: `url(${RESTAURANTS_IMAGES.HERO})` }}
+      >
         <div className="rp-hero-content">
           <h1 className="rp-hero-title">Restaurantes</h1>
         </div>
       </section>
 
       {/* Restaurantes Sections */}
-      {restaurantsData.map((restaurant, index) => (
-        <section 
-          key={restaurant.title}
-          className="rp-room-section" 
-          style={{ backgroundImage: `url(${restaurant.banner.startsWith('http') ? restaurant.banner : `/images/${restaurant.banner}`})` }}
-          role="link"
-          tabIndex={0}
-          onMouseEnter={() => setCursorVisible(true)}
-          onMouseLeave={() => setCursorVisible(false)}
-          onMouseMove={(e) => setCursorPosition({ x: e.clientX, y: e.clientY })}
-          onClick={() => {
-            window.location.href = `/gastro/${normalizeRestaurantName(restaurant.title)}`;
-          }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              window.location.href = `/gastro/${normalizeRestaurantName(restaurant.title)}`;
-            }
-          }}
-        >
-          <div className="rp-room-overlay"></div>
-          <div className="rp-room-content">
-            <div className="rp-room-info">
-              <h2 className="rp-room-title">{restaurant.title}</h2>
+      {restaurantsData.map((restaurant, index) => {
+        // Determinar la URL de la imagen del banner basada en el nombre del restaurante
+        const getBannerUrl = (title: string) => {
+          switch (title.toLowerCase()) {
+            case 'tres generaciones':
+              return RESTAURANTS_IMAGES.TRES_GENERACIONES_BANNER;
+            case 'v-coffee':
+              return RESTAURANTS_IMAGES.V_COFFEE_BANNER;
+            default:
+              return restaurant.banner.startsWith('http') ? restaurant.banner : `/restaurants/${restaurant.banner}`;
+          }
+        };
+
+        return (
+          <section 
+            key={restaurant.title}
+            className="rp-room-section" 
+            style={{ backgroundImage: `url(${getBannerUrl(restaurant.title)})` }}
+            role="link"
+            tabIndex={0}
+            onMouseEnter={() => setCursorVisible(true)}
+            onMouseLeave={() => setCursorVisible(false)}
+            onMouseMove={(e) => setCursorPosition({ x: e.clientX, y: e.clientY })}
+            onClick={() => {
+              window.location.href = `/restaurants/${normalizeRestaurantName(restaurant.title)}`;
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                window.location.href = `/restaurants/${normalizeRestaurantName(restaurant.title)}`;
+              }
+            }}
+          >
+            <div className="rp-room-overlay"></div>
+            <div className="rp-room-content">
+              <div className="rp-room-info">
+                <h2 className="rp-room-title">{restaurant.title}</h2>
+              </div>
             </div>
-          </div>
-        </section>
-      ))}
+          </section>
+        );
+      })}
 
       {/* Navigation Dots - Un solo conjunto para todos los restaurantes */}
       <div className="rp-navigation-dots">

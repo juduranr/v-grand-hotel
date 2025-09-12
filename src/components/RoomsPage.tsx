@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ROOMS_IMAGES } from '../config/env';
 import './RoomsPage.css';
 
 interface Room {
@@ -143,7 +144,10 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
   return (
     <div className="rp-rooms-page" ref={containerRef}>
       {/* Hero Section */}
-      <section className="rp-hero-section">
+      <section 
+        className="rp-hero-section"
+        style={{ backgroundImage: `url(${ROOMS_IMAGES.HERO})` }}
+      >
         <div className="rp-hero-content">
           <h1 className="rp-hero-title">Habitaciones</h1>
         </div>

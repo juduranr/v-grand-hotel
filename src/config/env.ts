@@ -61,15 +61,23 @@ export const STORIES_VIDEOS = {
 
 // URLs específicas para las imágenes de restaurantes
 export const RESTAURANTS_IMAGES = {
+  HERO: `${IMAGES_BASE_URL}restaurants/tres-generaciones-1.webp`,
+  
   // V-Coffee
+  V_COFFEE_BANNER: `${IMAGES_BASE_URL}restaurants/v-coffee.avif`,
   V_COFFEE_1: `${IMAGES_BASE_URL}restaurants/v-coffee-1.webp`,
   V_COFFEE_2: `${IMAGES_BASE_URL}restaurants/v-coffee-2.webp`,
   V_COFFEE_3: `${IMAGES_BASE_URL}restaurants/v-coffee-3.webp`,
   
   // Tres Generaciones
-  TRES_GENERACIONES_1: `${IMAGES_BASE_URL}restaurants/tres-generaciones-1.webp`,
-  TRES_GENERACIONES_2: `${IMAGES_BASE_URL}restaurants/tres-generaciones-2.webp`,
-  TRES_GENERACIONES_3: `${IMAGES_BASE_URL}restaurants/tres-generaciones-3.webp`,
+  TRES_GENERACIONES_BANNER: `${IMAGES_BASE_URL}restaurants/tres-generaciones.avif`,
+  TRES_GENERACIONES_SLIDER_1: `${IMAGES_BASE_URL}restaurants/tres-generaciones-1.webp`,
+  TRES_GENERACIONES_SLIDER_2: `${IMAGES_BASE_URL}restaurants/tres-generaciones-2.webp`,
+  TRES_GENERACIONES_SLIDER_3: `${IMAGES_BASE_URL}restaurants/tres-generaciones-3.webp`,
+  TRES_GENERACIONES_1: `${IMAGES_BASE_URL}restaurants/tres-generaciones/tres-generaciones-gallery-1.avif`,
+  TRES_GENERACIONES_2: `${IMAGES_BASE_URL}restaurants/tres-generaciones/tres-generaciones-gallery-2.avif`,
+  TRES_GENERACIONES_3: `${IMAGES_BASE_URL}restaurants/tres-generaciones/tres-generaciones-gallery-3.avif`,
+  TRES_GENERACIONES_4: `${IMAGES_BASE_URL}restaurants/tres-generaciones/tres-generaciones-gallery-4.avif`,
   
   // Rooftop
   ROOFTOP_1: `${IMAGES_BASE_URL}restaurants/rooftop-1.webp`,
@@ -84,4 +92,9 @@ export const MENU_IMAGES = {
   BEHIND_US: `${IMAGES_BASE_URL}menu/behind-us.avif`,
   EXPERIENCES: `${IMAGES_BASE_URL}menu/experiences.avif`,
   EVENTS: `${IMAGES_BASE_URL}menu/events.avif`
+};
+
+// URLs específicas para las imágenes de habitaciones
+export const ROOMS_IMAGES = {
+  HERO: `${IMAGES_BASE_URL}rooms/rooms-hero.avif`
 };

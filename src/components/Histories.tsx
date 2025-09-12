@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import './Histories.css'
 import { STORIES_VIDEOS } from "../config/env";
 
@@ -18,12 +18,17 @@ const historiesContent = [
     { type: 'video', src: historiesVideos[3] }, // story (4).webm
 ];
 
+
 const Histories = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
     const [animTargetIndex, setAnimTargetIndex] = useState<number | null>(null);
     const [direction, setDirection] = useState<1 | -1>(1);
     const [animDirection, setAnimDirection] = useState<1 | -1>(1);
+    
+    // Referencias para los elementos de video
+    const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+    
 
     const normalizeIndex = (idx: number) => (idx + historiesContent.length) % historiesContent.length;
 
@@ -78,6 +83,22 @@ const Histories = () => {
         else if (e.key === 'ArrowRight') updateCarousel(currentIndex + 1);
     };
 
+    // Efecto para controlar la reproducción de videos
+    useEffect(() => {
+        // Pausar todos los videos primero
+        videoRefs.current.forEach((video) => {
+            if (video) {
+                video.pause();
+            }
+        });
+        
+        // Reproducir solo el video actual
+        const currentVideo = videoRefs.current[currentIndex];
+        if (currentVideo) {
+            currentVideo.play().catch(console.error);
+        }
+    }, [currentIndex]);
+
     useEffect(() => {
         document.addEventListener('keydown', handleKeyDown);
         return () => {
@@ -110,6 +131,31 @@ const Histories = () => {
                         </svg>
                     </button>
                     <div className="histories-track">
+                        {/* Renderizar todos los videos una sola vez, ocultos */}
+                        <div style={{ display: 'none' }}>
+                            {historiesContent.map((content, index) => (
+                                <video 
+                                    key={`video-${index}`}
+                                    src={content.src}
+                                    autoPlay={false}
+                                    loop
+                                    muted
+                                    playsInline
+                                    ref={(el) => {
+                                        videoRefs.current[index] = el;
+                                    }}
+                                    onError={(e) => {
+                                        (e.target as HTMLVideoElement).style.backgroundColor = '#1a1a1a';
+                                        (e.target as HTMLVideoElement).style.display = 'flex';
+                                        (e.target as HTMLVideoElement).style.alignItems = 'center';
+                                        (e.target as HTMLVideoElement).style.justifyContent = 'center';
+                                        (e.target as HTMLVideoElement).style.color = '#fff';
+                                        (e.target as HTMLVideoElement).innerHTML = 'Video no disponible';
+                                    }}
+                                />
+                            ))}
+                        </div>
+
                         {[-2, -1, 0, 1, 2].map((slotOffset) => {
                             const currentImgIndex = normalizeIndex(currentIndex + slotOffset);
                             const targetIndex = animTargetIndex ?? currentIndex;
@@ -125,13 +171,12 @@ const Histories = () => {
                             // Función para renderizar el contenido (solo videos)
                             const renderContent = (index: number, key: string) => {
                                 const content = historiesContent[index];
-                                const shouldPlay = isCenter; // Solo reproducir si está en el centro
                                 
                                 return (
-                                    <div className="histories-card-pane" key={key}>
+                                    <div className="histories-card-pane" key={`${key}-${index}`}>
                                         <video 
                                             src={content.src}
-                                            autoPlay={shouldPlay}
+                                            autoPlay={false}
                                             loop
                                             muted
                                             playsInline

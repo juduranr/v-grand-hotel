@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Menu from './Menu';
 import headerLogo from '../assets/images/header-logo.svg';
+import tresGeneracionesLogo from '../assets/images/tres-generaciones-isotipo.svg';
 import './Header.css';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isTresGeneracionesPage, setIsTresGeneracionesPage] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -19,16 +21,24 @@ const Header: React.FC = () => {
       setIsScrolled(currentScrollY > heroHeight * 0.8);
     };
 
+    // Detectar si estamos en la página de Tres Generaciones
+    const checkCurrentRoute = () => {
+      const currentPath = window.location.pathname;
+      setIsTresGeneracionesPage(currentPath === '/restaurants/tres-generaciones');
+    };
+
     window.addEventListener('scroll', handleScroll);
     // Establecer estado inicial
     handleScroll();
+    checkCurrentRoute();
+    
     // Cleanup
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <>
-      <header className={`header ${isScrolled ? 'header--scrolled' : ''} ${isMenuOpen ? 'header--menu-open' : ''}`}>
+      <header className={`header ${isScrolled ? 'header--scrolled' : ''} ${isMenuOpen ? 'header--menu-open' : ''} ${isTresGeneracionesPage ? 'header--tres-generaciones' : ''}`}>
         <div className="header__container">
           {/* Left side - Burger menu */}
           <div className="header__left">
@@ -48,8 +58,8 @@ const Header: React.FC = () => {
           <div className={`header__center ${isMenuOpen ? 'header__center--hidden' : ''}`}>
             <a href="/" className="header__logo-link">
               <img 
-                src={headerLogo.src} 
-                alt="V Grand Hotel" 
+                src={isTresGeneracionesPage ? tresGeneracionesLogo.src : headerLogo.src} 
+                alt={isTresGeneracionesPage ? "Tres Generaciones" : "V Grand Hotel"} 
                 className="header__logo"
               />
             </a>
@@ -58,12 +68,12 @@ const Header: React.FC = () => {
           {/* Right side - Reserve button */}
           <div className={`header__right ${isMenuOpen ? 'header__right--hidden' : ''}`}>
             <a 
-              href="https://www.choicehotels.com/es-xl/colombia/medellin/radisson-individuals-hotels/cb031" 
-              target="_blank" 
-              rel="noopener noreferrer"
+              href={isTresGeneracionesPage ? "#carta" : "https://www.choicehotels.com/es-xl/colombia/medellin/radisson-individuals-hotels/cb031"} 
+              target={isTresGeneracionesPage ? "_self" : "_blank"} 
+              rel={isTresGeneracionesPage ? "" : "noopener noreferrer"}
               className="header__reserve-button"
             >
-              Reservar
+              {isTresGeneracionesPage ? "Reservar Mesa" : "Reservar"}
             </a>
           </div>
         </div>
@@ -72,12 +82,12 @@ const Header: React.FC = () => {
       {/* Botón flotante de reservar para móviles */}
       <div className="header__floating-reserve">
         <a 
-          href="https://www.choicehotels.com/es-xl/colombia/medellin/radisson-individuals-hotels/cb031" 
-          target="_blank" 
-          rel="noopener noreferrer"
+          href={isTresGeneracionesPage ? "#carta" : "https://www.choicehotels.com/es-xl/colombia/medellin/radisson-individuals-hotels/cb031"} 
+          target={isTresGeneracionesPage ? "_self" : "_blank"} 
+          rel={isTresGeneracionesPage ? "" : "noopener noreferrer"}
           className="header__floating-reserve-button"
         >
-          Reservar
+          {isTresGeneracionesPage ? "Reservar Mesa" : "Reservar"}
         </a>
       </div>
       

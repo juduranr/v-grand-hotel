@@ -1,0 +1,387 @@
+/* ===== Footer Tres Generaciones ===== */
+.tg-footer {
+  background: linear-gradient(180deg, #2E1207 0%, #240C02 100%);
+  color: #FFF;
+  padding: 80px 0 40px;
+  margin-top: auto;
+  width: 100%;
+}
+
+.tg-footer hr {
+  border: none;
+  outline: none;
+}
+
+.tg-footer__container {
+  width: 90vw;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.tg-footer__intro {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.tg-footer__intro-bg {
+  width: 261px;
+  height: auto;
+  margin-bottom: 40px;
+}
+
+.tg-footer__intro-text {
+  color: #FFF;
+  font-size: 18px;
+  line-height: 150%;
+  margin: 0 0 80px 0;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tg-footer__intro-separator {
+  width: 100%;
+  height: 0.5px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 0;
+  outline: none;
+}
+
+.tg-footer__main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+  width: 100%;
+}
+
+
+.tg-footer__social-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.tg-footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.tg-footer__social-link:hover {
+  background-color: transparent;
+  transform: translateY(-2px);
+}
+
+.tg-footer__social-icon {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+}
+
+/* Columns */
+.tg-footer__column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.tg-footer__title {
+  color: #FFF;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 120%;
+  text-transform: uppercase;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.tg-footer__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tg-footer__link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 16px;
+  line-height: 150%;
+  transition: color 0.3s ease;
+}
+
+.tg-footer__link:hover {
+  color: #FFF;
+}
+
+.tg-footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tg-footer__contact-item {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  line-height: 150%;
+}
+
+.tg-footer__contact-item a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.tg-footer__contact-item a:hover {
+  color: #FFF;
+}
+
+.tg-footer__address {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tg-footer__address-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  line-height: 150%;
+  margin: 0;
+}
+
+.tg-footer__directions-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #FFF;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  padding: 8px 0;
+}
+
+.tg-footer__directions-button:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.tg-footer__directions-button svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.tg-footer__directions-button:hover svg {
+  transform: translateX(4px);
+}
+
+/* Schedule styles */
+.tg-footer__schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tg-footer__schedule-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tg-footer__schedule-days {
+  color: #FFF;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 120%;
+}
+
+.tg-footer__schedule-hours {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  line-height: 120%;
+}
+
+.tg-footer__schedule-note {
+  margin-top: 8px;
+}
+
+.tg-footer__schedule-note p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Bottom section */
+.tg-footer__bottom {
+  padding-top: 40px;
+}
+
+.tg-footer__bottom-content {
+  padding-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.tg-footer__copyright {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+.tg-footer__bottom-logos {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.tg-footer__bottom-logos-group {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.tg-footer__bottom-member-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+}
+
+.tg-footer__bottom-member-logos {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.tg-footer__bottom-separator {
+  background: rgba(255, 255, 255, 0.3);
+  width: 0.5px;
+  height: 20px;
+  border: none;
+  margin: 0 8px;
+  outline: none;
+}
+
+.tg-footer__bottom-logo {
+  height: 24px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+.tg-footer__bottom-logo:hover {
+  opacity: 1;
+}
+
+.tg-footer__bottom-logo-text {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .tg-footer__main {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tg-footer {
+    padding: 60px 0 32px;
+  }
+  
+  .tg-footer__container {
+    padding: 0 16px;
+  }
+  
+  .tg-footer__intro {
+    padding: 60px 0;
+  }
+  
+  .tg-footer__intro-text {
+    font-size: 16px;
+    max-width: 100%;
+  }
+  
+  .tg-footer__main {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    text-align: center;
+  }
+  
+  .tg-footer__social-links {
+    justify-content: center;
+  }
+  
+  .tg-footer__bottom-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+  
+  .tg-footer__bottom-logos {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .tg-footer__bottom-logos-group {
+    gap: 24px;
+  }
+  
+  .tg-footer__bottom-member-group {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .tg-footer__bottom-member-logos {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tg-footer {
+    padding: 48px 0 24px;
+  }
+  
+  .tg-footer__tres-generaciones-logo {
+    width: 160px;
+  }
+  
+  .tg-footer__v-logo {
+    width: 100px;
+  }
+  
+  .tg-footer__raddison-logo {
+    width: 80px;
+  }
+  
+  .tg-footer__social-links {
+    gap: 12px;
+  }
+  
+  .tg-footer__social-link {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .tg-footer__social-icon {
+    width: 18px;
+    height: 18px;
+  }
+}

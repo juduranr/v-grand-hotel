@@ -1,7 +1,10 @@
 ---
 import { DevLinkProvider } from '../../devlink/DevLinkProvider.jsx';
-import { Header, Footer } from '../components';
+import { Header, Footer, FooterTresGeneraciones } from '../components';
 import '../styles/global.css';
+
+// Detectar si estamos en la página de Tres Generaciones
+const isTresGeneracionesPage = Astro.url.pathname === '/restaurants/tres-generaciones';
 ---
 
 <!doctype html>
@@ -19,7 +22,11 @@ import '../styles/global.css';
 			<main style="position: relative; z-index: 1;">
 				<slot />
 			</main>
-			<Footer client:load />
+			{isTresGeneracionesPage ? (
+				<FooterTresGeneraciones client:load />
+			) : (
+				<Footer client:load />
+			)}
 		</DevLinkProvider>
 	</body>
 </html>
