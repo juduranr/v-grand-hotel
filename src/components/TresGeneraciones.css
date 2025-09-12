@@ -215,10 +215,6 @@
     padding: 24px;
 }
 
-.tg-presentation__gallery-item--hover:hover .tg-presentation__hover-overlay {
-    opacity: 1;
-}
-
 .tg-presentation__hover-content {
     color: #FFF;
     font-size: 20px;
@@ -226,6 +222,16 @@
     font-weight: 400;
     line-height: 130%;
     letter-spacing: 0.4px;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.tg-presentation__gallery-item--hover:hover .tg-presentation__hover-overlay {
+    opacity: 1;
+}
+
+.tg-presentation__gallery-item--hover:hover .tg-presentation__hover-content {
+    transform: translateY(0);
 }
 
 .tg-presentation__hover-name {
