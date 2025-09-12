@@ -64,13 +64,10 @@ const FooterTresGeneraciones: React.FC = () => {
             <h3 className="tg-footer__title">Contacto</h3>
             <div className="tg-footer__contact">
               <div className="tg-footer__contact-item">
-                <a href="tel:+573144583693">+57 314 4583693</a>
+                <a href="tel:+34649745470">+34 649 74 54 70</a>
               </div>
               <div className="tg-footer__contact-item">
-                <a href="tel:018009122083">01-800-912-2083</a>
-              </div>
-              <div className="tg-footer__contact-item">
-                <a href='mailto:reservas@v-grandhotels.com'>reservas@v-grandhotels.com</a>
+                <a href='mailto:info@vgrandhotel.com'>info@vgrandhotel.com</a>
               </div>
             </div>
           </div>
@@ -79,11 +76,10 @@ const FooterTresGeneraciones: React.FC = () => {
           <div className="tg-footer__column">
             <h3 className="tg-footer__title">Legal</h3>
             <ul className="tg-footer__links">
-              <li><a href="#" className="tg-footer__link">Política de Privacidad</a></li>
-              <li><a href="#" className="tg-footer__link">Términos de Servicio</a></li>
-              <li><a href="#" className="tg-footer__link">Cookies</a></li>
-              <li><a href="#" className="tg-footer__link">Accesibilidad</a></li>
-              <li><a href="#" className="tg-footer__link">Términos de Reserva</a></li>
+              <li><a href="#" className="tg-footer__link">Términos y condiciones</a></li>
+              <li><a href="#" className="tg-footer__link">Términos de uso</a></li>
+              <li><a href="#" className="tg-footer__link">Políticas de privacidad</a></li>
+              <li><a href="#" className="tg-footer__link">Políticas de ventas</a></li>
             </ul>
           </div>
 

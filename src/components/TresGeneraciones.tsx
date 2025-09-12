@@ -41,7 +41,7 @@ const TresGeneraciones: React.FC = () => {
             });
 
             gsap.set('.tg-experiences__item--panel', {
-                flex: '0 0 auto',
+                flex: '1 1 auto',
                 width: 'auto'
             });
 

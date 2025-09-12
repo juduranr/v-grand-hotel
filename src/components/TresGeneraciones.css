@@ -425,11 +425,11 @@
 	position: relative;
 	overflow: hidden;
 	background: #111;
-	flex: 1 1 0;
 	min-width: 0;
 }
 
 .tg-experiences__item:not(.tg-experiences__item--panel) {
+	flex: 1 1 0;
 	min-width: 561px;
 }
 
@@ -438,10 +438,6 @@
 	height: 714px;
 	object-fit: cover;
 	display: block;
-}
-
-.tg-experiences__item--panel {
-	min-width: 1024px;
 }
 
 .tg-experiences__panel {
@@ -466,6 +462,8 @@
 	font-weight: 400;
 	line-height: 110%;
 	text-transform: uppercase;
+	text-align: center;
+	white-space: nowrap;
 }
 
 .tg-experiences__panel-text {
@@ -473,7 +471,8 @@
 	color: #FFF;
 	font-size: 18px;
 	line-height: 150%;
-	max-width: 600px;
+	width: 700px;
+	text-align: center;
 }
 
 .tg-experiences__actions {
@@ -508,6 +507,56 @@
 .tg-btn--outline {
 	color: #FFF;
 	border: 0.5px solid #FFF;
+}
+
+/* ===== Color de texto cuando header no es blanco ===== */
+/* Aplicar color #622E27 a textos cuando el header no tiene fondo blanco en Tres Generaciones */
+
+/* Solo aplicar color #622E27 cuando el header está transparente (no scrolled) */
+body.tres-generaciones-header-transparent .tg-hero__title {
+	color: #622E27 !important;
+}
+
+body.tres-generaciones-header-transparent .tg-section-title {
+	color: #622E27 !important;
+}
+
+body.tres-generaciones-header-transparent .tg-experiences__title {
+	color: #622E27 !important;
+}
+
+body.tres-generaciones-header-transparent .tg-experiences__panel-title {
+	color: #622E27 !important;
+}
+
+body.tres-generaciones-header-transparent .tg-highlight__title {
+	color: #622E27 !important;
+}
+
+body.tres-generaciones-header-transparent .tg-section-text {
+	color: #622E27 !important;
+}
+
+body.tres-generaciones-header-transparent .tg-experiences__text {
+	color: #622E27 !important;
+}
+
+body.tres-generaciones-header-transparent .tg-experiences__panel-text {
+	color: #622E27 !important;
+}
+
+body.tres-generaciones-header-transparent .tg-highlight__text {
+	color: #622E27 !important;
+}
+
+body.tres-generaciones-header-transparent .tg-experiences__subtitle {
+	color: #622E27 !important;
+}
+
+body.tres-generaciones-header-transparent .tg-presentation__hover-content,
+body.tres-generaciones-header-transparent .tg-presentation__hover-name,
+body.tres-generaciones-header-transparent .tg-presentation__hover-date {
+	color: #622E27 !important;
 }
 
 /* ===== Responsive Design ===== */

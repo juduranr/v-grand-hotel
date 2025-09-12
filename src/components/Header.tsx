@@ -36,6 +36,34 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Efecto para manejar las clases del body cuando el header cambia de estado
+  useEffect(() => {
+    const body = document.body;
+    
+    if (isTresGeneracionesPage) {
+      if (!isScrolled) {
+        // Header transparente - aplicar color #622E27
+        body.classList.add('tres-generaciones-header-transparent');
+        body.classList.remove('tres-generaciones-header-scrolled');
+      } else {
+        // Header con fondo blanco - remover color #622E27
+        body.classList.remove('tres-generaciones-header-transparent');
+        body.classList.add('tres-generaciones-header-scrolled');
+      }
+    } else {
+      // No estamos en Tres Generaciones - limpiar clases
+      body.classList.remove('tres-generaciones-header-transparent');
+      body.classList.remove('tres-generaciones-header-scrolled');
+    }
+
+    // Cleanup
+    return () => {
+      body.classList.remove('tres-generaciones-header-transparent');
+      body.classList.remove('tres-generaciones-header-scrolled');
+    };
+  }, [isTresGeneracionesPage, isScrolled]);
+
+
   return (
     <>
       <header className={`header ${isScrolled ? 'header--scrolled' : ''} ${isMenuOpen ? 'header--menu-open' : ''} ${isTresGeneracionesPage ? 'header--tres-generaciones' : ''}`}>
