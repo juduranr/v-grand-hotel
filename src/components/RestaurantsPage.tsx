@@ -20,11 +20,43 @@ interface RestaurantsPageProps {
 
 const RestaurantsPage: React.FC<RestaurantsPageProps> = ({ restaurantsData }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const [cursorVisible, setCursorVisible] = useState<boolean>(false);
   const [cursorPosition, setCursorPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const normalizeRestaurantName = (title: string): string => {
     return title.toLowerCase().replace(/\s+/g, '-');
+  };
+
+  // Función para ajustar el tamaño del texto dinámicamente
+  const adjustHeroTextSize = () => {
+    const textElement = heroTitleRef.current;
+    if (!textElement) return;
+
+    const container = textElement.closest('.rp-hero-section');
+    if (!container) return;
+
+    const containerWidth = (container as HTMLElement).offsetWidth;
+    
+    // Empezar con un tamaño base
+    textElement.style.fontSize = '1px';
+    
+    // Incrementar el tamaño hasta que ocupe todo el ancho
+    let fontSize = 1;
+    while (textElement.scrollWidth <= containerWidth && fontSize < 1000) {
+      fontSize += 1;
+      textElement.style.fontSize = fontSize + 'px';
+    }
+    
+    // Si se pasó del ancho, reducir un poco
+    if (textElement.scrollWidth > containerWidth) {
+      fontSize -= 1;
+      textElement.style.fontSize = fontSize + 'px';
+    }
+    
+    // Aplicar escala horizontal para ocupar exactamente todo el ancho
+    const scale = containerWidth / textElement.scrollWidth;
+    textElement.style.transform = `scaleX(${scale})`;
   };
 
   // Función para actualizar indicadores de navegación
@@ -109,6 +141,9 @@ const RestaurantsPage: React.FC<RestaurantsPageProps> = ({ restaurantsData }) =>
     // Registrar el plugin ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
+    // Ajustar el texto del hero al cargar
+    adjustHeroTextSize();
+
     // Agregar event listener para scroll con throttling en el contenedor
     let ticking = false;
     const handleScroll = () => {
@@ -120,6 +155,11 @@ const RestaurantsPage: React.FC<RestaurantsPageProps> = ({ restaurantsData }) =>
         ticking = true;
       }
     };
+
+    // Event listener para redimensionar ventana
+    const handleResize = () => {
+      adjustHeroTextSize();
+    };
     
     const container = containerRef.current;
     if (container) {
@@ -129,12 +169,18 @@ const RestaurantsPage: React.FC<RestaurantsPageProps> = ({ restaurantsData }) =>
       updateNavigationDots();
     }
 
+    // Agregar event listeners para el texto dinámico
+    window.addEventListener('load', adjustHeroTextSize);
+    window.addEventListener('resize', handleResize);
+
     // Cleanup function
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       if (container) {
         container.removeEventListener('scroll', handleScroll);
       }
+      window.removeEventListener('load', adjustHeroTextSize);
+      window.removeEventListener('resize', handleResize);
     };
   }, [restaurantsData]);
 
@@ -146,18 +192,16 @@ const RestaurantsPage: React.FC<RestaurantsPageProps> = ({ restaurantsData }) =>
         style={{ backgroundImage: `url(${RESTAURANTS_IMAGES.HERO})` }}
       >
         <div className="rp-hero-content">
-          <h1 className="rp-hero-title">Restaurantes</h1>
+          <h1 className="rp-hero-title" ref={heroTitleRef}>Restaurantes</h1>
         </div>
       </section>
 
-      {/* Restaurantes Sections */}
-      {restaurantsData.map((restaurant, index) => {
-        // Determinar la URL de la imagen del banner basada en el nombre del restaurante
+      {restaurantsData.map((restaurant) => {
         const getBannerUrl = (title: string) => {
           switch (title.toLowerCase()) {
             case 'tres generaciones':
               return RESTAURANTS_IMAGES.TRES_GENERACIONES_BANNER;
-            case 'v-coffee':
+            case 'v coffee':
               return RESTAURANTS_IMAGES.V_COFFEE_BANNER;
             default:
               return restaurant.banner.startsWith('http') ? restaurant.banner : `/restaurants/${restaurant.banner}`;

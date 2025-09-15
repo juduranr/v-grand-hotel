@@ -119,7 +119,7 @@ text-transform: uppercase;
 	z-index: 2;
 	display: flex;
 	justify-content: center;
-	transform: translateY(10%);
+	overflow: hidden;
 }
 
 .rs-room-overlay {
@@ -134,7 +134,7 @@ text-transform: uppercase;
 }
 
 .rs-hero-title {
-	font-size: 15dvw;
+	font-size: 1rem;
     font-weight: 400;
     color: white;
     text-align: center;
@@ -146,6 +146,11 @@ text-transform: uppercase;
     display: inline-block;
     text-transform: uppercase;
     opacity: 0.5;
+    white-space: nowrap;
+    overflow: visible;
+    width: 100%;
+    transform: scaleX(1);
+    transform-origin: center;
 }
 
 .rs-room-content {
@@ -206,13 +211,8 @@ text-transform: uppercase;
 }
 
 @media (max-width: 768px) {
-    .rs-hero-title {
-        font-size: 2.5rem;
-        bottom: -10%;
-    }
-
 	.rs-summary-title {
-		line-height: 0.4;
+		line-height: 0.6;
 	}
 
     .rs-room-content {
@@ -226,13 +226,8 @@ text-transform: uppercase;
 }
 
 @media (max-width: 480px) {
-    .rs-hero-title {
-        font-size: 2rem;
-        bottom: -10%;
-    }
-
 	.rs-summary-title {
-		line-height: 0.4;
+		line-height: 0.6;
 	}
 }
 

@@ -23,11 +23,43 @@ interface RoomsPageProps {
 
 const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const [cursorVisible, setCursorVisible] = useState<boolean>(false);
   const [cursorPosition, setCursorPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const normalizeRoomName = (title: string): string => {
     return title.toLowerCase().replace(/\s+/g, '-');
+  };
+
+  // Función para ajustar el tamaño del texto dinámicamente
+  const adjustHeroTextSize = () => {
+    const textElement = heroTitleRef.current;
+    if (!textElement) return;
+
+    const container = textElement.closest('.rp-hero-section');
+    if (!container) return;
+
+    const containerWidth = (container as HTMLElement).offsetWidth;
+    
+    // Empezar con un tamaño base
+    textElement.style.fontSize = '1px';
+    
+    // Incrementar el tamaño hasta que ocupe todo el ancho
+    let fontSize = 1;
+    while (textElement.scrollWidth <= containerWidth && fontSize < 1000) {
+      fontSize += 1;
+      textElement.style.fontSize = fontSize + 'px';
+    }
+    
+    // Si se pasó del ancho, reducir un poco
+    if (textElement.scrollWidth > containerWidth) {
+      fontSize -= 1;
+      textElement.style.fontSize = fontSize + 'px';
+    }
+    
+    // Aplicar escala horizontal para ocupar exactamente todo el ancho
+    const scale = containerWidth / textElement.scrollWidth;
+    textElement.style.transform = `scaleX(${scale})`;
   };
 
   // Función para actualizar indicadores de navegación
@@ -112,6 +144,9 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
     // Registrar el plugin ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
+    // Ajustar el texto del hero al cargar
+    adjustHeroTextSize();
+
     // Agregar event listener para scroll con throttling en el contenedor
     let ticking = false;
     const handleScroll = () => {
@@ -123,6 +158,11 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
         ticking = true;
       }
     };
+
+    // Event listener para redimensionar ventana
+    const handleResize = () => {
+      adjustHeroTextSize();
+    };
     
     const container = containerRef.current;
     if (container) {
@@ -132,12 +172,18 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
       updateNavigationDots();
     }
 
+    // Agregar event listeners para el texto dinámico
+    window.addEventListener('load', adjustHeroTextSize);
+    window.addEventListener('resize', handleResize);
+
     // Cleanup function
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       if (container) {
         container.removeEventListener('scroll', handleScroll);
       }
+      window.removeEventListener('load', adjustHeroTextSize);
+      window.removeEventListener('resize', handleResize);
     };
   }, [roomsData]);
 
@@ -149,7 +195,7 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ roomsData }) => {
         style={{ backgroundImage: `url(${ROOMS_IMAGES.HERO})` }}
       >
         <div className="rp-hero-content">
-          <h1 className="rp-hero-title">Habitaciones</h1>
+          <h1 className="rp-hero-title" ref={heroTitleRef}>Habitaciones</h1>
         </div>
       </section>
 

@@ -492,6 +492,7 @@
 	text-decoration: none;
 	flex-shrink: 0;
 	min-width: 160px;
+	text-wrap: nowrap;
 }
 
 .tg-btn--light {

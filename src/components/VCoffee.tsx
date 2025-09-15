@@ -1,8 +1,61 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { RESTAURANTS_IMAGES } from '../config/env';
 import './VCoffee.css';
 
 const VCoffee: React.FC = () => {
+  const heroTitleRef = useRef<HTMLHeadingElement>(null);
+
+  // Función para ajustar el tamaño del texto dinámicamente
+  const adjustHeroTextSize = () => {
+    const textElement = heroTitleRef.current;
+    if (!textElement) return;
+
+    const container = textElement.closest('.vcoffee-hero');
+    if (!container) return;
+
+    const containerWidth = (container as HTMLElement).offsetWidth;
+    
+    // Empezar con un tamaño base
+    textElement.style.fontSize = '1px';
+    
+    // Incrementar el tamaño hasta que ocupe todo el ancho
+    let fontSize = 1;
+    while (textElement.scrollWidth <= containerWidth && fontSize < 1000) {
+      fontSize += 1;
+      textElement.style.fontSize = fontSize + 'px';
+    }
+    
+    // Si se pasó del ancho, reducir un poco
+    if (textElement.scrollWidth > containerWidth) {
+      fontSize -= 1;
+      textElement.style.fontSize = fontSize + 'px';
+    }
+    
+    // Aplicar escala horizontal para ocupar exactamente todo el ancho
+    const scale = containerWidth / textElement.scrollWidth;
+    textElement.style.transform = `scaleX(${scale})`;
+  };
+
+  useEffect(() => {
+    // Ajustar el texto del hero al cargar
+    adjustHeroTextSize();
+
+    // Event listener para redimensionar ventana
+    const handleResize = () => {
+      adjustHeroTextSize();
+    };
+
+    // Agregar event listeners para el texto dinámico
+    window.addEventListener('load', adjustHeroTextSize);
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener('load', adjustHeroTextSize);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <main className="vcoffee-detail">
       <section
@@ -10,7 +63,7 @@ const VCoffee: React.FC = () => {
         style={{ backgroundImage: `url(${RESTAURANTS_IMAGES.V_COFFEE_BANNER})` }}
       >
         <div className="vcoffee-hero__content">
-          <h1 className="vcoffee-title">V-Coffee</h1>
+          <h1 className="vcoffee-title" ref={heroTitleRef}>V Coffee</h1>
         </div>
       </section>
       <section className="vcoffee-content">

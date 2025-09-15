@@ -18,21 +18,22 @@
 	display: flex;
 	align-items: flex-end;
 	justify-content: center;
-	padding-bottom: 20px;
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .vcoffee-hero__content {
 	position: absolute;
 	left: 0;
 	bottom: 0;
+	width: 100%;
+	z-index: 2;
 	display: flex;
 	justify-content: center;
-	transform: translateY(10%);
+	overflow: hidden;
 }
 
 .vcoffee-title {
-	font-size: 23dvw;
+	font-size: 1rem;
 	font-weight: 400;
 	color: white;
 	text-align: center;
@@ -43,6 +44,11 @@
 	display: inline-block;
 	text-transform: uppercase;
 	opacity: 0.5;
+	white-space: nowrap;
+	overflow: visible;
+	width: 100%;
+	transform: scaleX(1);
+	transform-origin: center;
 }
 
 /* ===== V-Coffee Content ===== */
@@ -291,8 +297,7 @@
 /* ===== Responsive Design ===== */
 @media (max-width: 768px) {
 	.vcoffee-title {
-		bottom: -10%;
-		line-height: 0.4;
+		line-height: 0.6;
 	}
 	
 	.vcoffee-intro__text {
@@ -365,8 +370,7 @@
 
 @media (max-width: 480px) {
 	.vcoffee-title {
-		bottom: -10%;
-		line-height: 0.4;
+		line-height: 0.6;
 	}
 	
 	.vcoffee-intro__text {

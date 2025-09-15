@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import './RoomSummary.css';
 import { DoubleBed, Tub, Sunbath, KnifeFork } from '@icon-park/react';
 import roomsData from '../data/rooms.json';
@@ -26,6 +26,7 @@ function getAssetUrl(path: string): string {
 }
 
 const RoomSummary: React.FC = () => {
+  const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const [room, setRoom] = useState<Room | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
@@ -35,6 +36,37 @@ const RoomSummary: React.FC = () => {
     const parts = window.location.pathname.split('/').filter(Boolean);
     return parts[parts.length - 1] || '';
   }, []);
+
+  // Función para ajustar el tamaño del texto dinámicamente
+  const adjustHeroTextSize = () => {
+    const textElement = heroTitleRef.current;
+    if (!textElement) return;
+
+    const container = textElement.closest('.rs-hero-section');
+    if (!container) return;
+
+    const containerWidth = (container as HTMLElement).offsetWidth;
+    
+    // Empezar con un tamaño base
+    textElement.style.fontSize = '1px';
+    
+    // Incrementar el tamaño hasta que ocupe todo el ancho
+    let fontSize = 1;
+    while (textElement.scrollWidth <= containerWidth && fontSize < 1000) {
+      fontSize += 1;
+      textElement.style.fontSize = fontSize + 'px';
+    }
+    
+    // Si se pasó del ancho, reducir un poco
+    if (textElement.scrollWidth > containerWidth) {
+      fontSize -= 1;
+      textElement.style.fontSize = fontSize + 'px';
+    }
+    
+    // Aplicar escala horizontal para ocupar exactamente todo el ancho
+    const scale = containerWidth / textElement.scrollWidth;
+    textElement.style.transform = `scaleX(${scale})`;
+  };
 
   useEffect(() => {
     const found = (roomsData as Room[]).find(r => normalizeRoomName(r.title) === slug);
@@ -46,6 +78,26 @@ const RoomSummary: React.FC = () => {
     }
     setRoom(found);
   }, [slug]);
+
+  useEffect(() => {
+    // Ajustar el texto del hero al cargar
+    adjustHeroTextSize();
+
+    // Event listener para redimensionar ventana
+    const handleResize = () => {
+      adjustHeroTextSize();
+    };
+
+    // Agregar event listeners para el texto dinámico
+    window.addEventListener('load', adjustHeroTextSize);
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener('load', adjustHeroTextSize);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [room]);
 
   useEffect(() => {
     if (!lightboxOpen) return;
@@ -91,7 +143,7 @@ const RoomSummary: React.FC = () => {
       <div className="rs-hero-section" style={{ backgroundImage: `url('${bannerUrl}')` }}>
         <div className="rs-room-overlay"></div>
         <div className="rs-hero-content">
-          <h1 className="rs-hero-title">{room.title}</h1>
+          <h1 className="rs-hero-title" ref={heroTitleRef}>{room.title}</h1>
         </div>
       </div>
 

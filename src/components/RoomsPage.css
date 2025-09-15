@@ -29,7 +29,7 @@
 .rp-hero-section {
 	justify-content: center;
 	align-items: flex-end;
-	padding-bottom: 20px;
+	overflow: hidden;
 }
 
 .rp-hero-content {
@@ -40,11 +40,11 @@
 	z-index: 2;
 	display: flex;
 	justify-content: center;
-	transform: translateY(10%);
+	overflow: hidden;
 }
 
 .rp-hero-title {
-	font-size: 15dvw;
+	font-size: 1rem;
     font-weight: 400;
     color: white;
     text-align: center;
@@ -56,6 +56,11 @@
     display: inline-block;
     text-transform: uppercase;
     opacity: 0.5;
+    white-space: nowrap;
+    overflow: visible;
+    width: 100%;
+    transform: scaleX(1);
+    transform-origin: center;
 }
 
 .rp-room-section {
@@ -122,8 +127,7 @@
 /* Responsive */
 @media (max-width: 768px) {
 	.rp-hero-title {
-		bottom: -10%;
-		line-height: 0.4;
+		line-height: 0.6;
 	}
 
 	.rp-room-index {
@@ -148,8 +152,7 @@
 
 @media (max-width: 480px) {
 	.rp-hero-title {
-		bottom: -10%;
-		line-height: 0.4;
+		line-height: 0.6;
 	}
 	
 	.rp-index-number {
